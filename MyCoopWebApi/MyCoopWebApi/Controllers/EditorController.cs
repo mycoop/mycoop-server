@@ -18,7 +18,7 @@ namespace MyCoopWebApi.Controllers
         {
             var fileName = fileId;
             var fileUri = DocumentService.FileUri(fileName);
-            var key = ServiceConverter.GenerateRevisionId(DocumentService.CurUserHostAddress + "/" + Path.GetFileName(fileUri));
+            var key = ServiceConverter.GenerateRevisionId(/*DocumentService.CurUserHostAddress +*/ "__1/" + Path.GetFileName(fileUri));
             var validateKey = ServiceConverter.GenerateValidateKey(key);
             return Request.CreateResponse(HttpStatusCode.OK, new
             {

@@ -106,7 +106,8 @@ namespace MyCoopWebApi
                 {
                     Path = HttpRuntime.AppDomainAppVirtualPath + "/"
                            + WebConfigurationManager.AppSettings["storage-path"]
-                           + CurUserHostAddress + "/"
+                           //+ CurUserHostAddress + "/"
+                           + "__1/"
                            + fileName,
                     Query = ""
                 };
