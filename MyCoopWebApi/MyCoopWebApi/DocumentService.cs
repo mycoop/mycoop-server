@@ -243,6 +243,51 @@ namespace MyCoopWebApi
 
             return "{ \"filename\" : \"" + _fileName + "\"}";
         }
+        public static string DoConvert(string fileId)
+        {
+            _fileName = fileId;
+
+            var extension = (Path.GetExtension(_fileName) ?? "").Trim('.');
+            var internalExtension = FileType.GetInternalExtension(_fileName).Trim('.');
+
+            if (ConvertExts.Contains("." + extension)
+                && !string.IsNullOrEmpty(internalExtension))
+            {
+                var key = ServiceConverter.GenerateRevisionId(FileUri(_fileName));
+
+                string newFileUri;
+                var result = ServiceConverter.GetConvertedUri(FileUri(_fileName), extension, internalExtension, key, true, out newFileUri);
+                if (result != 100)
+                {
+                    return "{ \"step\" : \"" + result + "\", \"filename\" : \"" + _fileName + "\"}";
+                }
+
+                var fileName = GetCorrectName(Path.GetFileNameWithoutExtension(_fileName) + "." + internalExtension);
+
+                var req = (HttpWebRequest)WebRequest.Create(newFileUri);
+
+                using (var stream = req.GetResponse().GetResponseStream())
+                {
+                    if (stream == null) throw new Exception("Stream is null");
+                    const int bufferSize = 4096;
+
+                    using (var fs = File.Open(StoragePath + fileName, FileMode.Create))
+                    {
+                        var buffer = new byte[bufferSize];
+                        int readed;
+                        while ((readed = stream.Read(buffer, 0, bufferSize)) != 0)
+                        {
+                            fs.Write(buffer, 0, readed);
+                        }
+                    }
+                }
+
+                File.Delete(StoragePath + _fileName);
+                _fileName = fileName;
+            }
+
+            return "{ \"filename\" : \"" + _fileName + "\"}";
+        }
 
         public static string GetCorrectName(string fileName)
         {

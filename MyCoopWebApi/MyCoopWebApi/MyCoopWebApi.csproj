@@ -85,14 +85,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\ConvertController.cs" />
+    <Compile Include="Controllers\DocumentController.cs" />
     <Compile Include="Controllers\EditorController.cs" />
     <Compile Include="Controllers\HelloController.cs" />
+    <Compile Include="Controllers\SearchAndReplaceController.cs" />
     <Compile Include="DocumentConverter.cs" />
     <Compile Include="DocumentService.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\DocumentModel.cs" />
     <Compile Include="Models\EditorConfig.cs" />
+    <Compile Include="Models\SearchAndReplaceModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WebEditor.ashx.cs">
       <DependentUpon>WebEditor.ashx</DependentUpon>
@@ -101,6 +106,13 @@
   <ItemGroup>
     <Content Include="packages.config" />
     <Content Include="settings.config" />
+    <Content Include="App_Data\temp\BankOfAmericaCOOP123.docx" />
+    <Content Include="documents\BankOfAmericaCOOP.docx" />
+    <None Include="documents\BankOfAmericaCOOP.pdf" />
+    <Content Include="documents\COOPPlanTemplate.doc" />
+    <Content Include="documents\COOP_FEMA_instructions.doc" />
+    <Content Include="documents\Final_COOP_Completed_Example_v1.doc" />
+    <Content Include="documents\major_disaster_requests.doc" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -109,8 +121,12 @@
     </None>
     <Content Include="WebEditor.ashx" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="App_Data\" />
+    <ProjectReference Include="..\MyCoop.Services\MyCoop.Services.csproj">
+      <Project>{c3be913d-d234-42e0-89a0-5c91825df989}</Project>
+      <Name>MyCoop.Services</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
