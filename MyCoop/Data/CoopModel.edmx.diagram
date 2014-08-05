@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="b749d490547e4f618460740bd1ce2e37" Name="Diagram1">
+        <EntityTypeShape EntityType="CoopModel.Company" Width="1.5" PointX="0.75" PointY="5.75" />
+        <EntityTypeShape EntityType="CoopModel.Group" Width="1.5" PointX="5.25" PointY="1.125" />
+        <EntityTypeShape EntityType="CoopModel.PermissionLevel" Width="1.5" PointX="0.75" PointY="1.875" />
+        <EntityTypeShape EntityType="CoopModel.UserGroup" Width="1.5" PointX="7.5" PointY="1.625" />
+        <EntityTypeShape EntityType="CoopModel.User" Width="1.5" PointX="3" PointY="1" />
+        <AssociationConnector Association="CoopModel.FK_Groups_Users" />
+        <AssociationConnector Association="CoopModel.FK_Groups_Users1" />
+        <AssociationConnector Association="CoopModel.FK_UserGroups_Groups" />
+        <AssociationConnector Association="CoopModel.FK_Users_PermissionLevels" />
+        <AssociationConnector Association="CoopModel.FK_UserGroups_Users" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
