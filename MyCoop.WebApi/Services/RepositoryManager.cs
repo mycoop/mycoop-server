@@ -15,6 +15,8 @@ namespace MyCoop.WebApi.Services
         static RepositoryManager()
         {
             _mapTypes.Add(typeof(IUserRepository), typeof(UserRepository));
+            _mapTypes.Add(typeof(IGroupRepository), typeof(GroupRepository));
+            _mapTypes.Add(typeof(IPermissionLevelRepository), typeof(PermissionLevelRepository));
         }
 
         private CoopEntities _context;

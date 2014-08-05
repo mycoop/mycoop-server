@@ -8,7 +8,7 @@ namespace MyCoop.Repositories
     {
         Task<User> GetUser(string email, string password);
 
-        User GetUser(int id);
+        Task<User> GetUser(int id);
 
         User GetUser(string email);
 

@@ -23,9 +23,9 @@ namespace MyCoop.Repositories.Instances
             return ObjectSet.SingleOrDefaultAsync(user => user.Email == email && user.Password == password);
         }
 
-        public User GetUser(int id)
+        public Task<User> GetUser(int id)
         {
-            return ObjectSet.Single(user => user.Id == id);
+            return ObjectSet.SingleAsync(user => user.Id == id);
         }
 
         public User GetUser(string email)

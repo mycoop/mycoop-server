@@ -1,4 +1,6 @@
 ﻿using System.Data.Entity;
+using System.Linq;
+using System.Threading.Tasks;
 using MyCoop.Data;
 
 namespace MyCoop.Repositories.Instances
@@ -12,6 +14,11 @@ namespace MyCoop.Repositories.Instances
         protected override DbSet<Group> ObjectSet
         {
             get { return Context.Groups; }
+        }
+
+        public Task<Group[]> GetGroupsByUserId(int userId)
+        {
+            return GetEntities().Where(g => g.UserGroups.Any(item => item.UserId == userId)).ToArrayAsync();
         }
     }
 }

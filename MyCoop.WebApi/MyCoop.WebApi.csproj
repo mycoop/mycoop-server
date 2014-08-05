@@ -144,6 +144,10 @@
     <Compile Include="Helpers\CultureHelper.cs" />
     <Compile Include="Helpers\UserHelper.cs" />
     <Compile Include="Models\Signs\UserModel.cs" />
+    <Compile Include="Models\Users\AddUserModel.cs" />
+    <Compile Include="Models\Users\GroupModel.cs" />
+    <Compile Include="Models\Users\UpdateUserModel.cs" />
+    <Compile Include="Models\Users\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Instances\ServiceBase.cs" />
     <Compile Include="Services\Instances\SystemService.cs" />
