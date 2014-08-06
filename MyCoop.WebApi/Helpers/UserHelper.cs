@@ -41,7 +41,11 @@ namespace MyCoop.WebApi.Helpers
                 }
                 
             }
+#if !DEBUG
             return -1;
+#else
+            return 1;
+#endif
         }
 
         public static void RemoveId()

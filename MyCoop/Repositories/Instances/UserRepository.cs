@@ -40,7 +40,17 @@ namespace MyCoop.Repositories.Instances
 
         public Task<User[]> GetUsers()
         {
-            return GetEntities("PermissionLevel").ToArrayAsync();
+            return GetEntities().ToArrayAsync();
+        }
+
+        public Task<User[]> GetUsersByGroupId(int groupId)
+        {
+            return GetEntities().Where(user => user.UserGroups.Any(item => item.GroupId == groupId)).ToArrayAsync();
+        }
+
+        public Task Delete(int id)
+        {
+            return Task.Run(() => Context.DeleteUser(id));
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using MyCoop.WebApi.Models.Users;
+using MyCoop.WebApi.Models.Groups;
 
 namespace MyCoop.WebApi.Services
 {
@@ -18,6 +19,22 @@ namespace MyCoop.WebApi.Services
 
         Task UpdateUser(int id, UpdateUserModel model);
 
-        Task<GroupModel[]> GetUserGroups(int id);
+        Task<UserGroupModel[]> GetUserGroups(int userId);
+
+        Task<GroupModel[]> GetGroups();
+
+        Task<GroupModel> GetGroup(int id);
+
+        Task<int> AddGroup(EditGroupModel model);
+
+        Task UpdateGroup(int id, EditGroupModel model);
+
+        Task DeleteGroup(int id);
+
+        Task<GroupUserModel[]> GetGroupUsers(int groupId);
+
+        Task AddUserToGroup(int userId, int groupId);
+
+        Task RemoveUserFromGroup(int userId, int groupId);
     }
 }

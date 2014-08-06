@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using MyCoop.Data;
 
 namespace MyCoop.Repositories
@@ -15,5 +14,9 @@ namespace MyCoop.Repositories
         bool HasUser(string email);
 
         Task<User[]> GetUsers();
+
+        Task<User[]> GetUsersByGroupId(int groupId);
+
+        Task Delete(int id);
     }
 }

@@ -114,6 +114,12 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="DeleteGroup" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="groupId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="DeleteUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="userId" Type="int" Mode="In" />
+        </Function>
         <EntityContainer Name="Хранилище CoopModelContainer">
           <EntitySet Name="Companies" EntityType="Self.Companies" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Groups" EntityType="Self.Groups" Schema="dbo" store:Type="Tables" />
@@ -171,6 +177,12 @@
             <End Role="User" EntitySet="Users" />
             <End Role="UserGroup" EntitySet="UserGroups" />
           </AssociationSet>
+          <FunctionImport Name="DeleteGroup">
+            <Parameter Name="groupId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteUser">
+            <Parameter Name="userId" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="Company">
           <Key>
@@ -350,6 +362,8 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="DeleteGroup" FunctionName="Хранилище CoopModel.DeleteGroup" />
+          <FunctionImportMapping FunctionImportName="DeleteUser" FunctionName="Хранилище CoopModel.DeleteUser" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

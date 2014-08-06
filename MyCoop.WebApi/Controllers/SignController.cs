@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using MyCoop.WebApi.Filters;
 using MyCoop.WebApi.Helpers;
 using MyCoop.WebApi.Models.Signs;
 using MyCoop.WebApi.Services;
@@ -27,7 +28,7 @@ namespace MyCoop.WebApi.Controllers
             if (userId != -1)
             {
                 UserHelper.SaveId(userId);
-                return Request.CreateResponse(HttpStatusCode.OK);
+                return Request.CreateResponse(HttpStatusCode.OK, userId);
             }
             return Request.CreateResponse(HttpStatusCode.BadRequest);
 
@@ -35,6 +36,7 @@ namespace MyCoop.WebApi.Controllers
 
         [HttpPost]
         [Route("out")]
+        [CoopAuthorize]
         public HttpResponseMessage Out()
         {
             UserHelper.RemoveId();
