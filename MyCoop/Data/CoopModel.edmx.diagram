@@ -15,6 +15,9 @@
         <AssociationConnector Association="CoopModel.FK_UserGroups_Groups" />
         <AssociationConnector Association="CoopModel.FK_Users_PermissionLevels" />
         <AssociationConnector Association="CoopModel.FK_UserGroups_Users" />
+        <EntityTypeShape EntityType="CoopModel.OrgUnit" Width="1.5" PointX="5.25" PointY="5.25" />
+        <AssociationConnector Association="CoopModel.FK_OrgUnits_OrgUnits" />
+        <AssociationConnector Association="CoopModel.FK_OrgUnits_Users" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

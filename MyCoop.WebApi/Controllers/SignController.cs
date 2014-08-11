@@ -22,9 +22,9 @@ namespace MyCoop.WebApi.Controllers
 
         [HttpPost]
         [Route("in")]
-        public async Task<HttpResponseMessage> In([FromBody] UserModel user)
+        public async Task<HttpResponseMessage> In([FromBody] LoginModel login)
         {
-            int userId = await Service.Get<ISystemService>().Connect(user.Email, user.Password);
+            int userId = await Service.Get<ISystemService>().Connect(login.Email, login.Password);
             if (userId != -1)
             {
                 UserHelper.SaveId(userId);

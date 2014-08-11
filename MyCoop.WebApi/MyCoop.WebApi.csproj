@@ -39,6 +39,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Any.Logs">
+      <HintPath>..\Components\AnyLog\Any.Logs.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.dll</HintPath>
@@ -133,7 +136,6 @@
     <Compile Include="AppStart\WebApiDependencyResolver.cs" />
     <Compile Include="Controllers\ApiControllerBase.cs" />
     <Compile Include="Controllers\GroupController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SignController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Filters\CoopAuthorizeAttribute.cs" />
@@ -145,7 +147,7 @@
     <Compile Include="Helpers\UserHelper.cs" />
     <Compile Include="Models\Groups\EditGroupModel.cs" />
     <Compile Include="Models\Groups\UserGroupModel.cs" />
-    <Compile Include="Models\Signs\UserModel.cs" />
+    <Compile Include="Models\Signs\LoginModel.cs" />
     <Compile Include="Models\Users\AddUserModel.cs" />
     <Compile Include="Models\Groups\GroupModel.cs" />
     <Compile Include="Models\Users\GroupUserModel.cs" />
@@ -160,7 +162,72 @@
     <Compile Include="Services\ServiceManager.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Clients\app.js" />
+    <Content Include="Clients\config.js" />
+    <Content Include="Clients\css\site.css" />
+    <Content Include="Clients\images\busy-danger.gif" />
+    <Content Include="Clients\images\busy.gif" />
+    <Content Include="Clients\index.js" />
+    <Content Include="Clients\namespaces.js" />
+    <Content Include="Clients\plugins\bootstrap\css\bootstrap-theme.css" />
+    <Content Include="Clients\plugins\bootstrap\css\bootstrap-theme.min.css" />
+    <Content Include="Clients\plugins\bootstrap\css\bootstrap.css" />
+    <Content Include="Clients\plugins\bootstrap\css\bootstrap.min.css" />
+    <Content Include="Clients\plugins\bootstrap\fonts\glyphicons-halflings-regular.eot.jpg" />
+    <Content Include="Clients\plugins\bootstrap\fonts\glyphicons-halflings-regular.svg.jpg" />
+    <Content Include="Clients\plugins\bootstrap\fonts\glyphicons-halflings-regular.ttf.jpg" />
+    <Content Include="Clients\plugins\bootstrap\fonts\glyphicons-halflings-regular.woff.jpg" />
+    <Content Include="Clients\plugins\bootstrap\js\bootstrap.js" />
+    <Content Include="Clients\plugins\bootstrap\js\bootstrap.min.js" />
+    <None Include="Clients\plugins\jquery-1.10.2.intellisense.js" />
+    <Content Include="Clients\plugins\jquery-1.10.2.js" />
+    <Content Include="Clients\plugins\jquery-1.10.2.min.js" />
+    <Content Include="Clients\plugins\jquery-ui-1.11.0\images\animated-overlay.gif" />
+    <Content Include="Clients\plugins\jquery-ui-1.11.0\images\ui-bg_diagonals-thick_18_b81900_40x40.png" />
+    <Content Include="Clients\plugins\jquery-ui-1.11.0\images\ui-bg_diagonals-thick_20_666666_40x40.png" />
+    <Content Include="Clients\plugins\jquery-ui-1.11.0\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Clients\plugins\jquery-ui-1.11.0\images\ui-bg_flat_0_eeeeee_40x100.png" />
+    <Content Include="Clients\plugins\jquery-ui-1.11.0\images\ui-bg_flat_10_000000_40x100.png" />
+    <Content Include="Clients\plugins\jquery-ui-1.11.0\images\ui-bg_flat_55_ffffff_40x100.png" />
+    <Content Include="Clients\plugins\jquery-ui-1.11.0\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Clients\plugins\jquery-ui-1.11.0\images\ui-bg_glass_100_f6f6f6_1x400.png" />
+    <Content Include="Clients\plugins\jquery-ui-1.11.0\images\ui-bg_glass_100_fdf5ce_1x400.png" />
+    <Content Include="Clients\plugins\jquery-ui-1.11.0\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Clients\plugins\jquery-ui-1.11.0\images\ui-bg_gloss-wave_35_f6a828_500x100.png" />
+    <Content Include="Clients\plugins\jquery-ui-1.11.0\images\ui-bg_highlight-soft_100_eeeeee_1x100.png" />
+    <Content Include="Clients\plugins\jquery-ui-1.11.0\images\ui-bg_highlight-soft_100_f6f6f6_1x100.png" />
+    <Content Include="Clients\plugins\jquery-ui-1.11.0\images\ui-bg_highlight-soft_25_0073ea_1x100.png" />
+    <Content Include="Clients\plugins\jquery-ui-1.11.0\images\ui-bg_highlight-soft_50_dddddd_1x100.png" />
+    <Content Include="Clients\plugins\jquery-ui-1.11.0\images\ui-bg_highlight-soft_75_ffe45c_1x100.png" />
+    <Content Include="Clients\plugins\jquery-ui-1.11.0\images\ui-icons_0073ea_256x240.png" />
+    <Content Include="Clients\plugins\jquery-ui-1.11.0\images\ui-icons_222222_256x240.png" />
+    <Content Include="Clients\plugins\jquery-ui-1.11.0\images\ui-icons_228ef1_256x240.png" />
+    <Content Include="Clients\plugins\jquery-ui-1.11.0\images\ui-icons_454545_256x240.png" />
+    <Content Include="Clients\plugins\jquery-ui-1.11.0\images\ui-icons_666666_256x240.png" />
+    <Content Include="Clients\plugins\jquery-ui-1.11.0\images\ui-icons_ef8c08_256x240.png" />
+    <Content Include="Clients\plugins\jquery-ui-1.11.0\images\ui-icons_ff0084_256x240.png" />
+    <Content Include="Clients\plugins\jquery-ui-1.11.0\images\ui-icons_ffd27a_256x240.png" />
+    <Content Include="Clients\plugins\jquery-ui-1.11.0\images\ui-icons_ffffff_256x240.png" />
+    <Content Include="Clients\plugins\jquery-ui-1.11.0\jquery-ui-1.10.4.custom.css" />
+    <Content Include="Clients\plugins\jquery-ui-1.11.0\jquery-ui-1.10.4.custom.min.css" />
+    <Content Include="Clients\plugins\jquery-ui-1.11.0\jquery-ui.css" />
+    <Content Include="Clients\plugins\jquery-ui-1.11.0\jquery-ui.js" />
+    <Content Include="Clients\plugins\jquery-ui-1.11.0\jquery-ui.min.css" />
+    <Content Include="Clients\plugins\jquery-ui-1.11.0\jquery-ui.min.js" />
+    <Content Include="Clients\plugins\jquery-ui-1.11.0\jquery-ui.structure.css" />
+    <Content Include="Clients\plugins\jquery-ui-1.11.0\jquery-ui.structure.min.css" />
+    <Content Include="Clients\plugins\jquery-ui-1.11.0\jquery-ui.theme.css" />
+    <Content Include="Clients\plugins\jquery-ui-1.11.0\jquery-ui.theme.min.css" />
+    <Content Include="Clients\plugins\knockout-3.1.0.debug.js" />
+    <Content Include="Clients\plugins\knockout-3.1.0.js" />
+    <Content Include="Clients\plugins\modernizr-2.6.2.js" />
+    <Content Include="Clients\plugins\respond.js" />
+    <Content Include="Clients\plugins\respond.min.js" />
+    <Content Include="Clients\router.js" />
+    <Content Include="Clients\viewModels\mainPage.js" />
+    <Content Include="Clients\views\mainPage.html" />
     <Content Include="Global.asax" />
+    <Content Include="Clients\index.html" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -169,9 +236,12 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Clients\models\repositories\" />
+    <Folder Include="Clients\models\services\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

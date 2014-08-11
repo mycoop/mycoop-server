@@ -1,6 +1,6 @@
 ﻿namespace MyCoop.WebApi.Models.Signs
 {
-    public class UserModel
+    public class LoginModel
     {
         public string Email { get; set; }
 

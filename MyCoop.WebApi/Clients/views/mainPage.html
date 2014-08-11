@@ -1,0 +1,57 @@
+﻿<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-12">
+            <div id="page">
+                <fieldset class="form-horizontal">
+                    <div class="form-group">
+                        <label for="templates" class="col-xs-2 control-label">
+                            Templates:
+                        </label>
+                        <div class="col-xs-2">
+                            <select class="form-control" id="templates" data-bind="options: templates, optionsText: 'name', value: selectedTemplate, optionsCaption: 'Choose...'"></select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="method" class="col-xs-2 control-label">
+                            Method:
+                        </label>
+                        <div class="col-xs-2">
+                            <select class="form-control" id="method" data-bind="options: methods, optionsText: 'name', value: selectedMethod"></select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="url" class="col-xs-2 control-label">
+                            Url:
+                        </label>
+                        <div class="col-xs-4">
+                            <input type="text" class="form-control" id="url" placeholder="Url"
+                                   data-bind="value: url" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="httpBody" class="col-xs-2 control-label">
+                            Body:
+                        </label>
+                        <div class="col-xs-4">
+                            <textarea id="httpBody" class="form-control" rows="7" data-bind="text: httpBody"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-4 col-xs-offset-2">
+                            <button style="width: 100px" type="button" class="btn btn-primary" data-bind="click: go">
+                                Go
+                            </button>
+                        </div>
+                    </div>
+                </fieldset>
+                <hr/>
+                <div class="panel col-xs-offset-2 col-xs-6" data-bind="text: result"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="info-message" class="alert" data-bind="visible: infoVisible, css: infoStatus">
+    <button type="button" class="close" data-bind="click: closeInfo">
+        &times;</button>
+    <strong data-bind="text: infoMessage"></strong>
+</div>

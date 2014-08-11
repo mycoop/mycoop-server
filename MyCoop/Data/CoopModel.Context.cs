@@ -45,6 +45,8 @@ public partial class CoopEntities : DbContext
 
     public virtual DbSet<User> Users { get; set; }
 
+    public virtual DbSet<OrgUnit> OrgUnits { get; set; }
+
 
     public virtual int DeleteGroup(Nullable<int> groupId)
     {

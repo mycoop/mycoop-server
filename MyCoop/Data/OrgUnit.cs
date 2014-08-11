@@ -15,13 +15,13 @@ namespace MyCoop.Data
 using System;
     using System.Collections.Generic;
     
-public partial class Group
+public partial class OrgUnit
 {
 
-    public Group()
+    public OrgUnit()
     {
 
-        this.UserGroups = new HashSet<UserGroup>();
+        this.Children = new HashSet<OrgUnit>();
 
     }
 
@@ -30,23 +30,25 @@ public partial class Group
 
     public string Name { get; set; }
 
-    public string Description { get; set; }
+    public string Address { get; set; }
 
-    public System.DateTime ModifiedDate { get; set; }
+    public string Location { get; set; }
 
-    public System.DateTime CreatedDate { get; set; }
+    public System.DateTime CreationTime { get; set; }
 
-    public int ModifiedByUserId { get; set; }
+    public System.DateTime ModificationTime { get; set; }
 
-    public int CreatedByUserId { get; set; }
+    public int OwnerId { get; set; }
+
+    public Nullable<int> ParentId { get; set; }
 
 
 
-    public virtual User ModifiedBy { get; set; }
+    public virtual ICollection<OrgUnit> Children { get; set; }
 
-    public virtual User CreatedBy { get; set; }
+    public virtual OrgUnit Parent { get; set; }
 
-    public virtual ICollection<UserGroup> UserGroups { get; set; }
+    public virtual User User { get; set; }
 
 }
 
