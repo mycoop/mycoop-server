@@ -32,8 +32,6 @@ public partial class OrgUnit
 
     public string Address { get; set; }
 
-    public string Location { get; set; }
-
     public System.DateTime CreationTime { get; set; }
 
     public System.DateTime ModificationTime { get; set; }
@@ -41,6 +39,10 @@ public partial class OrgUnit
     public int OwnerId { get; set; }
 
     public Nullable<int> ParentId { get; set; }
+
+    public double Lat { get; set; }
+
+    public double Lng { get; set; }
 
 
 

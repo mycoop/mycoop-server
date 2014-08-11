@@ -136,6 +136,7 @@
     <Compile Include="AppStart\WebApiDependencyResolver.cs" />
     <Compile Include="Controllers\ApiControllerBase.cs" />
     <Compile Include="Controllers\GroupController.cs" />
+    <Compile Include="Controllers\OrgUnitController.cs" />
     <Compile Include="Controllers\SignController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Filters\CoopAuthorizeAttribute.cs" />
@@ -147,6 +148,9 @@
     <Compile Include="Helpers\UserHelper.cs" />
     <Compile Include="Models\Groups\EditGroupModel.cs" />
     <Compile Include="Models\Groups\UserGroupModel.cs" />
+    <Compile Include="Models\OrgUnits\EditOrgUnitModel.cs" />
+    <Compile Include="Models\OrgUnits\LocationModel.cs" />
+    <Compile Include="Models\OrgUnits\OrgUnitModel.cs" />
     <Compile Include="Models\Signs\LoginModel.cs" />
     <Compile Include="Models\Users\AddUserModel.cs" />
     <Compile Include="Models\Groups\GroupModel.cs" />
@@ -154,6 +158,8 @@
     <Compile Include="Models\Users\UpdateUserModel.cs" />
     <Compile Include="Models\Users\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\IManagementSevice.cs" />
+    <Compile Include="Services\Instances\ManagementSevice.cs" />
     <Compile Include="Services\Instances\ServiceBase.cs" />
     <Compile Include="Services\Instances\SystemService.cs" />
     <Compile Include="Services\IServiceManager.cs" />
@@ -223,7 +229,6 @@
     <Content Include="Clients\plugins\modernizr-2.6.2.js" />
     <Content Include="Clients\plugins\respond.js" />
     <Content Include="Clients\plugins\respond.min.js" />
-    <Content Include="Clients\router.js" />
     <Content Include="Clients\viewModels\mainPage.js" />
     <Content Include="Clients\views\mainPage.html" />
     <Content Include="Global.asax" />
@@ -240,8 +245,7 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Clients\models\repositories\" />
-    <Folder Include="Clients\models\services\" />
+    <Folder Include="Clients\models\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

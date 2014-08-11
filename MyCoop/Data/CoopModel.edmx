@@ -32,11 +32,12 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Address" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Location" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="CreationTime" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="ModificationTime" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="OwnerId" Type="int" Nullable="false" />
           <Property Name="ParentId" Type="int" />
+          <Property Name="Lat" Type="float" Nullable="false" />
+          <Property Name="Lng" Type="float" Nullable="false" />
         </EntityType>
         <EntityType Name="PermissionLevels">
           <Key>
@@ -366,7 +367,6 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Address" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Location" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="CreationTime" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="ModificationTime" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="OwnerId" Type="Int32" Nullable="false" />
@@ -374,6 +374,8 @@
           <NavigationProperty Name="Children" Relationship="CoopModel.FK_OrgUnits_OrgUnits" FromRole="OrgUnit" ToRole="OrgUnit1" />
           <NavigationProperty Name="Parent" Relationship="CoopModel.FK_OrgUnits_OrgUnits" FromRole="OrgUnit1" ToRole="OrgUnit" />
           <NavigationProperty Name="User" Relationship="CoopModel.FK_OrgUnits_Users" FromRole="OrgUnit" ToRole="User" />
+          <Property Name="Lat" Type="Double" Nullable="false" />
+          <Property Name="Lng" Type="Double" Nullable="false" />
         </EntityType>
         <Association Name="FK_OrgUnits_OrgUnits">
           <End Type="CoopModel.OrgUnit" Role="OrgUnit" Multiplicity="0..1" />
@@ -463,11 +465,12 @@
           <EntitySetMapping Name="OrgUnits">
             <EntityTypeMapping TypeName="CoopModel.OrgUnit">
               <MappingFragment StoreEntitySet="OrgUnits">
+                <ScalarProperty Name="Lng" ColumnName="Lng" />
+                <ScalarProperty Name="Lat" ColumnName="Lat" />
                 <ScalarProperty Name="ParentId" ColumnName="ParentId" />
                 <ScalarProperty Name="OwnerId" ColumnName="OwnerId" />
                 <ScalarProperty Name="ModificationTime" ColumnName="ModificationTime" />
                 <ScalarProperty Name="CreationTime" ColumnName="CreationTime" />
-                <ScalarProperty Name="Location" ColumnName="Location" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />

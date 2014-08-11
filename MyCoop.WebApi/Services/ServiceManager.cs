@@ -11,6 +11,7 @@ namespace MyCoop.WebApi.Services
         static ServiceManager()
         {
             _mapTypes.Add(typeof(ISystemService), typeof(SystemService));
+            _mapTypes.Add(typeof(IManagementSevice), typeof(ManagementSevice));
         }
 
         private readonly RepositoryManager _repositoryManager = new RepositoryManager();

@@ -13,7 +13,7 @@ App.ViewModels.MainPageModel = (function () {
 
     // private
 
-    
+
     // public
 
     function showInfo(text, isError) {
@@ -51,11 +51,13 @@ App.ViewModels.MainPageModel = (function () {
 
         publ.show();
     }
-    
+
     function go() {
-        
+
         var self = this;
         var publ = this.publ;
+
+        publ.result('Loading...');
 
         var body = publ.httpBody();
         var data = body ? JSON.parse(body) : null;
@@ -72,7 +74,7 @@ App.ViewModels.MainPageModel = (function () {
                 app.showError();
             }
         });
-        
+
     }
 
     // consructor
@@ -92,11 +94,11 @@ App.ViewModels.MainPageModel = (function () {
         publ.navigate = navigate.bind(self);
         publ.closeInfo = closeInfo.bind(self);
         publ.showInfo = showInfo.bind(self);
-        
+
         publ.url = ko.observable(config.apiPrefix);
         publ.httpBody = ko.observable("");
         publ.result = ko.observable("");
-        
+
         var methods = [{ name: "GET", value: "GET" },
                    { name: "POST", value: "POST" },
                    { name: "DELETE", value: "DELETE" }];
@@ -104,25 +106,55 @@ App.ViewModels.MainPageModel = (function () {
         publ.methods = ko.observable(methods);
         publ.selectedMethod = ko.observable(methods[0]);
         publ.go = go.bind(self);
-        
+
 
         var templates = [
             {
-                name: "sign/in",
+                name: "sign-in",
                 url: config.apiPrefix + "sign/in",
                 method: methods[1],
                 body: '{"email":"mr.gusev.k@gmail.com", "password": "123"}'
             },
             {
-                name: "sign/out",
+                name: "sign-out",
                 url: config.apiPrefix + "sign/out",
                 method: methods[1],
-                body: ""
+                body: ''
+            },
+            {
+                name: "org-unit-gets",
+                url: config.apiPrefix + "orgunit",
+                method: methods[0],
+                body: ''
+            },
+            {
+                name: "org-unit-get",
+                url: config.apiPrefix + "orgunit/1",
+                method: methods[0],
+                body: ''
+            },
+            {
+                name: "org-unit-add",
+                url: config.apiPrefix + "orgunit",
+                method: methods[1],
+                body: '{"name":"sfasf", "address": "qwrqw", "location": { "lat":"54.55", "lng":"1.2" }, "ownerId": "1", "parentId": "1"}'
+            },
+            {
+                name: "org-unit-update",
+                url: config.apiPrefix + "orgunit/1",
+                method: methods[1],
+                body: '{"name":"vasja", "address": "qwrqw", "location": { "lat":"77.55", "lng":"5.2" }, "ownerId": "1", "parentId": "1"}'
+            },
+            {
+                name: "org-unit-delete",
+                url: config.apiPrefix + "orgunit/3",
+                method: methods[2],
+                body: ''
             }];
 
         publ.templates = ko.observable(templates);
         publ.selectedTemplate = ko.observable();
-        
+
         publ.selectedTemplate.subscribe(function (value) {
             publ.selectedMethod(value.method);
             publ.url(value.url);

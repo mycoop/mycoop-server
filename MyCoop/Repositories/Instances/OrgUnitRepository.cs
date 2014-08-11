@@ -18,5 +18,15 @@ namespace MyCoop.Repositories.Instances
         {
             get { return Context.OrgUnits; }
         }
+
+        public Task<OrgUnit[]> GeOrgUnits()
+        {
+            return GetEntities().ToArrayAsync();
+        }
+
+        public Task<OrgUnit> GeOrgUnit(int id)
+        {
+            return GetEntities().SingleAsync(orgUnit => orgUnit.Id == id);
+        }
     }
 }

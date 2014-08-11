@@ -238,7 +238,6 @@ namespace MyCoop.WebApi.Services.Instances
                     var entity = model.Entity;
                     group.Name = entity.Name;
                     group.Description = entity.Description;
-                    //group.CreatedByUserId = entity.CreatedByUserId;
                     group.ModifiedByUserId = entity.ModifiedByUserId;
                     group.ModifiedDate = DateTime.UtcNow;
                     Repository.SaveChangesAsync().ContinueWith(__ => 
