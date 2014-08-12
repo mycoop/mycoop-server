@@ -46,9 +46,9 @@ namespace MyCoop.WebApi.Models.OrgUnits
             set { _orgUnit.ParentId = value; }
         }
 
-        public OrgUnit Entity
+        public OrgUnit GetEntity()
         {
-            get { return _orgUnit; }
+            return _orgUnit;
         }
     }
 }

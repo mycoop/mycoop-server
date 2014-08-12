@@ -46,6 +46,24 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <EntityType Name="SysEvents">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Time" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="Summary" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="TypeId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SysEventTypes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
         <EntityType Name="UserGroups">
           <Key>
             <PropertyRef Name="UserId" />
@@ -116,6 +134,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_SysEvents_SysEventTypes">
+          <End Role="SysEventTypes" Type="Self.SysEventTypes" Multiplicity="1" />
+          <End Role="SysEvents" Type="Self.SysEvents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SysEventTypes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SysEvents">
+              <PropertyRef Name="TypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_UserGroups_Groups">
           <End Role="Groups" Type="Self.Groups" Multiplicity="1" />
           <End Role="UserGroups" Type="Self.UserGroups" Multiplicity="*" />
@@ -163,6 +193,8 @@
           <EntitySet Name="Groups" EntityType="Self.Groups" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OrgUnits" EntityType="Self.OrgUnits" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PermissionLevels" EntityType="Self.PermissionLevels" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SysEvents" EntityType="Self.SysEvents" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SysEventTypes" EntityType="Self.SysEventTypes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserGroups" EntityType="Self.UserGroups" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Groups_Users" Association="Self.FK_Groups_Users">
@@ -180,6 +212,10 @@
           <AssociationSet Name="FK_OrgUnits_Users" Association="Self.FK_OrgUnits_Users">
             <End Role="Users" EntitySet="Users" />
             <End Role="OrgUnits" EntitySet="OrgUnits" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SysEvents_SysEventTypes" Association="Self.FK_SysEvents_SysEventTypes">
+            <End Role="SysEventTypes" EntitySet="SysEventTypes" />
+            <End Role="SysEvents" EntitySet="SysEvents" />
           </AssociationSet>
           <AssociationSet Name="FK_UserGroups_Groups" Association="Self.FK_UserGroups_Groups">
             <End Role="Groups" EntitySet="Groups" />
@@ -238,6 +274,12 @@
           <AssociationSet Name="FK_OrgUnits_Users" Association="CoopModel.FK_OrgUnits_Users">
             <End Role="User" EntitySet="Users" />
             <End Role="OrgUnit" EntitySet="OrgUnits" />
+          </AssociationSet>
+          <EntitySet Name="SysEvents" EntityType="CoopModel.SysEvent" />
+          <EntitySet Name="SysEventTypes" EntityType="CoopModel.SysEventType" />
+          <AssociationSet Name="FK_SysEvents_SysEventTypes" Association="CoopModel.FK_SysEvents_SysEventTypes">
+            <End Role="SysEventType" EntitySet="SysEventTypes" />
+            <End Role="SysEvent" EntitySet="SysEvents" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Company">
@@ -401,6 +443,38 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="SysEvent">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Time" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="Summary" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TypeId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="SysEventType" Relationship="CoopModel.FK_SysEvents_SysEventTypes" FromRole="SysEvent" ToRole="SysEventType" />
+        </EntityType>
+        <EntityType Name="SysEventType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="SysEvents" Relationship="CoopModel.FK_SysEvents_SysEventTypes" FromRole="SysEventType" ToRole="SysEvent" />
+        </EntityType>
+        <Association Name="FK_SysEvents_SysEventTypes">
+          <End Type="CoopModel.SysEventType" Role="SysEventType" Multiplicity="1" />
+          <End Type="CoopModel.SysEvent" Role="SysEvent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SysEventType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SysEvent">
+              <PropertyRef Name="TypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -472,6 +546,26 @@
                 <ScalarProperty Name="ModificationTime" ColumnName="ModificationTime" />
                 <ScalarProperty Name="CreationTime" ColumnName="CreationTime" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SysEvents">
+            <EntityTypeMapping TypeName="CoopModel.SysEvent">
+              <MappingFragment StoreEntitySet="SysEvents">
+                <ScalarProperty Name="TypeId" ColumnName="TypeId" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Summary" ColumnName="Summary" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SysEventTypes">
+            <EntityTypeMapping TypeName="CoopModel.SysEventType">
+              <MappingFragment StoreEntitySet="SysEventTypes">
+                <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>

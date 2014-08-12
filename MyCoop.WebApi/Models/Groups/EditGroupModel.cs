@@ -31,9 +31,9 @@ namespace MyCoop.WebApi.Models.Groups
             set { _group.ModifiedByUserId = value; }
         }
 
-        public Group Entity
+        public Group GetEntity()
         {
-            get { return _group; }
+            return _group;
         }
     }
 }

@@ -18,6 +18,9 @@
         <EntityTypeShape EntityType="CoopModel.OrgUnit" Width="1.5" PointX="5.25" PointY="5.25" />
         <AssociationConnector Association="CoopModel.FK_OrgUnits_OrgUnits" />
         <AssociationConnector Association="CoopModel.FK_OrgUnits_Users" />
+        <EntityTypeShape EntityType="CoopModel.SysEvent" Width="1.5" PointX="9.625" PointY="4.875" />
+        <EntityTypeShape EntityType="CoopModel.SysEventType" Width="1.5" PointX="7.375" PointY="5.125" />
+        <AssociationConnector Association="CoopModel.FK_SysEvents_SysEventTypes" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

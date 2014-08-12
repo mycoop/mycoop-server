@@ -1,6 +1,9 @@
 ﻿using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using Any.Logs;
+using Any.Logs.Extentions;
+using MyCoop.WebApi.Extentions;
 using MyCoop.WebApi.Filters;
 using MyCoop.WebApi.Services;
 using MyCoop.WebApi.Helpers;
@@ -38,6 +41,7 @@ namespace MyCoop.WebApi.Controllers
             model.CreatedBy = userId;
             model.ModifiedBy = userId;
             var id = await Service.Get<ISystemService>().AddGroup(model);
+            Log.Out.Info(model.ToJson(), "AddGroup - Id: {0}", id);
             return Request.CreateResponse(HttpStatusCode.OK, new { Id = id });
 
         }
@@ -47,6 +51,7 @@ namespace MyCoop.WebApi.Controllers
         {
             model.ModifiedBy = UserHelper.GetId();
             await Service.Get<ISystemService>().UpdateGroup(id, model);
+            Log.Out.Info(model.ToJson(), "UpdateGroup - Id: {0}", id);
             return Request.CreateResponse(HttpStatusCode.OK);
 
         }
@@ -55,6 +60,7 @@ namespace MyCoop.WebApi.Controllers
         public async Task<HttpResponseMessage> DeleteGroup(int id)
         {
             await Service.Get<ISystemService>().DeleteGroup(id);
+            Log.Out.Info("UpdateGroup - Id: {0}", id);
             return Request.CreateResponse(HttpStatusCode.OK);
 
         }
@@ -72,6 +78,7 @@ namespace MyCoop.WebApi.Controllers
         public async Task<HttpResponseMessage> AddUserToGroup([FromUri]int userId, [FromUri]int groupId)
         {
             await Service.Get<ISystemService>().AddUserToGroup(userId, groupId);
+            Log.Out.Info("AddUser ({0}) To Group ({1})", userId, groupId);
             return Request.CreateResponse(HttpStatusCode.OK);
 
         }
@@ -81,6 +88,7 @@ namespace MyCoop.WebApi.Controllers
         public async Task<HttpResponseMessage> RemoveUserFromGroup([FromUri]int userId, [FromUri]int groupId)
         {
             await Service.Get<ISystemService>().RemoveUserFromGroup(userId, groupId);
+            Log.Out.Info("RemoveUser ({0}) From Group ({1})", userId, groupId);
             return Request.CreateResponse(HttpStatusCode.OK);
 
         }

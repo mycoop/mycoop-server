@@ -1,5 +1,6 @@
 ﻿using System.Net.Http.Headers;
 using System.Web.Http;
+using MyCoop.WebApi.Filters;
 using Newtonsoft.Json.Serialization;
 
 namespace MyCoop.WebApi.AppStart
@@ -20,6 +21,8 @@ namespace MyCoop.WebApi.AppStart
             );
 
             config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+
+            config.Filters.Add(new ApiExceptionFilterAttribute());
         }
     }
 }

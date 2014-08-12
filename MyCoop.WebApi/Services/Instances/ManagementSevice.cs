@@ -9,7 +9,8 @@ namespace MyCoop.WebApi.Services.Instances
 {
     public class ManagementSevice : ServiceBase, IManagementSevice
     {
-        public ManagementSevice(IRepositoryManager repository) : base(repository)
+        public ManagementSevice(IRepositoryManager repository)
+            : base(repository)
         {
         }
 
@@ -54,16 +55,17 @@ namespace MyCoop.WebApi.Services.Instances
         public Task<int> AddOrgUnit(EditOrgUnitModel model)
         {
             var tcs = new TaskCompletionSource<int>();
+            var entity = model.GetEntity();
             var orgUnit = new OrgUnit
             {
-               Name = model.Name,
-               Address = model.Address,
-               Lat = model.Entity.Lat,
-               Lng = model.Entity.Lng,
-               ParentId = model.ParentId,
-               OwnerId = model.OwnerId,
-               CreationTime = DateTime.UtcNow,
-               ModificationTime = DateTime.UtcNow
+                Name = entity.Name,
+                Address = entity.Address,
+                Lat = entity.Lat,
+                Lng = entity.Lng,
+                ParentId = entity.ParentId,
+                OwnerId = entity.OwnerId,
+                CreationTime = DateTime.UtcNow,
+                ModificationTime = DateTime.UtcNow
             };
 
             var userRepository = Repository.GetWithContext<IOrgUnitRepository>();
@@ -96,7 +98,7 @@ namespace MyCoop.WebApi.Services.Instances
                 else
                 {
                     var orgUnit = _.Result;
-                    var entity = model.Entity;
+                    var entity = model.GetEntity();
                     orgUnit.Name = entity.Name;
                     orgUnit.Address = entity.Address;
                     orgUnit.OwnerId = entity.OwnerId;

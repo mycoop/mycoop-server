@@ -27,13 +27,19 @@ namespace MyCoop.WebApi.Helpers
 
         public static int GetId()
         {
+            if (HttpContext.Current.Items[GlobalKeys.UserId] != null)
+            {
+                return (int)HttpContext.Current.Items[GlobalKeys.UserId];
+            }
             var cookie = HttpContext.Current.Request.Cookies[IdKey];
             if (cookie != null)
             {
                 try
                 {
                     var sId = SecurityHelper.Decrypt(cookie.Value);
-                    return Convert.ToInt32(sId);
+                    int id = Convert.ToInt32(sId);
+                    HttpContext.Current.Items[GlobalKeys.UserId] = id;
+                    return id;
                 }
                 catch
                 {
@@ -41,11 +47,7 @@ namespace MyCoop.WebApi.Helpers
                 }
                 
             }
-#if !DEBUG
             return -1;
-#else
-            return 1;
-#endif
         }
 
         public static void RemoveId()

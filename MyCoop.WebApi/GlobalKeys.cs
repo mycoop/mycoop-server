@@ -3,5 +3,7 @@
     public class GlobalKeys
     {
         public static readonly string Culture = "Culture";
+
+        public static readonly string UserId = "UserId";
     }
 }

@@ -200,7 +200,7 @@ namespace MyCoop.WebApi.Services.Instances
         {
             var tcs = new TaskCompletionSource<int>();
 
-            var group = model.Entity;
+            var group = model.GetEntity();
             group.ModifiedDate = DateTime.UtcNow;
             group.CreatedDate = DateTime.UtcNow;
 
@@ -225,7 +225,6 @@ namespace MyCoop.WebApi.Services.Instances
         {
             var tcs = new TaskCompletionSource<int>();
             var userRepository = Repository.GetWithContext<IGroupRepository>();
-            model.Entity.ModifiedDate = DateTime.UtcNow;
             userRepository.GetGroup(id).ContinueWith(_ =>
             {
                 if (_.Exception != null)
@@ -235,7 +234,7 @@ namespace MyCoop.WebApi.Services.Instances
                 else
                 {
                     var group = _.Result;
-                    var entity = model.Entity;
+                    var entity = model.GetEntity();
                     group.Name = entity.Name;
                     group.Description = entity.Description;
                     group.ModifiedByUserId = entity.ModifiedByUserId;
