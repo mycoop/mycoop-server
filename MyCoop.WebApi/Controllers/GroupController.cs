@@ -37,11 +37,12 @@ namespace MyCoop.WebApi.Controllers
         [HttpPost]
         public async Task<HttpResponseMessage> AddGroup([FromBody] EditGroupModel model)
         {
+            Log.Out.Info(model.ToJson(), "Begin AddGroup");
             int userId = UserHelper.GetId();
             model.CreatedBy = userId;
             model.ModifiedBy = userId;
             var id = await Service.Get<ISystemService>().AddGroup(model);
-            Log.Out.Info(model.ToJson(), "AddGroup - Id: {0}", id);
+            Log.Out.Info("End AddGroup - Id: {0}", id);
             return Request.CreateResponse(HttpStatusCode.OK, new { Id = id });
 
         }
@@ -49,9 +50,10 @@ namespace MyCoop.WebApi.Controllers
         [HttpPost]
         public async Task<HttpResponseMessage> UpdateGroup([FromUri] int id, [FromBody] EditGroupModel model)
         {
+            Log.Out.Info(model.ToJson(), "Begin UpdateGroup - Id: {0}", id);
             model.ModifiedBy = UserHelper.GetId();
             await Service.Get<ISystemService>().UpdateGroup(id, model);
-            Log.Out.Info(model.ToJson(), "UpdateGroup - Id: {0}", id);
+            Log.Out.Info("End UpdateGroup - Id: {0}", id);
             return Request.CreateResponse(HttpStatusCode.OK);
 
         }
@@ -59,8 +61,9 @@ namespace MyCoop.WebApi.Controllers
         [HttpDelete]
         public async Task<HttpResponseMessage> DeleteGroup(int id)
         {
+            Log.Out.Info("Begin UpdateGroup - Id: {0}", id);
             await Service.Get<ISystemService>().DeleteGroup(id);
-            Log.Out.Info("UpdateGroup - Id: {0}", id);
+            Log.Out.Info("End UpdateGroup - Id: {0}", id);
             return Request.CreateResponse(HttpStatusCode.OK);
 
         }
@@ -77,8 +80,9 @@ namespace MyCoop.WebApi.Controllers
         [Route("{groupId}/user/{userId}")]
         public async Task<HttpResponseMessage> AddUserToGroup([FromUri]int userId, [FromUri]int groupId)
         {
+            Log.Out.Info("Begin AddUser ({0}) To Group ({1})", userId, groupId);
             await Service.Get<ISystemService>().AddUserToGroup(userId, groupId);
-            Log.Out.Info("AddUser ({0}) To Group ({1})", userId, groupId);
+            Log.Out.Info("End AddUser ({0}) To Group ({1})", userId, groupId);
             return Request.CreateResponse(HttpStatusCode.OK);
 
         }
@@ -87,8 +91,9 @@ namespace MyCoop.WebApi.Controllers
         [Route("{groupId}/user/{userId}")]
         public async Task<HttpResponseMessage> RemoveUserFromGroup([FromUri]int userId, [FromUri]int groupId)
         {
+            Log.Out.Info("Begin RemoveUser ({0}) From Group ({1})", userId, groupId);
             await Service.Get<ISystemService>().RemoveUserFromGroup(userId, groupId);
-            Log.Out.Info("RemoveUser ({0}) From Group ({1})", userId, groupId);
+            Log.Out.Info("End RemoveUser ({0}) From Group ({1})", userId, groupId);
             return Request.CreateResponse(HttpStatusCode.OK);
 
         }

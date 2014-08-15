@@ -36,8 +36,9 @@ namespace MyCoop.WebApi.Controllers
         [HttpPost]
         public async Task<HttpResponseMessage> AddUser([FromBody] AddUserModel model)
         {
+            Log.Out.Info(model.ToJson(), "Begin AddUser");
             var id = await Service.Get<ISystemService>().AddUser(model);
-            Log.Out.Info(model.ToJson(), "AddUser - Id: {0}", id);
+            Log.Out.Info(model.ToJson(), "End AddUser - Id: {0}", id);
             return Request.CreateResponse(HttpStatusCode.OK, new { Id = id });
 
         }
@@ -45,8 +46,9 @@ namespace MyCoop.WebApi.Controllers
         [HttpPost]
         public async Task<HttpResponseMessage> UpdateUser([FromUri] int id,  [FromBody] UpdateUserModel model)
         {
+            Log.Out.Info(model.ToJson(), "Begin UpdateUser - Id: {0}", id);
             await Service.Get<ISystemService>().UpdateUser(id, model);
-            Log.Out.Info(model.ToJson(), "UpdateUser - Id: {0}", id);
+            Log.Out.Info(model.ToJson(), "End UpdateUser - Id: {0}", id);
             return Request.CreateResponse(HttpStatusCode.OK);
 
         }
@@ -54,8 +56,9 @@ namespace MyCoop.WebApi.Controllers
         [HttpDelete]
         public async Task<HttpResponseMessage> DeleteUser(int id)
         {
+            Log.Out.Info("Begin DeleteUser - Id: {0}", id);
             await Service.Get<ISystemService>().DeleteUser(id);
-            Log.Out.Info("DeleteUser - Id: {0}", id);
+            Log.Out.Info("End DeleteUser - Id: {0}", id);
             return Request.CreateResponse(HttpStatusCode.OK);
 
         }

@@ -28,6 +28,8 @@ public partial class SysEvent
 
     public int TypeId { get; set; }
 
+    public int UserId { get; set; }
+
 
 
     public virtual SysEventType SysEventType { get; set; }

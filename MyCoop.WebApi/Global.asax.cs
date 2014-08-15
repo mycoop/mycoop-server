@@ -7,8 +7,8 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using Any.Logs;
-using MyCoop.Loggers;
 using MyCoop.WebApi.AppStart;
+using MyCoop.WebApi.Loggers;
 
 namespace MyCoop.WebApi
 {
@@ -16,7 +16,7 @@ namespace MyCoop.WebApi
     {
         protected void Application_Start()
         {
-            Log.Initialize(new ErrorLogger(), new InfoLogger());
+            Log.Initialize(new SysEventLogger());
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
