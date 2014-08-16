@@ -2,9 +2,9 @@
 using System.Net.Http;
 using System.Web.Http;
 using Any.Logs;
-using Any.Logs.Extentions;
 using MyCoop.WebApi.Extentions;
 using MyCoop.WebApi.Filters;
+using MyCoop.WebApi.Loggers;
 using MyCoop.WebApi.Services;
 using MyCoop.WebApi.Helpers;
 using MyCoop.WebApi.Models.Groups;

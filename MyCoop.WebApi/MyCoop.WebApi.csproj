@@ -149,7 +149,9 @@
     <Compile Include="GlobalKeys.cs" />
     <Compile Include="Helpers\CultureHelper.cs" />
     <Compile Include="Helpers\UserHelper.cs" />
-    <Compile Include="Loggers\SysEventLogger.cs" />
+    <Compile Include="Loggers\EventLogger.cs" />
+    <Compile Include="Loggers\EventType.cs" />
+    <Compile Include="Loggers\LogExtensions.cs" />
     <Compile Include="Models\Groups\EditGroupModel.cs" />
     <Compile Include="Models\Groups\UserGroupModel.cs" />
     <Compile Include="Models\OrgUnits\EditOrgUnitModel.cs" />

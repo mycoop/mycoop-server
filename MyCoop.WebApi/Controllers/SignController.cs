@@ -9,6 +9,7 @@ using Any.Logs;
 using Any.Logs.Extentions;
 using MyCoop.WebApi.Filters;
 using MyCoop.WebApi.Helpers;
+using MyCoop.WebApi.Loggers;
 using MyCoop.WebApi.Models.Signs;
 using MyCoop.WebApi.Services;
 
@@ -29,8 +30,8 @@ namespace MyCoop.WebApi.Controllers
             int userId = await Service.Get<ISystemService>().Connect(login.Email, login.Password);
             if (userId != -1)
             {
-                Log.Out.Info("Sign in");
                 UserHelper.SaveId(userId);
+                Log.Out.Info("Sign in");
                 return Request.CreateResponse(HttpStatusCode.OK, userId);
             }
             return Request.CreateResponse(HttpStatusCode.BadRequest);

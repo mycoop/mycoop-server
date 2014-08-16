@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using System.Web.Http.Filters;
 using Any.Logs;
 using Any.Logs.Extentions;
+using MyCoop.WebApi.Loggers;
 
 namespace MyCoop.WebApi.Filters
 {
