@@ -18,29 +18,9 @@ namespace MyCoop.WebApi.Services.Instances
 
         public Task<int> Connect(string email, string password)
         {
-            var tcs = new TaskCompletionSource<int>();
             var hash = SecurityHelper.GetHash(String.Concat(email, password));
-            Repository.GetWithContext<IUserRepository>().GetUser(email, hash).ContinueWith(_ =>
-            {
-                if (_.Exception != null)
-                {
-                    tcs.SetException(_.Exception);
-                }
-                else
-                {
-                    var user = _.Result;
-                    if (user != null)
-                    {
-                        tcs.SetResult(user.Id);
-                    }
-                    else
-                    {
-                        tcs.SetResult(-1);
-                    }
-
-                }
-            });
-            return tcs.Task;
+            return AsyncOperation(() => Repository.GetWithContext<IUserRepository>().GetUser(email, hash),
+                result => result != null ? result.Id : -1);
         }
 
         public Task<UserModel[]> GetUsers()
@@ -77,21 +57,8 @@ namespace MyCoop.WebApi.Services.Instances
 
         public Task<UserGroupModel[]> GetUserGroups(int userId)
         {
-            var tcs = new TaskCompletionSource<UserGroupModel[]>();
-            Repository.GetWithContext<IUserGroupRepository>().GetUserGroups(userId, null).ContinueWith(_ =>
-            {
-                if (_.Exception != null)
-                {
-                    tcs.SetException(_.Exception);
-                }
-                else
-                {
-                    var userGroups = _.Result;
-                    tcs.SetResult(userGroups.Select(ug => new UserGroupModel(ug)).ToArray());
-
-                }
-            });
-            return tcs.Task;
+            return AsyncOperation(() => Repository.GetWithContext<IUserGroupRepository>().GetUserGroups(userId, null),
+                userGroups => userGroups.Select(ug => new UserGroupModel(ug)).ToArray());
         }
 
         public Task DeleteUser(int id)
@@ -133,21 +100,8 @@ namespace MyCoop.WebApi.Services.Instances
 
         public Task<GroupUserModel[]> GetGroupUsers(int groupId)
         {
-            var tcs = new TaskCompletionSource<GroupUserModel[]>();
-            Repository.GetWithContext<IUserGroupRepository>().GetUserGroups(null, groupId).ContinueWith(_ =>
-            {
-                if (_.Exception != null)
-                {
-                    tcs.SetException(_.Exception);
-                }
-                else
-                {
-                    var userGroups = _.Result;
-                    tcs.SetResult(userGroups.Select(ug => new GroupUserModel(ug)).ToArray());
-
-                }
-            });
-            return tcs.Task;
+            return AsyncOperation(() => Repository.GetWithContext<IUserGroupRepository>().GetUserGroups(null, groupId),
+                userGroups => userGroups.Select(ug => new GroupUserModel(ug)).ToArray());
         }
 
         public Task AddUserToGroup(int userId, int groupId)
