@@ -45,93 +45,34 @@ namespace MyCoop.WebApi.Services.Instances
 
         public Task<UserModel[]> GetUsers()
         {
-            var tcs = new TaskCompletionSource<UserModel[]>();
-            Repository.GetWithContext<IUserRepository>().GetUsers().ContinueWith(_ =>
-            {
-                if (_.Exception != null)
-                {
-                    tcs.SetException(_.Exception);
-                }
-                else
-                {
-                    var users = _.Result;
-                    tcs.SetResult(users.Select(user => new UserModel(user)).ToArray());
-
-                }
-            });
-            return tcs.Task;
+            return GetValues<UserModel, User, IUserRepository>(user => new UserModel(user));
         }
 
         public Task<UserModel> GetUser(int id)
         {
-            var tcs = new TaskCompletionSource<UserModel>();
-            Repository.GetWithContext<IUserRepository>().GetUser(id).ContinueWith(_ =>
-            {
-                if (_.Exception != null)
-                {
-                    tcs.SetException(_.Exception);
-                }
-                else
-                {
-                    var user = _.Result;
-                    tcs.SetResult(new UserModel(user));
-
-                }
-            });
-            return tcs.Task;
+            return GetValue<UserModel, User, IUserRepository>(id, user => new UserModel(user));
         }
 
         public Task<int> AddUser(AddUserModel model)
         {
-            var tcs = new TaskCompletionSource<int>();
-            var user = new User
+            return Add<User, IUserRepository>(user => user.Id, () => new User
             {
                 FirstName = model.FirstName,
                 LastName = model.LastName,
                 PermissionLevelId = model.PermissionLevelId,
                 Email = model.Email,
                 Password = SecurityHelper.GetHash(String.Concat(model.Email, model.Password))
-            };
-
-            var userRepository = Repository.GetWithContext<IUserRepository>();
-            userRepository.Add(user);
-
-            Repository.SaveChangesAsync().ContinueWith(_ =>
-            {
-                if (_.Exception != null)
-                {
-                    tcs.SetException(_.Exception);
-                }
-                else
-                {
-                    tcs.SetResult(user.Id);
-                }
             });
-            return tcs.Task;
         }
 
         public Task UpdateUser(int id, UpdateUserModel model)
         {
-            var tcs = new TaskCompletionSource<int>();
-            var userRepository = Repository.GetWithContext<IUserRepository>();
-            userRepository.GetUser(id).ContinueWith(_ =>
+            return Update<User, IUserRepository>(id, user =>
             {
-                if (_.Exception != null)
-                {
-                    tcs.SetException(_.Exception);
-                }
-                else
-                {
-                    var user = _.Result;
-                    //user.Email = model.Email;
-                    user.FirstName = model.FirstName;
-                    user.LastName = model.LastName;
-                    user.PermissionLevelId = model.PermissionLevelId;
-                    Repository.SaveChanges();
-                    tcs.SetResult(0);
-                }
+                user.FirstName = model.FirstName;
+                user.LastName = model.LastName;
+                user.PermissionLevelId = model.PermissionLevelId;
             });
-            return tcs.Task;
         }
 
         public Task<UserGroupModel[]> GetUserGroups(int userId)
@@ -160,99 +101,29 @@ namespace MyCoop.WebApi.Services.Instances
 
         public Task<GroupModel[]> GetGroups()
         {
-            var tcs = new TaskCompletionSource<GroupModel[]>();
-            Repository.GetWithContext<IGroupRepository>().GetGroups().ContinueWith(_ =>
-            {
-                if (_.Exception != null)
-                {
-                    tcs.SetException(_.Exception);
-                }
-                else
-                {
-                    var goups = _.Result;
-                    tcs.SetResult(goups.Select(group => new GroupModel(group)).ToArray());
-
-                }
-            });
-            return tcs.Task;
+            return GetValues<GroupModel, Group, IGroupRepository>(group => new GroupModel(group), "ModifiedBy", "CreatedBy");
         }
 
         public Task<GroupModel> GetGroup(int id)
         {
-            var tcs = new TaskCompletionSource<GroupModel>();
-            Repository.GetWithContext<IGroupRepository>().GetGroup(id).ContinueWith(_ =>
-            {
-                if (_.Exception != null)
-                {
-                    tcs.SetException(_.Exception);
-                }
-                else
-                {
-                    var group = _.Result;
-                    tcs.SetResult(new GroupModel(group));
-
-                }
-            });
-            return tcs.Task;
+            return GetValue<GroupModel, Group, IGroupRepository>(id, group => new GroupModel(group));
         }
 
         public Task<int> AddGroup(EditGroupModel model)
         {
-            var tcs = new TaskCompletionSource<int>();
-
-            var group = model.GetEntity();
-            group.ModifiedDate = DateTime.UtcNow;
-            group.CreatedDate = DateTime.UtcNow;
-
-            var groupRepository = Repository.GetWithContext<IGroupRepository>();
-            groupRepository.Add(group);
-
-            Repository.SaveChangesAsync().ContinueWith(_ =>
-            {
-                if (_.Exception != null)
-                {
-                    tcs.SetException(_.Exception);
-                }
-                else
-                {
-                    tcs.SetResult(group.Id);
-                }
-            });
-            return tcs.Task;
+            return Add<Group, IGroupRepository>(group => group.Id, model.GetEntity);
         }
 
         public Task UpdateGroup(int id, EditGroupModel model)
         {
-            var tcs = new TaskCompletionSource<int>();
-            var userRepository = Repository.GetWithContext<IGroupRepository>();
-            userRepository.GetGroup(id).ContinueWith(_ =>
+            return Update<Group, IGroupRepository>(id, group =>
             {
-                if (_.Exception != null)
-                {
-                    tcs.SetException(_.Exception);
-                }
-                else
-                {
-                    var group = _.Result;
-                    var entity = model.GetEntity();
-                    group.Name = entity.Name;
-                    group.Description = entity.Description;
-                    group.ModifiedByUserId = entity.ModifiedByUserId;
-                    group.ModifiedDate = DateTime.UtcNow;
-                    Repository.SaveChangesAsync().ContinueWith(__ => 
-                    {
-                        if (__.Exception != null)
-                        {
-                            tcs.SetException(__.Exception);
-                        }
-                        else
-                        {
-                            tcs.SetResult(0);
-                        }
-                    });
-                }
+                var entity = model.GetEntity();
+                group.Name = entity.Name;
+                group.Description = entity.Description;
+                group.ModifiedByUserId = entity.ModifiedByUserId;
+                group.ModifiedDate = DateTime.UtcNow;
             });
-            return tcs.Task;
         }
 
         public Task DeleteGroup(int id)
@@ -281,7 +152,7 @@ namespace MyCoop.WebApi.Services.Instances
 
         public Task AddUserToGroup(int userId, int groupId)
         {
-            var userGroup = new UserGroup 
+            var userGroup = new UserGroup
             {
                 UserId = userId,
                 GroupId = groupId,

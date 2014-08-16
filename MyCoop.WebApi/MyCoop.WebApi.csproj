@@ -168,8 +168,10 @@
     <Compile Include="Services\Instances\ManagementSevice.cs" />
     <Compile Include="Services\Instances\ServiceBase.cs" />
     <Compile Include="Services\Instances\SystemService.cs" />
+    <Compile Include="Services\Instances\TemplateService.cs" />
     <Compile Include="Services\IServiceManager.cs" />
     <Compile Include="Services\ISystemService.cs" />
+    <Compile Include="Services\ITemplateService.cs" />
     <Compile Include="Services\RepositoryManager.cs" />
     <Compile Include="Services\ServiceManager.cs" />
   </ItemGroup>

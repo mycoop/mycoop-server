@@ -13,6 +13,25 @@
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Address" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <EntityType Name="Components">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DocumentTemplates">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Reference" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Purpose" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="PagesCount" Type="int" Nullable="false" />
+          <Property Name="Link" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ComponentId" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Groups">
           <Key>
             <PropertyRef Name="Id" />
@@ -87,6 +106,18 @@
           <Property Name="PermissionLevelId" Type="int" Nullable="false" />
           <Property Name="LastAcitve" Type="datetime2" Precision="7" Nullable="false" />
         </EntityType>
+        <Association Name="FK_DocumentTemplates_Components">
+          <End Role="Components" Type="Self.Components" Multiplicity="1" />
+          <End Role="DocumentTemplates" Type="Self.DocumentTemplates" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Components">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DocumentTemplates">
+              <PropertyRef Name="ComponentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Groups_Users">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="Groups" Type="Self.Groups" Multiplicity="*" />
@@ -191,6 +222,8 @@
         </Function>
         <EntityContainer Name="Хранилище CoopModelContainer">
           <EntitySet Name="Companies" EntityType="Self.Companies" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Components" EntityType="Self.Components" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DocumentTemplates" EntityType="Self.DocumentTemplates" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Groups" EntityType="Self.Groups" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OrgUnits" EntityType="Self.OrgUnits" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PermissionLevels" EntityType="Self.PermissionLevels" Schema="dbo" store:Type="Tables" />
@@ -198,6 +231,10 @@
           <EntitySet Name="SysEventTypes" EntityType="Self.SysEventTypes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserGroups" EntityType="Self.UserGroups" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_DocumentTemplates_Components" Association="Self.FK_DocumentTemplates_Components">
+            <End Role="Components" EntitySet="Components" />
+            <End Role="DocumentTemplates" EntitySet="DocumentTemplates" />
+          </AssociationSet>
           <AssociationSet Name="FK_Groups_Users" Association="Self.FK_Groups_Users">
             <End Role="Users" EntitySet="Users" />
             <End Role="Groups" EntitySet="Groups" />
@@ -281,6 +318,12 @@
           <AssociationSet Name="FK_SysEvents_SysEventTypes" Association="CoopModel.FK_SysEvents_SysEventTypes">
             <End Role="SysEventType" EntitySet="SysEventTypes" />
             <End Role="SysEvent" EntitySet="SysEvents" />
+          </AssociationSet>
+          <EntitySet Name="Components" EntityType="CoopModel.Component" />
+          <EntitySet Name="DocumentTemplates" EntityType="CoopModel.DocumentTemplate" />
+          <AssociationSet Name="FK_DocumentTemplates_Components" Association="CoopModel.FK_DocumentTemplates_Components">
+            <End Role="Component" EntitySet="Components" />
+            <End Role="DocumentTemplate" EntitySet="DocumentTemplates" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Company">
@@ -477,6 +520,39 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Component">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="DocumentTemplates" Relationship="CoopModel.FK_DocumentTemplates_Components" FromRole="Component" ToRole="DocumentTemplate" />
+        </EntityType>
+        <EntityType Name="DocumentTemplate">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Reference" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Purpose" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PagesCount" Type="Int32" Nullable="false" />
+          <Property Name="Link" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ComponentId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Component" Relationship="CoopModel.FK_DocumentTemplates_Components" FromRole="DocumentTemplate" ToRole="Component" />
+        </EntityType>
+        <Association Name="FK_DocumentTemplates_Components">
+          <End Type="CoopModel.Component" Role="Component" Multiplicity="1" />
+          <End Type="CoopModel.DocumentTemplate" Role="DocumentTemplate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Component">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DocumentTemplate">
+              <PropertyRef Name="ComponentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -569,6 +645,27 @@
             <EntityTypeMapping TypeName="CoopModel.SysEventType">
               <MappingFragment StoreEntitySet="SysEventTypes">
                 <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Components">
+            <EntityTypeMapping TypeName="CoopModel.Component">
+              <MappingFragment StoreEntitySet="Components">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DocumentTemplates">
+            <EntityTypeMapping TypeName="CoopModel.DocumentTemplate">
+              <MappingFragment StoreEntitySet="DocumentTemplates">
+                <ScalarProperty Name="ComponentId" ColumnName="ComponentId" />
+                <ScalarProperty Name="Link" ColumnName="Link" />
+                <ScalarProperty Name="PagesCount" ColumnName="PagesCount" />
+                <ScalarProperty Name="Purpose" ColumnName="Purpose" />
+                <ScalarProperty Name="Reference" ColumnName="Reference" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>

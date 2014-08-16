@@ -1,14 +1,17 @@
 ﻿using MyCoop.Data;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace MyCoop.WebApi.Models.Groups
 {
     public class EditGroupModel
     {
         private readonly Group _group = new Group();
+
+        public EditGroupModel()
+        {
+            _group.CreatedDate = DateTime.UtcNow;
+            _group.ModifiedDate = DateTime.UtcNow;
+        }
 
         public string Name
         {

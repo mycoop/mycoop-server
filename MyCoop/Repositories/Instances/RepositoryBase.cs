@@ -2,6 +2,7 @@
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
+using System.Threading.Tasks;
 using MyCoop.Data;
 
 namespace MyCoop.Repositories.Instances
@@ -32,9 +33,9 @@ namespace MyCoop.Repositories.Instances
             ObjectSet.Remove(value);
         }
 
-        public IEnumerable<T> GetValues(params string[] includes)
+        public Task<T[]> GetValues(params string[] includes)
         {
-            return GetEntities(includes).ToList();
+            return GetEntities(includes).ToArrayAsync();
         }
 
         protected IQueryable<T> GetEntities(params string[] includes)

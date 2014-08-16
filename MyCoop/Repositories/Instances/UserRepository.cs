@@ -23,26 +23,6 @@ namespace MyCoop.Repositories.Instances
             return ObjectSet.SingleOrDefaultAsync(user => user.Email == email && user.Password == password);
         }
 
-        public Task<User> GetUser(int id)
-        {
-            return ObjectSet.SingleAsync(user => user.Id == id);
-        }
-
-        public User GetUser(string email)
-        {
-            return ObjectSet.SingleOrDefault(user => user.Email == email);
-        }
-
-        public bool HasUser(string email)
-        {
-            return ObjectSet.Any(user => user.Email == email);
-        }
-
-        public Task<User[]> GetUsers()
-        {
-            return GetEntities().ToArrayAsync();
-        }
-
         public Task<User[]> GetUsersByGroupId(int groupId)
         {
             return GetEntities().Where(user => user.UserGroups.Any(item => item.GroupId == groupId)).ToArrayAsync();
@@ -51,6 +31,11 @@ namespace MyCoop.Repositories.Instances
         public Task Delete(int id)
         {
             return Task.Run(() => Context.DeleteUser(id));
+        }
+
+        public Task<User> GetValue(int id, params string[] includes)
+        {
+            return GetEntities(includes).SingleAsync(entity => entity.Id == id);
         }
     }
 }

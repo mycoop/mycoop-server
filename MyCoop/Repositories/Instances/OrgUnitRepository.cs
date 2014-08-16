@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Text;
+﻿using System.Data.Entity;
 using System.Threading.Tasks;
 using MyCoop.Data;
 
@@ -19,14 +15,9 @@ namespace MyCoop.Repositories.Instances
             get { return Context.OrgUnits; }
         }
 
-        public Task<OrgUnit[]> GeOrgUnits()
+        public Task<OrgUnit> GetValue(int id, params string[] includes)
         {
-            return GetEntities().ToArrayAsync();
-        }
-
-        public Task<OrgUnit> GeOrgUnit(int id)
-        {
-            return GetEntities().SingleAsync(orgUnit => orgUnit.Id == id);
+            return GetEntities(includes).SingleAsync(entity => entity.Id == id);
         }
     }
 }

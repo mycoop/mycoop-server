@@ -21,6 +21,9 @@
         <EntityTypeShape EntityType="CoopModel.SysEvent" Width="1.5" PointX="9.625" PointY="4.875" />
         <EntityTypeShape EntityType="CoopModel.SysEventType" Width="1.5" PointX="7.375" PointY="5.125" />
         <AssociationConnector Association="CoopModel.FK_SysEvents_SysEventTypes" />
+        <EntityTypeShape EntityType="CoopModel.Component" Width="1.5" PointX="7.375" PointY="9.375" />
+        <EntityTypeShape EntityType="CoopModel.DocumentTemplate" Width="1.5" PointX="9.625" PointY="9" />
+        <AssociationConnector Association="CoopModel.FK_DocumentTemplates_Components" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

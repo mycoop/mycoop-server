@@ -2,7 +2,7 @@
 
 namespace MyCoop.Repositories
 {
-    public interface IPermissionLevelRepository : IRepository<PermissionLevel>
+    public interface IPermissionLevelRepository : IStdRepository<PermissionLevel>
     {
          
     }

@@ -1,4 +1,5 @@
-﻿using MyCoop.Data;
+﻿using System;
+using MyCoop.Data;
 
 namespace MyCoop.WebApi.Models.OrgUnits
 {
@@ -6,6 +7,12 @@ namespace MyCoop.WebApi.Models.OrgUnits
     {
         private readonly OrgUnit _orgUnit = new OrgUnit();
         private LocationModel _location;
+
+        public EditOrgUnitModel()
+        {
+            _orgUnit.CreationTime = DateTime.UtcNow;
+            _orgUnit.ModificationTime = DateTime.UtcNow;
+        }
 
         public string Name
         {

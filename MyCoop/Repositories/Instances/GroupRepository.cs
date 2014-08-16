@@ -21,19 +21,14 @@ namespace MyCoop.Repositories.Instances
             return GetEntities().Where(g => g.UserGroups.Any(item => item.UserId == userId)).ToArrayAsync();
         }
 
-        public Task<Group[]> GetGroups()
-        {
-            return GetEntities("ModifiedBy", "CreatedBy").ToArrayAsync();
-        }
-
-        public Task<Group> GetGroup(int id)
-        {
-            return GetEntities().SingleAsync(group => group.Id == id);
-        }
-
         public Task Delete(int id)
         {
             return Task.Run(() => Context.DeleteGroup(id));
+        }
+
+        public Task<Group> GetValue(int id, params string[] includes)
+        {
+            return GetEntities(includes).SingleAsync(entity => entity.Id == id);
         }
     }
 }

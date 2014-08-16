@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System.Threading.Tasks;
 
 namespace MyCoop.Repositories
 {
-    public interface IRepository<T> where T : class
+    public interface IRepository<T>
     {
         void Add(T value);
 
@@ -10,6 +10,6 @@ namespace MyCoop.Repositories
 
         void Delete(T value);
 
-        IEnumerable<T> GetValues(params string[] includes);
+        Task<T[]> GetValues(params string[] includes);
     } 
 }

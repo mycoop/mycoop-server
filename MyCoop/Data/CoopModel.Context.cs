@@ -51,6 +51,10 @@ public partial class CoopEntities : DbContext
 
     public virtual DbSet<SysEventType> SysEventTypes { get; set; }
 
+    public virtual DbSet<Component> Components { get; set; }
+
+    public virtual DbSet<DocumentTemplate> DocumentTemplates { get; set; }
+
 
     public virtual int DeleteGroup(Nullable<int> groupId)
     {
