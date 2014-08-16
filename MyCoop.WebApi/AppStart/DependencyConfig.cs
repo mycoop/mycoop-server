@@ -1,5 +1,6 @@
 ﻿using System.Web.Http;
 using System.Web.Mvc;
+using MyCoop.WebApi.Core;
 
 namespace MyCoop.WebApi.AppStart
 {

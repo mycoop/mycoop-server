@@ -134,7 +134,9 @@
     <Compile Include="AppStart\FilterConfig.cs" />
     <Compile Include="AppStart\RouteConfig.cs" />
     <Compile Include="AppStart\WebApiConfig.cs" />
-    <Compile Include="AppStart\WebApiDependencyResolver.cs" />
+    <Compile Include="Controllers\ComponentController.cs" />
+    <Compile Include="Controllers\DocumentTemplateController.cs" />
+    <Compile Include="Core\WebApiDependencyResolver.cs" />
     <Compile Include="Controllers\ApiControllerBase.cs" />
     <Compile Include="Controllers\GroupController.cs" />
     <Compile Include="Controllers\OrgUnitController.cs" />
@@ -152,6 +154,9 @@
     <Compile Include="Loggers\EventLogger.cs" />
     <Compile Include="Loggers\EventType.cs" />
     <Compile Include="Loggers\LogExtensions.cs" />
+    <Compile Include="Models\Components\ComponentModel.cs" />
+    <Compile Include="Models\Components\EditComponentModel.cs" />
+    <Compile Include="Models\DocumentTemplates\DocumentTemplateModel.cs" />
     <Compile Include="Models\Groups\EditGroupModel.cs" />
     <Compile Include="Models\Groups\UserGroupModel.cs" />
     <Compile Include="Models\OrgUnits\EditOrgUnitModel.cs" />
@@ -172,8 +177,8 @@
     <Compile Include="Services\IServiceManager.cs" />
     <Compile Include="Services\ISystemService.cs" />
     <Compile Include="Services\ITemplateService.cs" />
-    <Compile Include="Services\RepositoryManager.cs" />
-    <Compile Include="Services\ServiceManager.cs" />
+    <Compile Include="Core\RepositoryManager.cs" />
+    <Compile Include="Core\ServiceManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Clients\app.js" />

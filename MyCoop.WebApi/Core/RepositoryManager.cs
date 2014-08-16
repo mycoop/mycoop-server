@@ -6,7 +6,7 @@ using MyCoop.Data;
 using MyCoop.Repositories;
 using MyCoop.Repositories.Instances;
 
-namespace MyCoop.WebApi.Services
+namespace MyCoop.WebApi.Core
 {
     public class RepositoryManager : IRepositoryManager
     {

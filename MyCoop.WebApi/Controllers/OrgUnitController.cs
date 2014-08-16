@@ -3,7 +3,6 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using Any.Logs;
-using Any.Logs.Extentions;
 using MyCoop.WebApi.Extentions;
 using MyCoop.WebApi.Filters;
 using MyCoop.WebApi.Loggers;
@@ -26,14 +25,12 @@ namespace MyCoop.WebApi.Controllers
         public async Task<HttpResponseMessage> GeOrgUnits()
         {
             return Request.CreateResponse(HttpStatusCode.OK, await Service.Get<IManagementSevice>().GeOrgUnits());
-
         }
 
         [HttpGet]
         public async Task<HttpResponseMessage> GetOrgUnit(int id)
         {
             return Request.CreateResponse(HttpStatusCode.OK, await Service.Get<IManagementSevice>().GeOrgUnit(id));
-
         }
 
         [HttpPost]
@@ -43,7 +40,6 @@ namespace MyCoop.WebApi.Controllers
             var id = await Service.Get<IManagementSevice>().AddOrgUnit(model);
             Log.Out.Info(model.ToJson(), "End AddOrgUnit Id: {0}", id);
             return Request.CreateResponse(HttpStatusCode.OK, new { Id = id });
-
         }
 
         [HttpPost]
@@ -53,7 +49,6 @@ namespace MyCoop.WebApi.Controllers
             await Service.Get<IManagementSevice>().UpdateOrgUnit(id, model);
             Log.Out.Info(model.ToJson(), "End UpdateOrgUnit Id: {0}", id);
             return Request.CreateResponse(HttpStatusCode.OK);
-
         }
 
         [HttpDelete]
@@ -63,7 +58,6 @@ namespace MyCoop.WebApi.Controllers
             await Service.Get<IManagementSevice>().DeleteOrgUnit(id);
             Log.Out.Info("End DeleteOrgUnit Id: {0}", id);
             return Request.CreateResponse(HttpStatusCode.OK);
-
         }
 
     }

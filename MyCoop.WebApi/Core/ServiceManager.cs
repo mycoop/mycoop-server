@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using MyCoop.WebApi.Services;
 using MyCoop.WebApi.Services.Instances;
 
-namespace MyCoop.WebApi.Services
+namespace MyCoop.WebApi.Core
 {
     public class ServiceManager : IServiceManager
     {

@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 using System.Web.Http.Dependencies;
-using MyCoop.WebApi.Services;
 
-namespace MyCoop.WebApi.AppStart
+namespace MyCoop.WebApi.Core
 {
     public class WebApiDependencyResolver : IDependencyResolver
     {
