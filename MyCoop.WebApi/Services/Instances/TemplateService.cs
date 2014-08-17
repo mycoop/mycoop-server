@@ -2,6 +2,7 @@
 using MyCoop.Data;
 using MyCoop.Repositories;
 using MyCoop.WebApi.Models.Components;
+using MyCoop.WebApi.Models.DocumentTemplates;
 
 namespace MyCoop.WebApi.Services.Instances
 {
@@ -14,12 +15,12 @@ namespace MyCoop.WebApi.Services.Instances
 
         public Task<ComponentModel[]> GetComponents()
         {
-            return GetValues<ComponentModel, Component, IComponentRepository>(component => new ComponentModel(component));
+            return GetValues<ComponentModel, Component, IComponentRepository>(component => new ComponentModel(component), "DocumentTemplates");
         }
 
         public Task<ComponentModel> GetComponent(int id)
         {
-            return GetValue<ComponentModel, Component, IComponentRepository>(id, component => new ComponentModel(component));
+            return GetValue<ComponentModel, Component, IComponentRepository>(id, component => new ComponentModel(component), "DocumentTemplates");
         }
 
         public Task<int> AddComponent(EditComponentModel model)
@@ -38,7 +39,39 @@ namespace MyCoop.WebApi.Services.Instances
 
         public Task DeleteComponent(int id)
         {
-            throw new System.NotImplementedException();
+            return Repository.GetWithContext<IComponentRepository>().Delete(id);
+        }
+
+        public Task<DocumentTemplateModel[]> GetDocumentTemplates()
+        {
+            return GetValues<DocumentTemplateModel, DocumentTemplate, IDocumentTemplateRepository>(template => new DocumentTemplateModel(template));
+        }
+
+        public Task<DocumentTemplateModel> GetDocumentTemplate(int id)
+        {
+            return GetValue<DocumentTemplateModel, DocumentTemplate, IDocumentTemplateRepository>(id, template => new DocumentTemplateModel(template));
+        }
+
+        public Task<int> AddDocumentTemplate(EditDocumentTemplateModel model)
+        {
+            return Add<DocumentTemplate, IDocumentTemplateRepository>(template => template.Id, model.GetEntity);
+        }
+
+        public Task UpdateDocumentTemplate(int id, EditDocumentTemplateModel model)
+        {
+            return Update<DocumentTemplate, IDocumentTemplateRepository>(id, template =>
+            {
+                var entity = model.GetEntity();
+                template.Name = entity.Name;
+                template.Reference = entity.Reference;
+                template.Purpose = entity.Purpose;
+                template.ComponentId = entity.ComponentId;
+            });
+        }
+
+        public Task DeleteDocumentTemplate(int id)
+        {
+            return Delete<DocumentTemplate, IDocumentTemplateRepository>(id);
         }
     }
 }

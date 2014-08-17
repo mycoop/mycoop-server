@@ -21,14 +21,8 @@ namespace MyCoop.WebApi.Loggers
             return context.SaveChangesAsync().ContinueWith(_ => context.Dispose());
         }
 
-        public void Flush()
-        {
-            
-        }
+        public void Flush() { }
 
-        public bool IsEnabledFor(string method)
-        {
-            return true;
-        }
+        public bool IsEnabledFor(string method) { return true; }
     }
 }

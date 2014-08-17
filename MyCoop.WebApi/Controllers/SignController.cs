@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
+﻿using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using Any.Logs;
-using Any.Logs.Extentions;
 using MyCoop.WebApi.Filters;
 using MyCoop.WebApi.Helpers;
 using MyCoop.WebApi.Loggers;

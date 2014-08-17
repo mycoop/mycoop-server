@@ -1,14 +1,18 @@
-﻿using MyCoop.Data;
+﻿using System.Linq;
+using MyCoop.Data;
+using MyCoop.WebApi.Models.DocumentTemplates;
 
 namespace MyCoop.WebApi.Models.Components
 {
     public class ComponentModel
     {
         private readonly Component _component;
+        private readonly DocumentTemplateModel[] _documentTemplates;
 
         public ComponentModel(Component component)
         {
             _component = component;
+            _documentTemplates = component.DocumentTemplates.Select(dt => new DocumentTemplateModel(dt)).ToArray();
         }
 
         public int Id
@@ -19,5 +23,14 @@ namespace MyCoop.WebApi.Models.Components
         {
             get { return _component.Name; }
         }
+
+        public DocumentTemplateModel[] DocumentTemplates
+        {
+            get
+            {
+                return _documentTemplates;
+            }
+        }
+
     }
 }

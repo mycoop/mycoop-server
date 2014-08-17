@@ -19,19 +19,19 @@ namespace MyCoop.WebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<HttpResponseMessage> GetComponents()
+        public async Task<HttpResponseMessage> Get()
         {
             return Request.CreateResponse(HttpStatusCode.OK, await Service.Get<ITemplateService>().GetComponents());
         }
 
         [HttpGet]
-        public async Task<HttpResponseMessage> GetComponent(int id)
+        public async Task<HttpResponseMessage> Get(int id)
         {
             return Request.CreateResponse(HttpStatusCode.OK, await Service.Get<ITemplateService>().GetComponent(id));
         }
 
         [HttpPost]
-        public async Task<HttpResponseMessage> AddComponent([FromBody] EditComponentModel model)
+        public async Task<HttpResponseMessage> Add([FromBody] EditComponentModel model)
         {
             Log.Out.BeginInfo(model.ToJson(), "AddComponent");
             var id = await Service.Get<ITemplateService>().AddComponent(model);
@@ -40,7 +40,7 @@ namespace MyCoop.WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<HttpResponseMessage> UpdateComponent([FromUri] int id, [FromBody] EditComponentModel model)
+        public async Task<HttpResponseMessage> Update([FromUri] int id, [FromBody] EditComponentModel model)
         {
             Log.Out.BeginInfo(model.ToJson(), "UpdateComponent Id: {0}", id);
             await Service.Get<ITemplateService>().UpdateComponent(id, model);
@@ -49,7 +49,7 @@ namespace MyCoop.WebApi.Controllers
         }
 
         [HttpDelete]
-        public async Task<HttpResponseMessage> DeleteOrgUnit(int id)
+        public async Task<HttpResponseMessage> Delete(int id)
         {
             Log.Out.BeginInfo("DeleteComponent Id: {0}", id);
             await Service.Get<ITemplateService>().DeleteComponent(id);

@@ -80,8 +80,7 @@ namespace MyCoop.WebApi.Services.Instances
             where TRepository : IRepository<TEntity>
         {
             var entity = getEntity();
-            var repository = Repository.GetWithContext<TRepository>();
-            repository.Add(entity);
+            Repository.GetWithContext<TRepository>().Add(entity);
             return AsyncOperation(() => Repository.SaveChangesAsync(), _ => getId(entity));
         }
 

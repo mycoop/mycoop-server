@@ -30,7 +30,7 @@ public partial class DocumentTemplate
 
     public string Link { get; set; }
 
-    public int ComponentId { get; set; }
+    public Nullable<int> ComponentId { get; set; }
 
 
 

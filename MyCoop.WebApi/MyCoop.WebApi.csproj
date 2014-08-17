@@ -42,6 +42,9 @@
     <Reference Include="Any.Logs">
       <HintPath>..\Components\AnyLog\Any.Logs.dll</HintPath>
     </Reference>
+    <Reference Include="Aspose.Words">
+      <HintPath>..\Components\Aspose\Aspose.Words.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.dll</HintPath>
@@ -157,6 +160,7 @@
     <Compile Include="Models\Components\ComponentModel.cs" />
     <Compile Include="Models\Components\EditComponentModel.cs" />
     <Compile Include="Models\DocumentTemplates\DocumentTemplateModel.cs" />
+    <Compile Include="Models\DocumentTemplates\EditDocumentTemplateModel.cs" />
     <Compile Include="Models\Groups\EditGroupModel.cs" />
     <Compile Include="Models\Groups\UserGroupModel.cs" />
     <Compile Include="Models\OrgUnits\EditOrgUnitModel.cs" />
@@ -184,6 +188,7 @@
     <Content Include="Clients\app.js" />
     <Content Include="Clients\config.js" />
     <Content Include="Clients\css\site.css" />
+    <Content Include="Clients\file.html" />
     <Content Include="Clients\images\busy-danger.gif" />
     <Content Include="Clients\images\busy.gif" />
     <Content Include="Clients\index.js" />
@@ -259,6 +264,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Clients\models\" />
+    <Folder Include="Content\DocumentTemplates\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

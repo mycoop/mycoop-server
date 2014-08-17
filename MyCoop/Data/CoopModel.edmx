@@ -26,11 +26,11 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Reference" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Purpose" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Reference" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Purpose" Type="nvarchar(max)" Nullable="false" />
           <Property Name="PagesCount" Type="int" Nullable="false" />
-          <Property Name="Link" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="ComponentId" Type="int" Nullable="false" />
+          <Property Name="Link" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="ComponentId" Type="int" />
         </EntityType>
         <EntityType Name="Groups">
           <Key>
@@ -107,7 +107,7 @@
           <Property Name="LastAcitve" Type="datetime2" Precision="7" Nullable="false" />
         </EntityType>
         <Association Name="FK_DocumentTemplates_Components">
-          <End Role="Components" Type="Self.Components" Multiplicity="1" />
+          <End Role="Components" Type="Self.Components" Multiplicity="0..1" />
           <End Role="DocumentTemplates" Type="Self.DocumentTemplates" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Components">
@@ -214,6 +214,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="DeleteComponent" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="groupId" Type="int" Mode="In" />
+        </Function>
         <Function Name="DeleteGroup" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="groupId" Type="int" Mode="In" />
         </Function>
@@ -325,6 +328,9 @@
             <End Role="Component" EntitySet="Components" />
             <End Role="DocumentTemplate" EntitySet="DocumentTemplates" />
           </AssociationSet>
+          <FunctionImport Name="DeleteComponent">
+            <Parameter Name="groupId" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="Company">
           <Key>
@@ -534,15 +540,15 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Reference" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Purpose" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Reference" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Purpose" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="PagesCount" Type="Int32" Nullable="false" />
-          <Property Name="Link" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ComponentId" Type="Int32" Nullable="false" />
+          <Property Name="Link" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ComponentId" Type="Int32" />
           <NavigationProperty Name="Component" Relationship="CoopModel.FK_DocumentTemplates_Components" FromRole="DocumentTemplate" ToRole="Component" />
         </EntityType>
         <Association Name="FK_DocumentTemplates_Components">
-          <End Type="CoopModel.Component" Role="Component" Multiplicity="1" />
+          <End Type="CoopModel.Component" Role="Component" Multiplicity="0..1" />
           <End Type="CoopModel.DocumentTemplate" Role="DocumentTemplate" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Component">
@@ -671,7 +677,8 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-        </EntityContainerMapping>
+          <FunctionImportMapping FunctionImportName="DeleteComponent" FunctionName="Хранилище CoopModel.DeleteComponent" />
+          </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

@@ -3,7 +3,6 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using Any.Logs;
-using Any.Logs.Extentions;
 using MyCoop.WebApi.Extentions;
 using MyCoop.WebApi.Filters;
 using MyCoop.WebApi.Loggers;
@@ -21,21 +20,21 @@ namespace MyCoop.WebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<HttpResponseMessage> GetUsers()
+        public async Task<HttpResponseMessage> Get()
         {
             return Request.CreateResponse(HttpStatusCode.OK, await Service.Get<ISystemService>().GetUsers());
 
         }
 
         [HttpGet]
-        public async Task<HttpResponseMessage> GetUser(int id)
+        public async Task<HttpResponseMessage> Get(int id)
         {
             return Request.CreateResponse(HttpStatusCode.OK, await Service.Get<ISystemService>().GetUser(id));
 
         }
 
         [HttpPost]
-        public async Task<HttpResponseMessage> AddUser([FromBody] AddUserModel model)
+        public async Task<HttpResponseMessage> Add([FromBody] AddUserModel model)
         {
             Log.Out.BeginInfo(model.ToJson(), "AddUser");
             var id = await Service.Get<ISystemService>().AddUser(model);
@@ -45,7 +44,7 @@ namespace MyCoop.WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<HttpResponseMessage> UpdateUser([FromUri] int id,  [FromBody] UpdateUserModel model)
+        public async Task<HttpResponseMessage> Update([FromUri] int id,  [FromBody] UpdateUserModel model)
         {
             Log.Out.BeginInfo(model.ToJson(), "UpdateUser - Id: {0}", id);
             await Service.Get<ISystemService>().UpdateUser(id, model);
@@ -55,7 +54,7 @@ namespace MyCoop.WebApi.Controllers
         }
 
         [HttpDelete]
-        public async Task<HttpResponseMessage> DeleteUser(int id)
+        public async Task<HttpResponseMessage> Delete(int id)
         {
             Log.Out.BeginInfo("DeleteUser - Id: {0}", id);
             await Service.Get<ISystemService>().DeleteUser(id);

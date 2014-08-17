@@ -108,7 +108,7 @@ App.ViewModels.MainPageModel = (function () {
         publ.go = go.bind(self);
 
 
-        var templates = [
+        var signTemplates = [
             {
                 name: "sign-in",
                 url: config.apiPrefix + "sign/in",
@@ -120,42 +120,118 @@ App.ViewModels.MainPageModel = (function () {
                 url: config.apiPrefix + "sign/out",
                 method: methods[1],
                 body: ''
-            },
-            {
-                name: "org-unit-gets",
-                url: config.apiPrefix + "orgunit",
-                method: methods[0],
-                body: ''
-            },
-            {
-                name: "org-unit-get",
-                url: config.apiPrefix + "orgunit/1",
-                method: methods[0],
-                body: ''
-            },
-            {
-                name: "org-unit-add",
-                url: config.apiPrefix + "orgunit",
-                method: methods[1],
-                body: '{"name":"sfasf", "address": "qwrqw", "location": { "lat":"54.55", "lng":"1.2" }, "ownerId": "1", "parentId": "1"}'
-            },
-            {
-                name: "org-unit-update",
-                url: config.apiPrefix + "orgunit/1",
-                method: methods[1],
-                body: '{"name":"vasja", "address": "qwrqw", "location": { "lat":"77.55", "lng":"5.2" }, "ownerId": "1", "parentId": "1"}'
-            },
-            {
-                name: "org-unit-delete",
-                url: config.apiPrefix + "orgunit/3",
-                method: methods[2],
-                body: ''
             }];
 
-        publ.templates = ko.observable(templates);
+        publ.signTemplates = ko.observable(signTemplates);
+        
+        var userTemplates = [];
+
+        publ.userTemplates = ko.observable(userTemplates);
+        
+        var groupTemplates = [];
+
+        publ.groupTemplates = ko.observable(groupTemplates);
+        
+        var orgUnitTemplates = [
+           {
+               name: "org-unit-gets",
+               url: config.apiPrefix + "orgunit",
+               method: methods[0],
+               body: ''
+           },
+           {
+               name: "org-unit-get",
+               url: config.apiPrefix + "orgunit/1",
+               method: methods[0],
+               body: ''
+           },
+           {
+               name: "org-unit-add",
+               url: config.apiPrefix + "orgunit",
+               method: methods[1],
+               body: '{"name":"sfasf", "address": "qwrqw", "location": { "lat":"54.55", "lng":"1.2" }, "ownerId": "1", "parentId": "1"}'
+           },
+           {
+               name: "org-unit-update",
+               url: config.apiPrefix + "orgunit/1",
+               method: methods[1],
+               body: '{"name":"vasja", "address": "qwrqw", "location": { "lat":"77.55", "lng":"5.2" }, "ownerId": "1", "parentId": "1"}'
+           },
+           {
+               name: "org-unit-delete",
+               url: config.apiPrefix + "orgunit/3",
+               method: methods[2],
+               body: ''
+           }];
+
+        publ.orgUnitTemplates = ko.observable(orgUnitTemplates);
+        
+        var componentTemplates = [
+            {
+                name: "component-gets",
+                url: config.apiPrefix + "component",
+                method: methods[0],
+                body: ''
+            },
+           {
+               name: "component-get",
+               url: config.apiPrefix + "component/1",
+               method: methods[0],
+               body: ''
+           },
+           {
+               name: "component-add",
+               url: config.apiPrefix + "component",
+               method: methods[1],
+               body: '{"name":"sfasf"}'
+           },
+           {
+               name: "component-update",
+               url: config.apiPrefix + "component/1",
+               method: methods[1],
+               body: '{"name":"vasja"}'
+           },
+           {
+               name: "component-delete",
+               url: config.apiPrefix + "component/3",
+               method: methods[2],
+               body: ''
+           }];
+
+        publ.componentTemplates = ko.observable(componentTemplates);
+
+        var documentTemplateTemplates = [
+            {
+                name: "document-template-gets",
+                url: config.apiPrefix + "document-template",
+                method: methods[0],
+                body: ''
+            },
+           {
+               name: "document-template-get",
+               url: config.apiPrefix + "document-template/1",
+               method: methods[0],
+               body: ''
+           },
+           {
+               name: "document-template-update",
+               url: config.apiPrefix + "document-template/1",
+               method: methods[1],
+               body: '{ "name" : "update-template", "reference" : "M0097", "purpose" : "bla-bal-bla", "componentId" : "1" }'
+           },
+           {
+               name: "document-template-delete",
+               url: config.apiPrefix + "document-template/3",
+               method: methods[2],
+               body: ''
+           }];
+
+        publ.documentTemplateTemplates = ko.observable(documentTemplateTemplates);
+
         publ.selectedTemplate = ko.observable();
 
         publ.selectedTemplate.subscribe(function (value) {
+            if (!value) return;
             publ.selectedMethod(value.method);
             publ.url(value.url);
             publ.httpBody(value.body);

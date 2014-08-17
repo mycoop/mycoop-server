@@ -79,6 +79,18 @@ public partial class CoopEntities : DbContext
         return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteUser", userIdParameter);
     }
 
+
+    public virtual int DeleteComponent(Nullable<int> groupId)
+    {
+
+        var groupIdParameter = groupId.HasValue ?
+            new ObjectParameter("groupId", groupId) :
+            new ObjectParameter("groupId", typeof(int));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteComponent", groupIdParameter);
+    }
+
 }
 
 }
