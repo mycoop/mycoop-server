@@ -48,7 +48,7 @@ public partial class OrgUnit
 
     public double Lng { get; set; }
 
-    public int WorkspaceTemplateId { get; set; }
+    public Nullable<int> WorkspaceTemplateId { get; set; }
 
 
 

@@ -95,8 +95,6 @@ namespace MyCoop.WebApi.Controllers
             await Service.Get<ISystemService>().RemoveUserFromGroup(userId, groupId);
             Log.Out.BeginInfo("RemoveUser ({0}) From Group ({1})", userId, groupId);
             return Request.CreateResponse(HttpStatusCode.OK);
-
         }
-
     }
 }

@@ -38,5 +38,13 @@ namespace MyCoop.WebApi.Services
         Task DeleteWorkspaceTemplate(int id);
 
         Task<DocumentTemplateModel[]> GetDocumentsByWorkspaceTemplateId(int id);
+
+        Task AddDocumentToWorkspaceTemplate(int workspaceTemplateId, int documentTemplateId);
+
+        Task RemoveDocumentFromWorkspaceTemplate(int workspaceTemplateId, int documentTemplateId);
+
+        Task AddComponentToWorkspaceTemplate(int workspaceTemplateId, int componentId);
+
+        Task RemoveComponentFromWorkspaceTemplate(int workspaceTemplateId, int componentId);
     }
 }

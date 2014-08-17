@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using MyCoop.Data;
 using MyCoop.Repositories;
@@ -78,12 +79,14 @@ namespace MyCoop.WebApi.Services.Instances
 
         public Task<WorkspaceTemplateModel[]> GetWorkspaceTemplates()
         {
-            return GetValues<WorkspaceTemplateModel, WorkspaceTemplate, IWorkspaceTemplateRepository>(template => new WorkspaceTemplateModel(template), "DocumentTemplates", "Components");
+            return GetValues<WorkspaceTemplateModel, WorkspaceTemplate, IWorkspaceTemplateRepository>(template => new WorkspaceTemplateModel(template), 
+                "WorkspaceDocumentTemplates", "WorkspaceTemplateComponents", "WorkspaceTemplateComponents.Component");
         }
 
         public Task<WorkspaceTemplateModel> GetWorkspaceTemplate(int id)
         {
-            return GetValue<WorkspaceTemplateModel, WorkspaceTemplate, IWorkspaceTemplateRepository>(id, template => new WorkspaceTemplateModel(template), "DocumentTemplates", "Components");
+            return GetValue<WorkspaceTemplateModel, WorkspaceTemplate, IWorkspaceTemplateRepository>(id, template => new WorkspaceTemplateModel(template), 
+                "WorkspaceDocumentTemplates", "WorkspaceTemplateComponents", "WorkspaceTemplateComponents.Component");
         }
 
         public Task<int> AddWorkspaceTemplate(EditWorkspaceTemplateModel model)
@@ -111,6 +114,66 @@ namespace MyCoop.WebApi.Services.Instances
         {
             return AsyncOperation(() => Repository.GetWithContext<IDocumentTemplateRepository>().GetValuesByWorkspaceTemplateId(id),
                 userGroups => userGroups.Select(ug => new DocumentTemplateModel(ug)).ToArray());
+        }
+
+        public Task AddDocumentToWorkspaceTemplate(int workspaceTemplateId, int documentTemplateId)
+        {
+            var entity = new WorkspaceDocumentTemplate
+            {
+                WorkspaceTemplateId = workspaceTemplateId,
+                DocumentTemplateId = documentTemplateId,
+                CreationTime = DateTime.UtcNow
+            };
+
+            var userGroupRepository = Repository.GetWithContext<IWorkspaceDocumentTemplateRepository>();
+            userGroupRepository.Add(entity);
+
+            return Repository.SaveChangesAsync();
+        }
+
+        public Task RemoveDocumentFromWorkspaceTemplate(int workspaceTemplateId, int documentTemplateId)
+        {
+            var entity = new WorkspaceDocumentTemplate
+            {
+                WorkspaceTemplateId = workspaceTemplateId,
+                DocumentTemplateId = documentTemplateId
+            };
+
+            var repository = Repository.GetWithContext<IWorkspaceDocumentTemplateRepository>();
+            repository.Attach(entity);
+            repository.Delete(entity);
+
+            return Repository.SaveChangesAsync();
+        }
+
+        public Task AddComponentToWorkspaceTemplate(int workspaceTemplateId, int componentId)
+        {
+            var entity = new WorkspaceDocumentTemplate
+            {
+                WorkspaceTemplateId = workspaceTemplateId,
+                DocumentTemplateId = componentId,
+                CreationTime = DateTime.UtcNow
+            };
+
+            var userGroupRepository = Repository.GetWithContext<IWorkspaceDocumentTemplateRepository>();
+            userGroupRepository.Add(entity);
+
+            return Repository.SaveChangesAsync();
+        }
+
+        public Task RemoveComponentFromWorkspaceTemplate(int workspaceTemplateId, int componentId)
+        {
+            var entity = new WorkspaceDocumentTemplate
+            {
+                WorkspaceTemplateId = workspaceTemplateId,
+                DocumentTemplateId = componentId
+            };
+
+            var repository = Repository.GetWithContext<IWorkspaceDocumentTemplateRepository>();
+            repository.Attach(entity);
+            repository.Delete(entity);
+
+            return Repository.SaveChangesAsync();
         }
     }
 }

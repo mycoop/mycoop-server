@@ -31,8 +31,8 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="ModifiedDate" Type="datetime2" Precision="7" Nullable="false" />
-          <Property Name="CreatedDate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="ModificationTime" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="CreationTime" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="ModifiedByUserId" Type="int" Nullable="false" />
           <Property Name="CreatedByUserId" Type="int" Nullable="false" />
         </EntityType>
@@ -59,7 +59,7 @@
           <Property Name="ParentId" Type="int" />
           <Property Name="Lat" Type="float" Nullable="false" />
           <Property Name="Lng" Type="float" Nullable="false" />
-          <Property Name="WorkspaceTemplateId" Type="int" Nullable="false" />
+          <Property Name="WorkspaceTemplateId" Type="int" />
         </EntityType>
         <EntityType Name="OrgUnitUserPermissions">
           <Key>
@@ -104,7 +104,7 @@
           </Key>
           <Property Name="UserId" Type="int" Nullable="false" />
           <Property Name="GroupId" Type="int" Nullable="false" />
-          <Property Name="CreatedDate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="CreationTime" Type="datetime2" Precision="7" Nullable="false" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -126,6 +126,7 @@
           </Key>
           <Property Name="WorkspaceTemplateId" Type="int" Nullable="false" />
           <Property Name="DocumentTemplateId" Type="int" Nullable="false" />
+          <Property Name="CreationTime" Type="datetime2" Precision="7" Nullable="false" />
         </EntityType>
         <EntityType Name="WorkspaceTemplateComponents">
           <Key>
@@ -134,6 +135,7 @@
           </Key>
           <Property Name="WorkspaceTemplateId" Type="int" Nullable="false" />
           <Property Name="ComponentId" Type="int" Nullable="false" />
+          <Property Name="CreationTime" Type="datetime2" Precision="7" Nullable="false" />
         </EntityType>
         <EntityType Name="WorkspaceTemplates">
           <Key>
@@ -243,7 +245,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_OrgUnits_WorkspaceTemplates">
-          <End Role="WorkspaceTemplates" Type="Self.WorkspaceTemplates" Multiplicity="1" />
+          <End Role="WorkspaceTemplates" Type="Self.WorkspaceTemplates" Multiplicity="0..1" />
           <End Role="OrgUnits" Type="Self.OrgUnits" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="WorkspaceTemplates">
@@ -411,13 +413,16 @@
           </ReferentialConstraint>
         </Association>
         <Function Name="DeleteComponent" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="groupId" Type="int" Mode="In" />
+          <Parameter Name="id" Type="int" Mode="In" />
         </Function>
         <Function Name="DeleteGroup" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="groupId" Type="int" Mode="In" />
+          <Parameter Name="id" Type="int" Mode="In" />
         </Function>
         <Function Name="DeleteUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="userId" Type="int" Mode="In" />
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="DeleteWorkspaceTemplate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
         </Function>
         <EntityContainer Name="Хранилище CoopModelContainer">
           <EntitySet Name="Components" EntityType="Self.Components" Schema="dbo" store:Type="Tables" />
@@ -528,14 +533,17 @@
     <edmx:ConceptualModels>
       <Schema Namespace="CoopModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="CoopEntities" annotation:LazyLoadingEnabled="true">
+          <FunctionImport Name="DeleteComponent">
+          <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
           <FunctionImport Name="DeleteGroup">
-          <Parameter Name="groupId" Mode="In" Type="Int32" />
+          <Parameter Name="id" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="DeleteUser">
-          <Parameter Name="userId" Mode="In" Type="Int32" />
+          <Parameter Name="id" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="DeleteComponent">
-          <Parameter Name="groupId" Mode="In" Type="Int32" />
+          <FunctionImport Name="DeleteWorkspaceTemplate">
+          <Parameter Name="id" Mode="In" Type="Int32" />
           </FunctionImport>
           <EntitySet Name="Components" EntityType="CoopModel.Component" />
           <EntitySet Name="DocumentTemplates" EntityType="CoopModel.DocumentTemplate" />
@@ -548,10 +556,20 @@
           <EntitySet Name="SysEventTypes" EntityType="CoopModel.SysEventType" />
           <EntitySet Name="UserGroups" EntityType="CoopModel.UserGroup" />
           <EntitySet Name="Users" EntityType="CoopModel.User" />
+          <EntitySet Name="WorkspaceDocumentTemplates" EntityType="CoopModel.WorkspaceDocumentTemplate" />
+          <EntitySet Name="WorkspaceTemplateComponents" EntityType="CoopModel.WorkspaceTemplateComponent" />
           <EntitySet Name="WorkspaceTemplates" EntityType="CoopModel.WorkspaceTemplate" />
           <AssociationSet Name="FK_DocumentTemplates_Components" Association="CoopModel.FK_DocumentTemplates_Components">
             <End Role="Component" EntitySet="Components" />
             <End Role="DocumentTemplate" EntitySet="DocumentTemplates" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WorkspaceTemplateComponents_Components" Association="CoopModel.FK_WorkspaceTemplateComponents_Components">
+            <End Role="Component" EntitySet="Components" />
+            <End Role="WorkspaceTemplateComponent" EntitySet="WorkspaceTemplateComponents" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WorkspaceDocumentTemplates_DocumentTemplates" Association="CoopModel.FK_WorkspaceDocumentTemplates_DocumentTemplates">
+            <End Role="DocumentTemplate" EntitySet="DocumentTemplates" />
+            <End Role="WorkspaceDocumentTemplate" EntitySet="WorkspaceDocumentTemplates" />
           </AssociationSet>
           <AssociationSet Name="FK_Groups_Users" Association="CoopModel.FK_Groups_Users">
             <End Role="User" EntitySet="Users" />
@@ -621,13 +639,13 @@
             <End Role="User" EntitySet="Users" />
             <End Role="WorkspaceTemplate" EntitySet="WorkspaceTemplates" />
           </AssociationSet>
-          <AssociationSet Name="WorkspaceDocumentTemplates" Association="CoopModel.WorkspaceDocumentTemplates">
-            <End Role="DocumentTemplate" EntitySet="DocumentTemplates" />
+          <AssociationSet Name="FK_WorkspaceDocumentTemplates_WorkspaceTemplates" Association="CoopModel.FK_WorkspaceDocumentTemplates_WorkspaceTemplates">
             <End Role="WorkspaceTemplate" EntitySet="WorkspaceTemplates" />
+            <End Role="WorkspaceDocumentTemplate" EntitySet="WorkspaceDocumentTemplates" />
           </AssociationSet>
-          <AssociationSet Name="WorkspaceTemplateComponents" Association="CoopModel.WorkspaceTemplateComponents">
-            <End Role="Component" EntitySet="Components" />
+          <AssociationSet Name="FK_WorkspaceTemplateComponents_WorkspaceTemplates" Association="CoopModel.FK_WorkspaceTemplateComponents_WorkspaceTemplates">
             <End Role="WorkspaceTemplate" EntitySet="WorkspaceTemplates" />
+            <End Role="WorkspaceTemplateComponent" EntitySet="WorkspaceTemplateComponents" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Component">
@@ -637,7 +655,7 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="DocumentTemplates" Relationship="CoopModel.FK_DocumentTemplates_Components" FromRole="Component" ToRole="DocumentTemplate" />
-          <NavigationProperty Name="WorkspaceTemplates" Relationship="CoopModel.WorkspaceTemplateComponents" FromRole="Component" ToRole="WorkspaceTemplate" />
+          <NavigationProperty Name="WorkspaceTemplateComponents" Relationship="CoopModel.FK_WorkspaceTemplateComponents_Components" FromRole="Component" ToRole="WorkspaceTemplateComponent" />
         </EntityType>
         <EntityType Name="DocumentTemplate">
           <Key>
@@ -651,7 +669,7 @@
           <Property Name="Link" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="ComponentId" Type="Int32" />
           <NavigationProperty Name="Component" Relationship="CoopModel.FK_DocumentTemplates_Components" FromRole="DocumentTemplate" ToRole="Component" />
-          <NavigationProperty Name="WorkspaceTemplates" Relationship="CoopModel.WorkspaceDocumentTemplates" FromRole="DocumentTemplate" ToRole="WorkspaceTemplate" />
+          <NavigationProperty Name="WorkspaceDocumentTemplates" Relationship="CoopModel.FK_WorkspaceDocumentTemplates_DocumentTemplates" FromRole="DocumentTemplate" ToRole="WorkspaceDocumentTemplate" />
         </EntityType>
         <EntityType Name="Group">
           <Key>
@@ -660,8 +678,8 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="7" />
-          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="ModificationTime" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="CreationTime" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="ModifiedByUserId" Type="Int32" Nullable="false" />
           <Property Name="CreatedByUserId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="User" Relationship="CoopModel.FK_Groups_Users" FromRole="Group" ToRole="User" />
@@ -695,7 +713,7 @@
           <Property Name="ParentId" Type="Int32" />
           <Property Name="Lat" Type="Double" Nullable="false" />
           <Property Name="Lng" Type="Double" Nullable="false" />
-          <Property Name="WorkspaceTemplateId" Type="Int32" Nullable="false" />
+          <Property Name="WorkspaceTemplateId" Type="Int32" />
           <NavigationProperty Name="OrgUnitGroupPermissions" Relationship="CoopModel.FK_OrgUnitGroupPermissions_OrgUnits" FromRole="OrgUnit" ToRole="OrgUnitGroupPermission" />
           <NavigationProperty Name="OrgUnits1" Relationship="CoopModel.FK_OrgUnits_OrgUnits" FromRole="OrgUnit" ToRole="OrgUnit1" />
           <NavigationProperty Name="OrgUnit1" Relationship="CoopModel.FK_OrgUnits_OrgUnits" FromRole="OrgUnit1" ToRole="OrgUnit" />
@@ -754,7 +772,7 @@
           </Key>
           <Property Name="UserId" Type="Int32" Nullable="false" />
           <Property Name="GroupId" Type="Int32" Nullable="false" />
-          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="CreationTime" Type="DateTime" Nullable="false" Precision="7" />
           <NavigationProperty Name="Group" Relationship="CoopModel.FK_UserGroups_Groups" FromRole="UserGroup" ToRole="Group" />
           <NavigationProperty Name="User" Relationship="CoopModel.FK_UserGroups_Users" FromRole="UserGroup" ToRole="User" />
         </EntityType>
@@ -779,6 +797,28 @@
           <NavigationProperty Name="WorkspaceTemplates" Relationship="CoopModel.FK_WorkspaceTemplates_Users" FromRole="User" ToRole="WorkspaceTemplate" />
           <NavigationProperty Name="WorkspaceTemplates1" Relationship="CoopModel.FK_WorkspaceTemplates_Users1" FromRole="User" ToRole="WorkspaceTemplate" />
         </EntityType>
+        <EntityType Name="WorkspaceDocumentTemplate">
+          <Key>
+            <PropertyRef Name="WorkspaceTemplateId" />
+            <PropertyRef Name="DocumentTemplateId" />
+          </Key>
+          <Property Name="WorkspaceTemplateId" Type="Int32" Nullable="false" />
+          <Property Name="DocumentTemplateId" Type="Int32" Nullable="false" />
+          <Property Name="CreationTime" Type="DateTime" Nullable="false" Precision="7" />
+          <NavigationProperty Name="DocumentTemplate" Relationship="CoopModel.FK_WorkspaceDocumentTemplates_DocumentTemplates" FromRole="WorkspaceDocumentTemplate" ToRole="DocumentTemplate" />
+          <NavigationProperty Name="WorkspaceTemplate" Relationship="CoopModel.FK_WorkspaceDocumentTemplates_WorkspaceTemplates" FromRole="WorkspaceDocumentTemplate" ToRole="WorkspaceTemplate" />
+        </EntityType>
+        <EntityType Name="WorkspaceTemplateComponent">
+          <Key>
+            <PropertyRef Name="WorkspaceTemplateId" />
+            <PropertyRef Name="ComponentId" />
+          </Key>
+          <Property Name="WorkspaceTemplateId" Type="Int32" Nullable="false" />
+          <Property Name="ComponentId" Type="Int32" Nullable="false" />
+          <Property Name="CreationTime" Type="DateTime" Nullable="false" Precision="7" />
+          <NavigationProperty Name="Component" Relationship="CoopModel.FK_WorkspaceTemplateComponents_Components" FromRole="WorkspaceTemplateComponent" ToRole="Component" />
+          <NavigationProperty Name="WorkspaceTemplate" Relationship="CoopModel.FK_WorkspaceTemplateComponents_WorkspaceTemplates" FromRole="WorkspaceTemplateComponent" ToRole="WorkspaceTemplate" />
+        </EntityType>
         <EntityType Name="WorkspaceTemplate">
           <Key>
             <PropertyRef Name="Id" />
@@ -792,8 +832,8 @@
           <NavigationProperty Name="OrgUnits" Relationship="CoopModel.FK_OrgUnits_WorkspaceTemplates" FromRole="WorkspaceTemplate" ToRole="OrgUnit" />
           <NavigationProperty Name="User" Relationship="CoopModel.FK_WorkspaceTemplates_Users" FromRole="WorkspaceTemplate" ToRole="User" />
           <NavigationProperty Name="User1" Relationship="CoopModel.FK_WorkspaceTemplates_Users1" FromRole="WorkspaceTemplate" ToRole="User" />
-          <NavigationProperty Name="DocumentTemplates" Relationship="CoopModel.WorkspaceDocumentTemplates" FromRole="WorkspaceTemplate" ToRole="DocumentTemplate" />
-          <NavigationProperty Name="Components" Relationship="CoopModel.WorkspaceTemplateComponents" FromRole="WorkspaceTemplate" ToRole="Component" />
+          <NavigationProperty Name="WorkspaceDocumentTemplates" Relationship="CoopModel.FK_WorkspaceDocumentTemplates_WorkspaceTemplates" FromRole="WorkspaceTemplate" ToRole="WorkspaceDocumentTemplate" />
+          <NavigationProperty Name="WorkspaceTemplateComponents" Relationship="CoopModel.FK_WorkspaceTemplateComponents_WorkspaceTemplates" FromRole="WorkspaceTemplate" ToRole="WorkspaceTemplateComponent" />
         </EntityType>
         <Association Name="FK_DocumentTemplates_Components">
           <End Type="CoopModel.Component" Role="Component" Multiplicity="0..1" />
@@ -804,6 +844,30 @@
             </Principal>
             <Dependent Role="DocumentTemplate">
               <PropertyRef Name="ComponentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WorkspaceTemplateComponents_Components">
+          <End Type="CoopModel.Component" Role="Component" Multiplicity="1" />
+          <End Type="CoopModel.WorkspaceTemplateComponent" Role="WorkspaceTemplateComponent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Component">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="WorkspaceTemplateComponent">
+              <PropertyRef Name="ComponentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WorkspaceDocumentTemplates_DocumentTemplates">
+          <End Type="CoopModel.DocumentTemplate" Role="DocumentTemplate" Multiplicity="1" />
+          <End Type="CoopModel.WorkspaceDocumentTemplate" Role="WorkspaceDocumentTemplate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DocumentTemplate">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="WorkspaceDocumentTemplate">
+              <PropertyRef Name="DocumentTemplateId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -904,7 +968,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_OrgUnits_WorkspaceTemplates">
-          <End Type="CoopModel.WorkspaceTemplate" Role="WorkspaceTemplate" Multiplicity="1" />
+          <End Type="CoopModel.WorkspaceTemplate" Role="WorkspaceTemplate" Multiplicity="0..1" />
           <End Type="CoopModel.OrgUnit" Role="OrgUnit" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="WorkspaceTemplate">
@@ -1011,13 +1075,29 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="WorkspaceDocumentTemplates">
-          <End Type="CoopModel.DocumentTemplate" Role="DocumentTemplate" Multiplicity="*" />
-          <End Type="CoopModel.WorkspaceTemplate" Role="WorkspaceTemplate" Multiplicity="*" />
+        <Association Name="FK_WorkspaceDocumentTemplates_WorkspaceTemplates">
+          <End Type="CoopModel.WorkspaceTemplate" Role="WorkspaceTemplate" Multiplicity="1" />
+          <End Type="CoopModel.WorkspaceDocumentTemplate" Role="WorkspaceDocumentTemplate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WorkspaceTemplate">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="WorkspaceDocumentTemplate">
+              <PropertyRef Name="WorkspaceTemplateId" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
-        <Association Name="WorkspaceTemplateComponents">
-          <End Type="CoopModel.Component" Role="Component" Multiplicity="*" />
-          <End Type="CoopModel.WorkspaceTemplate" Role="WorkspaceTemplate" Multiplicity="*" />
+        <Association Name="FK_WorkspaceTemplateComponents_WorkspaceTemplates">
+          <End Type="CoopModel.WorkspaceTemplate" Role="WorkspaceTemplate" Multiplicity="1" />
+          <End Type="CoopModel.WorkspaceTemplateComponent" Role="WorkspaceTemplateComponent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WorkspaceTemplate">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="WorkspaceTemplateComponent">
+              <PropertyRef Name="WorkspaceTemplateId" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
         </Schema>
     </edmx:ConceptualModels>
@@ -1025,9 +1105,10 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="Хранилище CoopModelContainer" CdmEntityContainer="CoopEntities">
+          <FunctionImportMapping FunctionImportName="DeleteComponent" FunctionName="Хранилище CoopModel.DeleteComponent" />
           <FunctionImportMapping FunctionImportName="DeleteGroup" FunctionName="Хранилище CoopModel.DeleteGroup" />
           <FunctionImportMapping FunctionImportName="DeleteUser" FunctionName="Хранилище CoopModel.DeleteUser" />
-          <FunctionImportMapping FunctionImportName="DeleteComponent" FunctionName="Хранилище CoopModel.DeleteComponent" />
+          <FunctionImportMapping FunctionImportName="DeleteWorkspaceTemplate" FunctionName="Хранилище CoopModel.DeleteWorkspaceTemplate" />
           <EntitySetMapping Name="Components">
             <EntityTypeMapping TypeName="CoopModel.Component">
               <MappingFragment StoreEntitySet="Components">
@@ -1054,8 +1135,8 @@
               <MappingFragment StoreEntitySet="Groups">
                 <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
                 <ScalarProperty Name="ModifiedByUserId" ColumnName="ModifiedByUserId" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreationTime" ColumnName="CreationTime" />
+                <ScalarProperty Name="ModificationTime" ColumnName="ModificationTime" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
@@ -1128,7 +1209,7 @@
           <EntitySetMapping Name="UserGroups">
             <EntityTypeMapping TypeName="CoopModel.UserGroup">
               <MappingFragment StoreEntitySet="UserGroups">
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreationTime" ColumnName="CreationTime" />
                 <ScalarProperty Name="GroupId" ColumnName="GroupId" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
               </MappingFragment>
@@ -1148,6 +1229,24 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="WorkspaceDocumentTemplates">
+            <EntityTypeMapping TypeName="CoopModel.WorkspaceDocumentTemplate">
+              <MappingFragment StoreEntitySet="WorkspaceDocumentTemplates">
+                <ScalarProperty Name="CreationTime" ColumnName="CreationTime" />
+                <ScalarProperty Name="DocumentTemplateId" ColumnName="DocumentTemplateId" />
+                <ScalarProperty Name="WorkspaceTemplateId" ColumnName="WorkspaceTemplateId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WorkspaceTemplateComponents">
+            <EntityTypeMapping TypeName="CoopModel.WorkspaceTemplateComponent">
+              <MappingFragment StoreEntitySet="WorkspaceTemplateComponents">
+                <ScalarProperty Name="CreationTime" ColumnName="CreationTime" />
+                <ScalarProperty Name="ComponentId" ColumnName="ComponentId" />
+                <ScalarProperty Name="WorkspaceTemplateId" ColumnName="WorkspaceTemplateId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="WorkspaceTemplates">
             <EntityTypeMapping TypeName="CoopModel.WorkspaceTemplate">
               <MappingFragment StoreEntitySet="WorkspaceTemplates">
@@ -1160,23 +1259,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="WorkspaceDocumentTemplates" TypeName="CoopModel.WorkspaceDocumentTemplates" StoreEntitySet="WorkspaceDocumentTemplates">
-            <EndProperty Name="WorkspaceTemplate">
-              <ScalarProperty Name="Id" ColumnName="WorkspaceTemplateId" />
-            </EndProperty>
-            <EndProperty Name="DocumentTemplate">
-              <ScalarProperty Name="Id" ColumnName="DocumentTemplateId" />
-            </EndProperty>
-          </AssociationSetMapping>
-          <AssociationSetMapping Name="WorkspaceTemplateComponents" TypeName="CoopModel.WorkspaceTemplateComponents" StoreEntitySet="WorkspaceTemplateComponents">
-            <EndProperty Name="WorkspaceTemplate">
-              <ScalarProperty Name="Id" ColumnName="WorkspaceTemplateId" />
-            </EndProperty>
-            <EndProperty Name="Component">
-              <ScalarProperty Name="Id" ColumnName="ComponentId" />
-            </EndProperty>
-          </AssociationSetMapping>
-          </EntityContainerMapping>
+        </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

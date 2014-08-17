@@ -22,6 +22,8 @@ namespace MyCoop.WebApi.Core
             _mapTypes.Add(typeof(IComponentRepository), typeof(ComponentRepository));
             _mapTypes.Add(typeof(IDocumentTemplateRepository), typeof(DocumentTemplateRepository));
             _mapTypes.Add(typeof(IWorkspaceTemplateRepository), typeof(WorkspaceTemplateRepository));
+            _mapTypes.Add(typeof(IWorkspaceDocumentTemplateRepository), typeof(WorkspaceDocumentTemplateRepository));
+            _mapTypes.Add(typeof(IWorkspaceTemplateComponentRepository), typeof(WorkspaceTemplateComponentRepository));
         }
 
         private CoopEntities _context;

@@ -89,7 +89,7 @@ namespace MyCoop.WebApi.Services.Instances
                 group.Name = entity.Name;
                 group.Description = entity.Description;
                 group.ModifiedByUserId = entity.ModifiedByUserId;
-                group.ModifiedDate = DateTime.UtcNow;
+                group.ModificationTime = DateTime.UtcNow;
             });
         }
 
@@ -110,7 +110,7 @@ namespace MyCoop.WebApi.Services.Instances
             {
                 UserId = userId,
                 GroupId = groupId,
-                CreatedDate = DateTime.UtcNow
+                CreationTime = DateTime.UtcNow
             };
 
             var userGroupRepository = Repository.GetWithContext<IUserGroupRepository>();

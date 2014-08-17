@@ -14,8 +14,8 @@ namespace MyCoop.WebApi.Models.WorkspaceTemplates
         public WorkspaceTemplateModel(WorkspaceTemplate workspaceTemplate)
         {
             _workspaceTemplate = workspaceTemplate;
-            _documentCount = workspaceTemplate.DocumentTemplates.Count;
-            _components = workspaceTemplate.Components.Select(c => new ComponentModel(c)).ToArray();
+            _documentCount = workspaceTemplate.WorkspaceDocumentTemplates.Count;
+            _components = workspaceTemplate.WorkspaceTemplateComponents.Select(c => new ComponentModel(c.Component)).ToArray();
         }
 
         public int Id

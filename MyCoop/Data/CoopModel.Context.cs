@@ -57,42 +57,58 @@ public partial class CoopEntities : DbContext
 
     public virtual DbSet<User> Users { get; set; }
 
+    public virtual DbSet<WorkspaceDocumentTemplate> WorkspaceDocumentTemplates { get; set; }
+
+    public virtual DbSet<WorkspaceTemplateComponent> WorkspaceTemplateComponents { get; set; }
+
     public virtual DbSet<WorkspaceTemplate> WorkspaceTemplates { get; set; }
 
 
-    public virtual int DeleteGroup(Nullable<int> groupId)
+    public virtual int DeleteComponent(Nullable<int> id)
     {
 
-        var groupIdParameter = groupId.HasValue ?
-            new ObjectParameter("groupId", groupId) :
-            new ObjectParameter("groupId", typeof(int));
+        var idParameter = id.HasValue ?
+            new ObjectParameter("id", id) :
+            new ObjectParameter("id", typeof(int));
 
 
-        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteGroup", groupIdParameter);
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteComponent", idParameter);
     }
 
 
-    public virtual int DeleteUser(Nullable<int> userId)
+    public virtual int DeleteGroup(Nullable<int> id)
     {
 
-        var userIdParameter = userId.HasValue ?
-            new ObjectParameter("userId", userId) :
-            new ObjectParameter("userId", typeof(int));
+        var idParameter = id.HasValue ?
+            new ObjectParameter("id", id) :
+            new ObjectParameter("id", typeof(int));
 
 
-        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteUser", userIdParameter);
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteGroup", idParameter);
     }
 
 
-    public virtual int DeleteComponent(Nullable<int> groupId)
+    public virtual int DeleteUser(Nullable<int> id)
     {
 
-        var groupIdParameter = groupId.HasValue ?
-            new ObjectParameter("groupId", groupId) :
-            new ObjectParameter("groupId", typeof(int));
+        var idParameter = id.HasValue ?
+            new ObjectParameter("id", id) :
+            new ObjectParameter("id", typeof(int));
 
 
-        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteComponent", groupIdParameter);
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteUser", idParameter);
+    }
+
+
+    public virtual int DeleteWorkspaceTemplate(Nullable<int> id)
+    {
+
+        var idParameter = id.HasValue ?
+            new ObjectParameter("id", id) :
+            new ObjectParameter("id", typeof(int));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteWorkspaceTemplate", idParameter);
     }
 
 }

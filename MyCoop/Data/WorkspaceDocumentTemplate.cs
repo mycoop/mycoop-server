@@ -15,28 +15,20 @@ namespace MyCoop.Data
 using System;
     using System.Collections.Generic;
     
-public partial class Component
+public partial class WorkspaceDocumentTemplate
 {
 
-    public Component()
-    {
+    public int WorkspaceTemplateId { get; set; }
 
-        this.DocumentTemplates = new HashSet<DocumentTemplate>();
+    public int DocumentTemplateId { get; set; }
 
-        this.WorkspaceTemplateComponents = new HashSet<WorkspaceTemplateComponent>();
-
-    }
-
-
-    public int Id { get; set; }
-
-    public string Name { get; set; }
+    public System.DateTime CreationTime { get; set; }
 
 
 
-    public virtual ICollection<DocumentTemplate> DocumentTemplates { get; set; }
+    public virtual DocumentTemplate DocumentTemplate { get; set; }
 
-    public virtual ICollection<WorkspaceTemplateComponent> WorkspaceTemplateComponents { get; set; }
+    public virtual WorkspaceTemplate WorkspaceTemplate { get; set; }
 
 }
 

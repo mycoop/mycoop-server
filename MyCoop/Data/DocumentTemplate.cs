@@ -21,7 +21,7 @@ public partial class DocumentTemplate
     public DocumentTemplate()
     {
 
-        this.WorkspaceTemplates = new HashSet<WorkspaceTemplate>();
+        this.WorkspaceDocumentTemplates = new HashSet<WorkspaceDocumentTemplate>();
 
     }
 
@@ -44,7 +44,7 @@ public partial class DocumentTemplate
 
     public virtual Component Component { get; set; }
 
-    public virtual ICollection<WorkspaceTemplate> WorkspaceTemplates { get; set; }
+    public virtual ICollection<WorkspaceDocumentTemplate> WorkspaceDocumentTemplates { get; set; }
 
 }
 

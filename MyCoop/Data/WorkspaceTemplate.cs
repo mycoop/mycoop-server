@@ -23,9 +23,9 @@ public partial class WorkspaceTemplate
 
         this.OrgUnits = new HashSet<OrgUnit>();
 
-        this.DocumentTemplates = new HashSet<DocumentTemplate>();
+        this.WorkspaceDocumentTemplates = new HashSet<WorkspaceDocumentTemplate>();
 
-        this.Components = new HashSet<Component>();
+        this.WorkspaceTemplateComponents = new HashSet<WorkspaceTemplateComponent>();
 
     }
 
@@ -50,9 +50,9 @@ public partial class WorkspaceTemplate
 
     public virtual User User1 { get; set; }
 
-    public virtual ICollection<DocumentTemplate> DocumentTemplates { get; set; }
+    public virtual ICollection<WorkspaceDocumentTemplate> WorkspaceDocumentTemplates { get; set; }
 
-    public virtual ICollection<Component> Components { get; set; }
+    public virtual ICollection<WorkspaceTemplateComponent> WorkspaceTemplateComponents { get; set; }
 
 }
 

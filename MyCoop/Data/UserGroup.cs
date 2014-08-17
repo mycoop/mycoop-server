@@ -22,7 +22,7 @@ public partial class UserGroup
 
     public int GroupId { get; set; }
 
-    public System.DateTime CreatedDate { get; set; }
+    public System.DateTime CreationTime { get; set; }
 
 
 

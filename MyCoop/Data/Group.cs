@@ -34,9 +34,9 @@ public partial class Group
 
     public string Description { get; set; }
 
-    public System.DateTime ModifiedDate { get; set; }
+    public System.DateTime ModificationTime { get; set; }
 
-    public System.DateTime CreatedDate { get; set; }
+    public System.DateTime CreationTime { get; set; }
 
     public int ModifiedByUserId { get; set; }
 

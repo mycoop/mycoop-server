@@ -9,8 +9,8 @@ namespace MyCoop.WebApi.Models.Groups
 
         public EditGroupModel()
         {
-            _group.CreatedDate = DateTime.UtcNow;
-            _group.ModifiedDate = DateTime.UtcNow;
+            _group.CreationTime = DateTime.UtcNow;
+            _group.ModificationTime = DateTime.UtcNow;
         }
 
         public string Name

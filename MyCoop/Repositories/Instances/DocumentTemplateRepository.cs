@@ -23,7 +23,7 @@ namespace MyCoop.Repositories.Instances
 
         public Task<DocumentTemplate[]> GetValuesByWorkspaceTemplateId(int id)
         {
-            return GetEntities().Where(dt => dt.WorkspaceTemplates.Any(wt => wt.Id == id)).ToArrayAsync();
+            return GetEntities().Where(dt => dt.WorkspaceDocumentTemplates.Any(wt => wt.WorkspaceTemplateId == id)).ToArrayAsync();
         }
     }
 }

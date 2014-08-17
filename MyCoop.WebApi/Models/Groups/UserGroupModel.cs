@@ -25,11 +25,11 @@ namespace MyCoop.WebApi.Models.Groups
         }
         public DateTime CreationTime
         {
-            get { return _userGroup.Group.CreatedDate; }
+            get { return _userGroup.Group.CreationTime; }
         }
         public DateTime ModificationTime
         {
-            get { return _userGroup.Group.ModifiedDate; }
+            get { return _userGroup.Group.ModificationTime; }
         }
         public int CreatedBy
         {
@@ -42,7 +42,7 @@ namespace MyCoop.WebApi.Models.Groups
 
         public DateTime AddTime
         {
-            get { return _userGroup.CreatedDate; }
+            get { return _userGroup.CreationTime; }
         }
     }
 }

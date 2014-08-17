@@ -68,9 +68,51 @@ namespace MyCoop.WebApi.Controllers
 
         [HttpGet]
         [Route("{id}/document-template")]
-        public async Task<HttpResponseMessage> GetGroups(int id)
+        public async Task<HttpResponseMessage> GetDocumentsByWorkspaceTemplateId(int id)
         {
             return Request.CreateResponse(HttpStatusCode.OK, await Service.Get<ITemplateService>().GetDocumentsByWorkspaceTemplateId(id));
+        }
+
+        [HttpPost]
+        [Route("{workspaceTemplateId}/document-template/{documentTemplateId}")]
+        public async Task<HttpResponseMessage> AddDocumentToWorkspaceTemplate([FromUri]int workspaceTemplateId, [FromUri]int documentTemplateId)
+        {
+            Log.Out.BeginInfo("AddDocument ({0}) To WorkspaceTemplate ({1})", workspaceTemplateId, documentTemplateId);
+            await Service.Get<ITemplateService>().AddDocumentToWorkspaceTemplate(workspaceTemplateId, documentTemplateId);
+            Log.Out.EndInfo("AddDocument ({0}) To WorkspaceTemplate ({1})", workspaceTemplateId, documentTemplateId);
+            return Request.CreateResponse(HttpStatusCode.OK);
+
+        }
+
+        [HttpDelete]
+        [Route("{workspaceTemplateId}/document-template/{documentTemplateId}")]
+        public async Task<HttpResponseMessage> RemoveDocumentFromWorkspaceTemplate([FromUri]int workspaceTemplateId, [FromUri]int documentTemplateId)
+        {
+            Log.Out.BeginInfo("RemoveDocument ({0}) From WorkspaceTemplate ({1})", workspaceTemplateId, documentTemplateId);
+            await Service.Get<ITemplateService>().RemoveDocumentFromWorkspaceTemplate(workspaceTemplateId, documentTemplateId);
+            Log.Out.EndInfo("RemoveDocument ({0}) From WorkspaceTemplate ({1})", workspaceTemplateId, documentTemplateId);
+            return Request.CreateResponse(HttpStatusCode.OK);
+        }
+
+        [HttpPost]
+        [Route("{workspaceTemplateId}/component-template/{componentTemplateId}")]
+        public async Task<HttpResponseMessage> AddComponentToWorkspaceTemplate([FromUri]int workspaceTemplateId, [FromUri]int componentTemplateId)
+        {
+            Log.Out.BeginInfo("AddComponent ({0}) To WorkspaceTemplate ({1})", workspaceTemplateId, componentTemplateId);
+            await Service.Get<ITemplateService>().AddComponentToWorkspaceTemplate(workspaceTemplateId, componentTemplateId);
+            Log.Out.EndInfo("AddComponent ({0}) To WorkspaceTemplate ({1})", workspaceTemplateId, componentTemplateId);
+            return Request.CreateResponse(HttpStatusCode.OK);
+
+        }
+
+        [HttpDelete]
+        [Route("{workspaceTemplateId}/component-template/{componentTemplateId}")]
+        public async Task<HttpResponseMessage> RemoveComponentFromWorkspaceTemplate([FromUri]int workspaceTemplateId, [FromUri]int componentTemplateId)
+        {
+            Log.Out.BeginInfo("RemoveComponent ({0}) From WorkspaceTemplate ({1})", workspaceTemplateId, componentTemplateId);
+            await Service.Get<ITemplateService>().RemoveComponentFromWorkspaceTemplate(workspaceTemplateId, componentTemplateId);
+            Log.Out.EndInfo("RemoveComponent ({0}) From WorkspaceTemplate ({1})", workspaceTemplateId, componentTemplateId);
+            return Request.CreateResponse(HttpStatusCode.OK);
         }
     }
 }

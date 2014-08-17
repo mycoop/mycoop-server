@@ -39,7 +39,7 @@ namespace MyCoop.WebApi.Models.Users
 
         public DateTime AddTime
         {
-            get { return _userGroup.CreatedDate; }
+            get { return _userGroup.CreationTime; }
         }
     }
 }

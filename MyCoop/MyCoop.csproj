@@ -101,7 +101,13 @@
     <Compile Include="Data\UserGroup.cs">
       <DependentUpon>CoopModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Data\WorkspaceDocumentTemplate.cs">
+      <DependentUpon>CoopModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Data\WorkspaceTemplate.cs">
+      <DependentUpon>CoopModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\WorkspaceTemplateComponent.cs">
       <DependentUpon>CoopModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Helpers\SecurityHelper.cs" />
@@ -117,6 +123,7 @@
     <Compile Include="Repositories\Instances\RepositoryBase.cs" />
     <Compile Include="Repositories\Instances\UserGroupRepository.cs" />
     <Compile Include="Repositories\Instances\UserRepository.cs" />
+    <Compile Include="Repositories\Instances\WorkspaceDocumentTemplateRepository.cs" />
     <Compile Include="Repositories\IOrgUnitRepository.cs" />
     <Compile Include="Repositories\IPermissionLevelRepository.cs" />
     <Compile Include="Repositories\IRepository.cs" />
@@ -125,7 +132,10 @@
     <Compile Include="Repositories\IUserGroupRepository.cs" />
     <Compile Include="Repositories\IUserRepository.cs" />
     <Compile Include="Repositories\Instances\WorkspaceTemplateRepository.cs" />
+    <Compile Include="Repositories\IWorkspaceDocumentTemplateRepository.cs" />
+    <Compile Include="Repositories\IWorkspaceTemplateComponentRepository.cs" />
     <Compile Include="Repositories\IWorkspaceTemplateRepository.cs" />
+    <Compile Include="Repositories\Instances\WorkspaceTemplateComponentRepository.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

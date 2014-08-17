@@ -5,19 +5,23 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="b749d490547e4f618460740bd1ce2e37" Name="Diagram1">
-        <EntityTypeShape EntityType="CoopModel.Component" Width="1.5" PointX="3.75" PointY="7.625" />
-        <EntityTypeShape EntityType="CoopModel.DocumentTemplate" Width="1.5" PointX="6" PointY="7.125" />
-        <EntityTypeShape EntityType="CoopModel.Group" Width="1.5" PointX="5.25" PointY="20.625" />
-        <EntityTypeShape EntityType="CoopModel.OrgUnitGroupPermission" Width="1.5" PointX="10.5" PointY="15.625" />
-        <EntityTypeShape EntityType="CoopModel.OrgUnit" Width="1.5" PointX="5.25" PointY="14.5" />
-        <EntityTypeShape EntityType="CoopModel.OrgUnitUserPermission" Width="1.5" PointX="5.25" PointY="11.5" />
-        <EntityTypeShape EntityType="CoopModel.PermissionLevel" Width="1.5" PointX="0.75" PointY="9.625" />
+        <EntityTypeShape EntityType="CoopModel.Component" Width="1.5" PointX="3" PointY="7.5" />
+        <EntityTypeShape EntityType="CoopModel.DocumentTemplate" Width="1.5" PointX="5.25" PointY="7" />
+        <EntityTypeShape EntityType="CoopModel.Group" Width="1.5" PointX="5.25" PointY="19.625" />
+        <EntityTypeShape EntityType="CoopModel.OrgUnitGroupPermission" Width="1.5" PointX="9.75" PointY="15.5" />
+        <EntityTypeShape EntityType="CoopModel.OrgUnit" Width="1.5" PointX="7.5" PointY="14.625" />
+        <EntityTypeShape EntityType="CoopModel.OrgUnitUserPermission" Width="1.5" PointX="5.25" PointY="15.375" />
+        <EntityTypeShape EntityType="CoopModel.PermissionLevel" Width="1.5" PointX="0.75" PointY="10.5" />
         <EntityTypeShape EntityType="CoopModel.SysEvent" Width="1.5" PointX="3" PointY="1" />
         <EntityTypeShape EntityType="CoopModel.SysEventType" Width="1.5" PointX="0.75" PointY="1.25" />
-        <EntityTypeShape EntityType="CoopModel.UserGroup" Width="1.5" PointX="7.5" PointY="16.625" />
-        <EntityTypeShape EntityType="CoopModel.User" Width="1.5" PointX="3" PointY="11.5" />
-        <EntityTypeShape EntityType="CoopModel.WorkspaceTemplate" Width="1.5" PointX="8.25" PointY="11.875" />
+        <EntityTypeShape EntityType="CoopModel.UserGroup" Width="1.5" PointX="7.5" PointY="19.5" />
+        <EntityTypeShape EntityType="CoopModel.User" Width="1.5" PointX="3" PointY="12.25" />
+        <EntityTypeShape EntityType="CoopModel.WorkspaceDocumentTemplate" Width="1.5" PointX="7.5" PointY="8.375" />
+        <EntityTypeShape EntityType="CoopModel.WorkspaceTemplateComponent" Width="1.5" PointX="7.5" PointY="11.375" />
+        <EntityTypeShape EntityType="CoopModel.WorkspaceTemplate" Width="1.5" PointX="5.25" PointY="10.875" />
         <AssociationConnector Association="CoopModel.FK_DocumentTemplates_Components" />
+        <AssociationConnector Association="CoopModel.FK_WorkspaceTemplateComponents_Components" />
+        <AssociationConnector Association="CoopModel.FK_WorkspaceDocumentTemplates_DocumentTemplates" />
         <AssociationConnector Association="CoopModel.FK_Groups_Users" />
         <AssociationConnector Association="CoopModel.FK_Groups_Users1" />
         <AssociationConnector Association="CoopModel.FK_OrgUnitGroupPermissions_Groups" />
@@ -35,8 +39,8 @@
         <AssociationConnector Association="CoopModel.FK_UserGroups_Users" />
         <AssociationConnector Association="CoopModel.FK_WorkspaceTemplates_Users" />
         <AssociationConnector Association="CoopModel.FK_WorkspaceTemplates_Users1" />
-        <AssociationConnector Association="CoopModel.WorkspaceDocumentTemplates" />
-        <AssociationConnector Association="CoopModel.WorkspaceTemplateComponents" />
+        <AssociationConnector Association="CoopModel.FK_WorkspaceDocumentTemplates_WorkspaceTemplates" />
+        <AssociationConnector Association="CoopModel.FK_WorkspaceTemplateComponents_WorkspaceTemplates" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

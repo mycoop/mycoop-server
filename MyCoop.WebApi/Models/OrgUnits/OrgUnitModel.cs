@@ -54,7 +54,7 @@ namespace MyCoop.WebApi.Models.OrgUnits
             get { return _orgUnit.ParentId; }
         }
 
-        public int WorkspaceTemplateId
+        public int? WorkspaceTemplateId
         {
             get { return _orgUnit.WorkspaceTemplateId; }
         }
