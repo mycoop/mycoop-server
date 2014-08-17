@@ -77,30 +77,25 @@ namespace MyCoop.WebApi.Controllers
             var provider = GetMultipartProvider();
             var result = await Request.Content.ReadAsMultipartAsync(provider);
 
-
-
             var originalFileName = GetDeserializedFileName(result.FileData.First());
             var uploadedFileInfo = new FileInfo(result.FileData.First().LocalFileName);
-            
 
-
-            var model = GetFormData<EditDocumentTemplateModel>(result);
-
-            var temlateName = String.Format("{0}_{1}{2}", model.Name, Guid.NewGuid(), Path.GetExtension(originalFileName));
+            var temlateName = String.Format("{0}_{1}{2}", Path.GetFileNameWithoutExtension(originalFileName), Guid.NewGuid(), Path.GetExtension(originalFileName));
             var temlatePath = String.Format("{0}\\{1}", uploadedFileInfo.DirectoryName, temlateName);
             uploadedFileInfo.MoveTo(temlatePath);
 
+            Log.Out.Info("Save file: {0}", temlatePath);
+
+            var model = GetFormData<EditDocumentTemplateModel>(result);
 
             var doc = new Document(temlatePath);
             model.PagesCount = doc.PageCount;
 
             model.Link = String.Format("/Content/DocumentTemplates/{0}", temlateName);
 
-            Log.Out.Info(model.ToJson(), "GetFormData");
+            Log.Out.Info(model.ToJson(), "Form model");
 
             var id = await Service.Get<ITemplateService>().AddDocumentTemplate(model);
-
-            
 
             Log.Out.EndInfo("AddDocumentTemplate Id: {0}", id);
             return Request.CreateResponse(HttpStatusCode.OK, new { Id = id });
@@ -133,7 +128,7 @@ namespace MyCoop.WebApi.Controllers
             return Path.GetFileName(fileName.Trim('\"'));
         }
 
-        public string GetFileName(MultipartFileData fileData)
+        private string GetFileName(MultipartFileData fileData)
         {
             return fileData.Headers.ContentDisposition.FileName;
         }

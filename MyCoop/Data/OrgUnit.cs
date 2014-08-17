@@ -21,7 +21,11 @@ public partial class OrgUnit
     public OrgUnit()
     {
 
-        this.Children = new HashSet<OrgUnit>();
+        this.OrgUnitGroupPermissions = new HashSet<OrgUnitGroupPermission>();
+
+        this.OrgUnits1 = new HashSet<OrgUnit>();
+
+        this.OrgUnitUserPermissions = new HashSet<OrgUnitUserPermission>();
 
     }
 
@@ -44,13 +48,21 @@ public partial class OrgUnit
 
     public double Lng { get; set; }
 
+    public int WorkspaceTemplateId { get; set; }
 
 
-    public virtual ICollection<OrgUnit> Children { get; set; }
 
-    public virtual OrgUnit Parent { get; set; }
+    public virtual ICollection<OrgUnitGroupPermission> OrgUnitGroupPermissions { get; set; }
+
+    public virtual ICollection<OrgUnit> OrgUnits1 { get; set; }
+
+    public virtual OrgUnit OrgUnit1 { get; set; }
 
     public virtual User User { get; set; }
+
+    public virtual WorkspaceTemplate WorkspaceTemplate { get; set; }
+
+    public virtual ICollection<OrgUnitUserPermission> OrgUnitUserPermissions { get; set; }
 
 }
 

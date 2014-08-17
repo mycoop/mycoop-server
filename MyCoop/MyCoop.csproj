@@ -53,9 +53,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration\CryptographySection.cs" />
-    <Compile Include="Data\Company.cs">
-      <DependentUpon>CoopModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Data\Component.cs">
       <DependentUpon>CoopModel.tt</DependentUpon>
     </Compile>
@@ -83,6 +80,12 @@
     <Compile Include="Data\OrgUnit.cs">
       <DependentUpon>CoopModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Data\OrgUnitGroupPermission.cs">
+      <DependentUpon>CoopModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\OrgUnitUserPermission.cs">
+      <DependentUpon>CoopModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Data\PermissionLevel.cs">
       <DependentUpon>CoopModel.tt</DependentUpon>
     </Compile>
@@ -96,6 +99,9 @@
       <DependentUpon>CoopModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Data\UserGroup.cs">
+      <DependentUpon>CoopModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\WorkspaceTemplate.cs">
       <DependentUpon>CoopModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Helpers\SecurityHelper.cs" />

@@ -18,6 +18,14 @@ using System;
 public partial class DocumentTemplate
 {
 
+    public DocumentTemplate()
+    {
+
+        this.WorkspaceTemplates = new HashSet<WorkspaceTemplate>();
+
+    }
+
+
     public int Id { get; set; }
 
     public string Name { get; set; }
@@ -35,6 +43,8 @@ public partial class DocumentTemplate
 
 
     public virtual Component Component { get; set; }
+
+    public virtual ICollection<WorkspaceTemplate> WorkspaceTemplates { get; set; }
 
 }
 

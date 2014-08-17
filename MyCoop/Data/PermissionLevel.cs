@@ -21,6 +21,10 @@ public partial class PermissionLevel
     public PermissionLevel()
     {
 
+        this.OrgUnitGroupPermissions = new HashSet<OrgUnitGroupPermission>();
+
+        this.OrgUnitUserPermissions = new HashSet<OrgUnitUserPermission>();
+
         this.Users = new HashSet<User>();
 
     }
@@ -31,6 +35,10 @@ public partial class PermissionLevel
     public string Name { get; set; }
 
 
+
+    public virtual ICollection<OrgUnitGroupPermission> OrgUnitGroupPermissions { get; set; }
+
+    public virtual ICollection<OrgUnitUserPermission> OrgUnitUserPermissions { get; set; }
 
     public virtual ICollection<User> Users { get; set; }
 

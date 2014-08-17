@@ -35,25 +35,29 @@ public partial class CoopEntities : DbContext
     }
 
 
-    public virtual DbSet<Company> Companies { get; set; }
+    public virtual DbSet<Component> Components { get; set; }
+
+    public virtual DbSet<DocumentTemplate> DocumentTemplates { get; set; }
 
     public virtual DbSet<Group> Groups { get; set; }
 
-    public virtual DbSet<PermissionLevel> PermissionLevels { get; set; }
-
-    public virtual DbSet<UserGroup> UserGroups { get; set; }
-
-    public virtual DbSet<User> Users { get; set; }
+    public virtual DbSet<OrgUnitGroupPermission> OrgUnitGroupPermissions { get; set; }
 
     public virtual DbSet<OrgUnit> OrgUnits { get; set; }
+
+    public virtual DbSet<OrgUnitUserPermission> OrgUnitUserPermissions { get; set; }
+
+    public virtual DbSet<PermissionLevel> PermissionLevels { get; set; }
 
     public virtual DbSet<SysEvent> SysEvents { get; set; }
 
     public virtual DbSet<SysEventType> SysEventTypes { get; set; }
 
-    public virtual DbSet<Component> Components { get; set; }
+    public virtual DbSet<UserGroup> UserGroups { get; set; }
 
-    public virtual DbSet<DocumentTemplate> DocumentTemplates { get; set; }
+    public virtual DbSet<User> Users { get; set; }
+
+    public virtual DbSet<WorkspaceTemplate> WorkspaceTemplates { get; set; }
 
 
     public virtual int DeleteGroup(Nullable<int> groupId)

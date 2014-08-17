@@ -53,6 +53,12 @@ namespace MyCoop.WebApi.Models.OrgUnits
             set { _orgUnit.ParentId = value; }
         }
 
+        public int WorkspaceTemplateId
+        {
+            get { return _orgUnit.WorkspaceTemplateId; }
+            set { _orgUnit.WorkspaceTemplateId = value; }
+        }
+
         public OrgUnit GetEntity()
         {
             return _orgUnit;

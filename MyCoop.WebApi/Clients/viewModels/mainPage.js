@@ -149,13 +149,13 @@ App.ViewModels.MainPageModel = (function () {
                name: "org-unit-add",
                url: config.apiPrefix + "orgunit",
                method: methods[1],
-               body: '{"name":"sfasf", "address": "qwrqw", "location": { "lat":"54.55", "lng":"1.2" }, "ownerId": "1", "parentId": "1"}'
+               body: '{"name":"sfasf", "address": "qwrqw", "location": { "lat":"54.55", "lng":"1.2" }, "ownerId": "1", "parentId": "1", "workspaceTemplateId":"1"}'
            },
            {
                name: "org-unit-update",
                url: config.apiPrefix + "orgunit/1",
                method: methods[1],
-               body: '{"name":"vasja", "address": "qwrqw", "location": { "lat":"77.55", "lng":"5.2" }, "ownerId": "1", "parentId": "1"}'
+               body: '{"name":"vasja", "address": "qwrqw", "location": { "lat":"77.55", "lng":"5.2" }, "ownerId": "1", "parentId": "1", "workspaceTemplateId":"1"}'
            },
            {
                name: "org-unit-delete",

@@ -13,8 +13,8 @@ namespace MyCoop.WebApi.Models.Groups
         public GroupModel(Group group)
         {
             _group = group;
-            _createdBy = new UserModel(_group.CreatedBy);
-            _modifiedBy = new UserModel(_group.ModifiedBy);
+            _createdBy = new UserModel(_group.User1);
+            _modifiedBy = new UserModel(_group.User);
         }
         public int Id
         {

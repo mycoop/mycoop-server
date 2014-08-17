@@ -21,6 +21,8 @@ public partial class Group
     public Group()
     {
 
+        this.OrgUnitGroupPermissions = new HashSet<OrgUnitGroupPermission>();
+
         this.UserGroups = new HashSet<UserGroup>();
 
     }
@@ -42,9 +44,11 @@ public partial class Group
 
 
 
-    public virtual User ModifiedBy { get; set; }
+    public virtual User User { get; set; }
 
-    public virtual User CreatedBy { get; set; }
+    public virtual User User1 { get; set; }
+
+    public virtual ICollection<OrgUnitGroupPermission> OrgUnitGroupPermissions { get; set; }
 
     public virtual ICollection<UserGroup> UserGroups { get; set; }
 

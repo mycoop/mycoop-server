@@ -21,13 +21,19 @@ public partial class User
     public User()
     {
 
-        this.ModifiedGroups = new HashSet<Group>();
+        this.Groups = new HashSet<Group>();
 
-        this.CreatedGroups = new HashSet<Group>();
+        this.Groups1 = new HashSet<Group>();
+
+        this.OrgUnits = new HashSet<OrgUnit>();
+
+        this.OrgUnitUserPermissions = new HashSet<OrgUnitUserPermission>();
 
         this.UserGroups = new HashSet<UserGroup>();
 
-        this.OrgUnits = new HashSet<OrgUnit>();
+        this.WorkspaceTemplates = new HashSet<WorkspaceTemplate>();
+
+        this.WorkspaceTemplates1 = new HashSet<WorkspaceTemplate>();
 
     }
 
@@ -50,15 +56,21 @@ public partial class User
 
 
 
-    public virtual ICollection<Group> ModifiedGroups { get; set; }
+    public virtual ICollection<Group> Groups { get; set; }
 
-    public virtual ICollection<Group> CreatedGroups { get; set; }
+    public virtual ICollection<Group> Groups1 { get; set; }
+
+    public virtual ICollection<OrgUnit> OrgUnits { get; set; }
+
+    public virtual ICollection<OrgUnitUserPermission> OrgUnitUserPermissions { get; set; }
 
     public virtual PermissionLevel PermissionLevel { get; set; }
 
     public virtual ICollection<UserGroup> UserGroups { get; set; }
 
-    public virtual ICollection<OrgUnit> OrgUnits { get; set; }
+    public virtual ICollection<WorkspaceTemplate> WorkspaceTemplates { get; set; }
+
+    public virtual ICollection<WorkspaceTemplate> WorkspaceTemplates1 { get; set; }
 
 }
 

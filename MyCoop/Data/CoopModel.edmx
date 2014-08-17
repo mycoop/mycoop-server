@@ -5,14 +5,6 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="Хранилище CoopModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="Companies">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Address" Type="nvarchar" MaxLength="50" Nullable="false" />
-        </EntityType>
         <EntityType Name="Components">
           <Key>
             <PropertyRef Name="Id" />
@@ -44,6 +36,16 @@
           <Property Name="ModifiedByUserId" Type="int" Nullable="false" />
           <Property Name="CreatedByUserId" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="OrgUnitGroupPermissions">
+          <Key>
+            <PropertyRef Name="OrgUnitId" />
+            <PropertyRef Name="GroupId" />
+            <PropertyRef Name="PermissionLevelId" />
+          </Key>
+          <Property Name="OrgUnitId" Type="int" Nullable="false" />
+          <Property Name="GroupId" Type="int" Nullable="false" />
+          <Property Name="PermissionLevelId" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="OrgUnits">
           <Key>
             <PropertyRef Name="Id" />
@@ -57,6 +59,17 @@
           <Property Name="ParentId" Type="int" />
           <Property Name="Lat" Type="float" Nullable="false" />
           <Property Name="Lng" Type="float" Nullable="false" />
+          <Property Name="WorkspaceTemplateId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OrgUnitUserPermissions">
+          <Key>
+            <PropertyRef Name="OrgUnitId" />
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="PermissionLevelId" />
+          </Key>
+          <Property Name="OrgUnitId" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="PermissionLevelId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="PermissionLevels">
           <Key>
@@ -106,6 +119,33 @@
           <Property Name="PermissionLevelId" Type="int" Nullable="false" />
           <Property Name="LastAcitve" Type="datetime2" Precision="7" Nullable="false" />
         </EntityType>
+        <EntityType Name="WorkspaceDocumentTemplates">
+          <Key>
+            <PropertyRef Name="WorkspaceTemplateId" />
+            <PropertyRef Name="DocumentTemplateId" />
+          </Key>
+          <Property Name="WorkspaceTemplateId" Type="int" Nullable="false" />
+          <Property Name="DocumentTemplateId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="WorkspaceTemplateComponents">
+          <Key>
+            <PropertyRef Name="WorkspaceTemplateId" />
+            <PropertyRef Name="ComponentId" />
+          </Key>
+          <Property Name="WorkspaceTemplateId" Type="int" Nullable="false" />
+          <Property Name="ComponentId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="WorkspaceTemplates">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreationTime" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="ModificationTime" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="CreatedByUserId" Type="int" Nullable="false" />
+          <Property Name="ModifiedByUserId" Type="int" Nullable="false" />
+        </EntityType>
         <Association Name="FK_DocumentTemplates_Components">
           <End Role="Components" Type="Self.Components" Multiplicity="0..1" />
           <End Role="DocumentTemplates" Type="Self.DocumentTemplates" Multiplicity="*" />
@@ -142,6 +182,42 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_OrgUnitGroupPermissions_Groups">
+          <End Role="Groups" Type="Self.Groups" Multiplicity="1" />
+          <End Role="OrgUnitGroupPermissions" Type="Self.OrgUnitGroupPermissions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Groups">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrgUnitGroupPermissions">
+              <PropertyRef Name="GroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrgUnitGroupPermissions_OrgUnits">
+          <End Role="OrgUnits" Type="Self.OrgUnits" Multiplicity="1" />
+          <End Role="OrgUnitGroupPermissions" Type="Self.OrgUnitGroupPermissions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrgUnits">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrgUnitGroupPermissions">
+              <PropertyRef Name="OrgUnitId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrgUnitGroupPermissions_PermissionLevels">
+          <End Role="PermissionLevels" Type="Self.PermissionLevels" Multiplicity="1" />
+          <End Role="OrgUnitGroupPermissions" Type="Self.OrgUnitGroupPermissions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PermissionLevels">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrgUnitGroupPermissions">
+              <PropertyRef Name="PermissionLevelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_OrgUnits_OrgUnits">
           <End Role="OrgUnits" Type="Self.OrgUnits" Multiplicity="0..1" />
           <End Role="OrgUnits1" Type="Self.OrgUnits" Multiplicity="*" />
@@ -163,6 +239,54 @@
             </Principal>
             <Dependent Role="OrgUnits">
               <PropertyRef Name="OwnerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrgUnits_WorkspaceTemplates">
+          <End Role="WorkspaceTemplates" Type="Self.WorkspaceTemplates" Multiplicity="1" />
+          <End Role="OrgUnits" Type="Self.OrgUnits" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WorkspaceTemplates">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrgUnits">
+              <PropertyRef Name="WorkspaceTemplateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrgUnitUserPermissions_OrgUnits">
+          <End Role="OrgUnits" Type="Self.OrgUnits" Multiplicity="1" />
+          <End Role="OrgUnitUserPermissions" Type="Self.OrgUnitUserPermissions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrgUnits">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrgUnitUserPermissions">
+              <PropertyRef Name="OrgUnitId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrgUnitUserPermissions_PermissionLevels">
+          <End Role="PermissionLevels" Type="Self.PermissionLevels" Multiplicity="1" />
+          <End Role="OrgUnitUserPermissions" Type="Self.OrgUnitUserPermissions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PermissionLevels">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrgUnitUserPermissions">
+              <PropertyRef Name="PermissionLevelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrgUnitUserPermissions_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="OrgUnitUserPermissions" Type="Self.OrgUnitUserPermissions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrgUnitUserPermissions">
+              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -214,6 +338,78 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_WorkspaceDocumentTemplates_DocumentTemplates">
+          <End Role="DocumentTemplates" Type="Self.DocumentTemplates" Multiplicity="1" />
+          <End Role="WorkspaceDocumentTemplates" Type="Self.WorkspaceDocumentTemplates" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DocumentTemplates">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="WorkspaceDocumentTemplates">
+              <PropertyRef Name="DocumentTemplateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WorkspaceDocumentTemplates_WorkspaceTemplates">
+          <End Role="WorkspaceTemplates" Type="Self.WorkspaceTemplates" Multiplicity="1" />
+          <End Role="WorkspaceDocumentTemplates" Type="Self.WorkspaceDocumentTemplates" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WorkspaceTemplates">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="WorkspaceDocumentTemplates">
+              <PropertyRef Name="WorkspaceTemplateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WorkspaceTemplateComponents_Components">
+          <End Role="Components" Type="Self.Components" Multiplicity="1" />
+          <End Role="WorkspaceTemplateComponents" Type="Self.WorkspaceTemplateComponents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Components">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="WorkspaceTemplateComponents">
+              <PropertyRef Name="ComponentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WorkspaceTemplateComponents_WorkspaceTemplates">
+          <End Role="WorkspaceTemplates" Type="Self.WorkspaceTemplates" Multiplicity="1" />
+          <End Role="WorkspaceTemplateComponents" Type="Self.WorkspaceTemplateComponents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WorkspaceTemplates">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="WorkspaceTemplateComponents">
+              <PropertyRef Name="WorkspaceTemplateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WorkspaceTemplates_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="WorkspaceTemplates" Type="Self.WorkspaceTemplates" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="WorkspaceTemplates">
+              <PropertyRef Name="CreatedByUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WorkspaceTemplates_Users1">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="WorkspaceTemplates" Type="Self.WorkspaceTemplates" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="WorkspaceTemplates">
+              <PropertyRef Name="ModifiedByUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Function Name="DeleteComponent" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="groupId" Type="int" Mode="In" />
         </Function>
@@ -224,16 +420,20 @@
           <Parameter Name="userId" Type="int" Mode="In" />
         </Function>
         <EntityContainer Name="Хранилище CoopModelContainer">
-          <EntitySet Name="Companies" EntityType="Self.Companies" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Components" EntityType="Self.Components" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DocumentTemplates" EntityType="Self.DocumentTemplates" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Groups" EntityType="Self.Groups" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrgUnitGroupPermissions" EntityType="Self.OrgUnitGroupPermissions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OrgUnits" EntityType="Self.OrgUnits" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrgUnitUserPermissions" EntityType="Self.OrgUnitUserPermissions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PermissionLevels" EntityType="Self.PermissionLevels" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SysEvents" EntityType="Self.SysEvents" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SysEventTypes" EntityType="Self.SysEventTypes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserGroups" EntityType="Self.UserGroups" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WorkspaceDocumentTemplates" EntityType="Self.WorkspaceDocumentTemplates" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WorkspaceTemplateComponents" EntityType="Self.WorkspaceTemplateComponents" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WorkspaceTemplates" EntityType="Self.WorkspaceTemplates" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_DocumentTemplates_Components" Association="Self.FK_DocumentTemplates_Components">
             <End Role="Components" EntitySet="Components" />
             <End Role="DocumentTemplates" EntitySet="DocumentTemplates" />
@@ -246,6 +446,18 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="Groups" EntitySet="Groups" />
           </AssociationSet>
+          <AssociationSet Name="FK_OrgUnitGroupPermissions_Groups" Association="Self.FK_OrgUnitGroupPermissions_Groups">
+            <End Role="Groups" EntitySet="Groups" />
+            <End Role="OrgUnitGroupPermissions" EntitySet="OrgUnitGroupPermissions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrgUnitGroupPermissions_OrgUnits" Association="Self.FK_OrgUnitGroupPermissions_OrgUnits">
+            <End Role="OrgUnits" EntitySet="OrgUnits" />
+            <End Role="OrgUnitGroupPermissions" EntitySet="OrgUnitGroupPermissions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrgUnitGroupPermissions_PermissionLevels" Association="Self.FK_OrgUnitGroupPermissions_PermissionLevels">
+            <End Role="PermissionLevels" EntitySet="PermissionLevels" />
+            <End Role="OrgUnitGroupPermissions" EntitySet="OrgUnitGroupPermissions" />
+          </AssociationSet>
           <AssociationSet Name="FK_OrgUnits_OrgUnits" Association="Self.FK_OrgUnits_OrgUnits">
             <End Role="OrgUnits" EntitySet="OrgUnits" />
             <End Role="OrgUnits1" EntitySet="OrgUnits" />
@@ -253,6 +465,22 @@
           <AssociationSet Name="FK_OrgUnits_Users" Association="Self.FK_OrgUnits_Users">
             <End Role="Users" EntitySet="Users" />
             <End Role="OrgUnits" EntitySet="OrgUnits" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrgUnits_WorkspaceTemplates" Association="Self.FK_OrgUnits_WorkspaceTemplates">
+            <End Role="WorkspaceTemplates" EntitySet="WorkspaceTemplates" />
+            <End Role="OrgUnits" EntitySet="OrgUnits" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrgUnitUserPermissions_OrgUnits" Association="Self.FK_OrgUnitUserPermissions_OrgUnits">
+            <End Role="OrgUnits" EntitySet="OrgUnits" />
+            <End Role="OrgUnitUserPermissions" EntitySet="OrgUnitUserPermissions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrgUnitUserPermissions_PermissionLevels" Association="Self.FK_OrgUnitUserPermissions_PermissionLevels">
+            <End Role="PermissionLevels" EntitySet="PermissionLevels" />
+            <End Role="OrgUnitUserPermissions" EntitySet="OrgUnitUserPermissions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrgUnitUserPermissions_Users" Association="Self.FK_OrgUnitUserPermissions_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="OrgUnitUserPermissions" EntitySet="OrgUnitUserPermissions" />
           </AssociationSet>
           <AssociationSet Name="FK_SysEvents_SysEventTypes" Association="Self.FK_SysEvents_SysEventTypes">
             <End Role="SysEventTypes" EntitySet="SysEventTypes" />
@@ -270,17 +498,61 @@
             <End Role="PermissionLevels" EntitySet="PermissionLevels" />
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
+          <AssociationSet Name="FK_WorkspaceDocumentTemplates_DocumentTemplates" Association="Self.FK_WorkspaceDocumentTemplates_DocumentTemplates">
+            <End Role="DocumentTemplates" EntitySet="DocumentTemplates" />
+            <End Role="WorkspaceDocumentTemplates" EntitySet="WorkspaceDocumentTemplates" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WorkspaceDocumentTemplates_WorkspaceTemplates" Association="Self.FK_WorkspaceDocumentTemplates_WorkspaceTemplates">
+            <End Role="WorkspaceTemplates" EntitySet="WorkspaceTemplates" />
+            <End Role="WorkspaceDocumentTemplates" EntitySet="WorkspaceDocumentTemplates" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WorkspaceTemplateComponents_Components" Association="Self.FK_WorkspaceTemplateComponents_Components">
+            <End Role="Components" EntitySet="Components" />
+            <End Role="WorkspaceTemplateComponents" EntitySet="WorkspaceTemplateComponents" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WorkspaceTemplateComponents_WorkspaceTemplates" Association="Self.FK_WorkspaceTemplateComponents_WorkspaceTemplates">
+            <End Role="WorkspaceTemplates" EntitySet="WorkspaceTemplates" />
+            <End Role="WorkspaceTemplateComponents" EntitySet="WorkspaceTemplateComponents" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WorkspaceTemplates_Users" Association="Self.FK_WorkspaceTemplates_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="WorkspaceTemplates" EntitySet="WorkspaceTemplates" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WorkspaceTemplates_Users1" Association="Self.FK_WorkspaceTemplates_Users1">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="WorkspaceTemplates" EntitySet="WorkspaceTemplates" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="CoopModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="CoopEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Companies" EntityType="CoopModel.Company" />
+          <FunctionImport Name="DeleteGroup">
+          <Parameter Name="groupId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteUser">
+          <Parameter Name="userId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteComponent">
+          <Parameter Name="groupId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="Components" EntityType="CoopModel.Component" />
+          <EntitySet Name="DocumentTemplates" EntityType="CoopModel.DocumentTemplate" />
           <EntitySet Name="Groups" EntityType="CoopModel.Group" />
+          <EntitySet Name="OrgUnitGroupPermissions" EntityType="CoopModel.OrgUnitGroupPermission" />
+          <EntitySet Name="OrgUnits" EntityType="CoopModel.OrgUnit" />
+          <EntitySet Name="OrgUnitUserPermissions" EntityType="CoopModel.OrgUnitUserPermission" />
           <EntitySet Name="PermissionLevels" EntityType="CoopModel.PermissionLevel" />
+          <EntitySet Name="SysEvents" EntityType="CoopModel.SysEvent" />
+          <EntitySet Name="SysEventTypes" EntityType="CoopModel.SysEventType" />
           <EntitySet Name="UserGroups" EntityType="CoopModel.UserGroup" />
           <EntitySet Name="Users" EntityType="CoopModel.User" />
+          <EntitySet Name="WorkspaceTemplates" EntityType="CoopModel.WorkspaceTemplate" />
+          <AssociationSet Name="FK_DocumentTemplates_Components" Association="CoopModel.FK_DocumentTemplates_Components">
+            <End Role="Component" EntitySet="Components" />
+            <End Role="DocumentTemplate" EntitySet="DocumentTemplates" />
+          </AssociationSet>
           <AssociationSet Name="FK_Groups_Users" Association="CoopModel.FK_Groups_Users">
             <End Role="User" EntitySet="Users" />
             <End Role="Group" EntitySet="Groups" />
@@ -289,25 +561,22 @@
             <End Role="User" EntitySet="Users" />
             <End Role="Group" EntitySet="Groups" />
           </AssociationSet>
+          <AssociationSet Name="FK_OrgUnitGroupPermissions_Groups" Association="CoopModel.FK_OrgUnitGroupPermissions_Groups">
+            <End Role="Group" EntitySet="Groups" />
+            <End Role="OrgUnitGroupPermission" EntitySet="OrgUnitGroupPermissions" />
+          </AssociationSet>
           <AssociationSet Name="FK_UserGroups_Groups" Association="CoopModel.FK_UserGroups_Groups">
             <End Role="Group" EntitySet="Groups" />
             <End Role="UserGroup" EntitySet="UserGroups" />
           </AssociationSet>
-          <AssociationSet Name="FK_Users_PermissionLevels" Association="CoopModel.FK_Users_PermissionLevels">
+          <AssociationSet Name="FK_OrgUnitGroupPermissions_OrgUnits" Association="CoopModel.FK_OrgUnitGroupPermissions_OrgUnits">
+            <End Role="OrgUnit" EntitySet="OrgUnits" />
+            <End Role="OrgUnitGroupPermission" EntitySet="OrgUnitGroupPermissions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrgUnitGroupPermissions_PermissionLevels" Association="CoopModel.FK_OrgUnitGroupPermissions_PermissionLevels">
             <End Role="PermissionLevel" EntitySet="PermissionLevels" />
-            <End Role="User" EntitySet="Users" />
+            <End Role="OrgUnitGroupPermission" EntitySet="OrgUnitGroupPermissions" />
           </AssociationSet>
-          <AssociationSet Name="FK_UserGroups_Users" Association="CoopModel.FK_UserGroups_Users">
-            <End Role="User" EntitySet="Users" />
-            <End Role="UserGroup" EntitySet="UserGroups" />
-          </AssociationSet>
-          <FunctionImport Name="DeleteGroup">
-          <Parameter Name="groupId" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="DeleteUser">
-          <Parameter Name="userId" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <EntitySet Name="OrgUnits" EntityType="CoopModel.OrgUnit" />
           <AssociationSet Name="FK_OrgUnits_OrgUnits" Association="CoopModel.FK_OrgUnits_OrgUnits">
             <End Role="OrgUnit" EntitySet="OrgUnits" />
             <End Role="OrgUnit1" EntitySet="OrgUnits" />
@@ -316,29 +585,73 @@
             <End Role="User" EntitySet="Users" />
             <End Role="OrgUnit" EntitySet="OrgUnits" />
           </AssociationSet>
-          <EntitySet Name="SysEvents" EntityType="CoopModel.SysEvent" />
-          <EntitySet Name="SysEventTypes" EntityType="CoopModel.SysEventType" />
+          <AssociationSet Name="FK_OrgUnits_WorkspaceTemplates" Association="CoopModel.FK_OrgUnits_WorkspaceTemplates">
+            <End Role="WorkspaceTemplate" EntitySet="WorkspaceTemplates" />
+            <End Role="OrgUnit" EntitySet="OrgUnits" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrgUnitUserPermissions_OrgUnits" Association="CoopModel.FK_OrgUnitUserPermissions_OrgUnits">
+            <End Role="OrgUnit" EntitySet="OrgUnits" />
+            <End Role="OrgUnitUserPermission" EntitySet="OrgUnitUserPermissions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrgUnitUserPermissions_PermissionLevels" Association="CoopModel.FK_OrgUnitUserPermissions_PermissionLevels">
+            <End Role="PermissionLevel" EntitySet="PermissionLevels" />
+            <End Role="OrgUnitUserPermission" EntitySet="OrgUnitUserPermissions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrgUnitUserPermissions_Users" Association="CoopModel.FK_OrgUnitUserPermissions_Users">
+            <End Role="User" EntitySet="Users" />
+            <End Role="OrgUnitUserPermission" EntitySet="OrgUnitUserPermissions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_PermissionLevels" Association="CoopModel.FK_Users_PermissionLevels">
+            <End Role="PermissionLevel" EntitySet="PermissionLevels" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
           <AssociationSet Name="FK_SysEvents_SysEventTypes" Association="CoopModel.FK_SysEvents_SysEventTypes">
             <End Role="SysEventType" EntitySet="SysEventTypes" />
             <End Role="SysEvent" EntitySet="SysEvents" />
           </AssociationSet>
-          <EntitySet Name="Components" EntityType="CoopModel.Component" />
-          <EntitySet Name="DocumentTemplates" EntityType="CoopModel.DocumentTemplate" />
-          <AssociationSet Name="FK_DocumentTemplates_Components" Association="CoopModel.FK_DocumentTemplates_Components">
-            <End Role="Component" EntitySet="Components" />
-            <End Role="DocumentTemplate" EntitySet="DocumentTemplates" />
+          <AssociationSet Name="FK_UserGroups_Users" Association="CoopModel.FK_UserGroups_Users">
+            <End Role="User" EntitySet="Users" />
+            <End Role="UserGroup" EntitySet="UserGroups" />
           </AssociationSet>
-          <FunctionImport Name="DeleteComponent">
-            <Parameter Name="groupId" Mode="In" Type="Int32" />
-          </FunctionImport>
+          <AssociationSet Name="FK_WorkspaceTemplates_Users" Association="CoopModel.FK_WorkspaceTemplates_Users">
+            <End Role="User" EntitySet="Users" />
+            <End Role="WorkspaceTemplate" EntitySet="WorkspaceTemplates" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WorkspaceTemplates_Users1" Association="CoopModel.FK_WorkspaceTemplates_Users1">
+            <End Role="User" EntitySet="Users" />
+            <End Role="WorkspaceTemplate" EntitySet="WorkspaceTemplates" />
+          </AssociationSet>
+          <AssociationSet Name="WorkspaceDocumentTemplates" Association="CoopModel.WorkspaceDocumentTemplates">
+            <End Role="DocumentTemplate" EntitySet="DocumentTemplates" />
+            <End Role="WorkspaceTemplate" EntitySet="WorkspaceTemplates" />
+          </AssociationSet>
+          <AssociationSet Name="WorkspaceTemplateComponents" Association="CoopModel.WorkspaceTemplateComponents">
+            <End Role="Component" EntitySet="Components" />
+            <End Role="WorkspaceTemplate" EntitySet="WorkspaceTemplates" />
+          </AssociationSet>
         </EntityContainer>
-        <EntityType Name="Company">
+        <EntityType Name="Component">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Address" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="DocumentTemplates" Relationship="CoopModel.FK_DocumentTemplates_Components" FromRole="Component" ToRole="DocumentTemplate" />
+          <NavigationProperty Name="WorkspaceTemplates" Relationship="CoopModel.WorkspaceTemplateComponents" FromRole="Component" ToRole="WorkspaceTemplate" />
+        </EntityType>
+        <EntityType Name="DocumentTemplate">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Reference" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Purpose" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PagesCount" Type="Int32" Nullable="false" />
+          <Property Name="Link" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ComponentId" Type="Int32" />
+          <NavigationProperty Name="Component" Relationship="CoopModel.FK_DocumentTemplates_Components" FromRole="DocumentTemplate" ToRole="Component" />
+          <NavigationProperty Name="WorkspaceTemplates" Relationship="CoopModel.WorkspaceDocumentTemplates" FromRole="DocumentTemplate" ToRole="WorkspaceTemplate" />
         </EntityType>
         <EntityType Name="Group">
           <Key>
@@ -351,9 +664,57 @@
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="ModifiedByUserId" Type="Int32" Nullable="false" />
           <Property Name="CreatedByUserId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="ModifiedBy" Relationship="CoopModel.FK_Groups_Users" FromRole="Group" ToRole="User" />
-          <NavigationProperty Name="CreatedBy" Relationship="CoopModel.FK_Groups_Users1" FromRole="Group" ToRole="User" />
+          <NavigationProperty Name="User" Relationship="CoopModel.FK_Groups_Users" FromRole="Group" ToRole="User" />
+          <NavigationProperty Name="User1" Relationship="CoopModel.FK_Groups_Users1" FromRole="Group" ToRole="User" />
+          <NavigationProperty Name="OrgUnitGroupPermissions" Relationship="CoopModel.FK_OrgUnitGroupPermissions_Groups" FromRole="Group" ToRole="OrgUnitGroupPermission" />
           <NavigationProperty Name="UserGroups" Relationship="CoopModel.FK_UserGroups_Groups" FromRole="Group" ToRole="UserGroup" />
+        </EntityType>
+        <EntityType Name="OrgUnitGroupPermission">
+          <Key>
+            <PropertyRef Name="OrgUnitId" />
+            <PropertyRef Name="GroupId" />
+            <PropertyRef Name="PermissionLevelId" />
+          </Key>
+          <Property Name="OrgUnitId" Type="Int32" Nullable="false" />
+          <Property Name="GroupId" Type="Int32" Nullable="false" />
+          <Property Name="PermissionLevelId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Group" Relationship="CoopModel.FK_OrgUnitGroupPermissions_Groups" FromRole="OrgUnitGroupPermission" ToRole="Group" />
+          <NavigationProperty Name="OrgUnit" Relationship="CoopModel.FK_OrgUnitGroupPermissions_OrgUnits" FromRole="OrgUnitGroupPermission" ToRole="OrgUnit" />
+          <NavigationProperty Name="PermissionLevel" Relationship="CoopModel.FK_OrgUnitGroupPermissions_PermissionLevels" FromRole="OrgUnitGroupPermission" ToRole="PermissionLevel" />
+        </EntityType>
+        <EntityType Name="OrgUnit">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreationTime" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="ModificationTime" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="OwnerId" Type="Int32" Nullable="false" />
+          <Property Name="ParentId" Type="Int32" />
+          <Property Name="Lat" Type="Double" Nullable="false" />
+          <Property Name="Lng" Type="Double" Nullable="false" />
+          <Property Name="WorkspaceTemplateId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="OrgUnitGroupPermissions" Relationship="CoopModel.FK_OrgUnitGroupPermissions_OrgUnits" FromRole="OrgUnit" ToRole="OrgUnitGroupPermission" />
+          <NavigationProperty Name="OrgUnits1" Relationship="CoopModel.FK_OrgUnits_OrgUnits" FromRole="OrgUnit" ToRole="OrgUnit1" />
+          <NavigationProperty Name="OrgUnit1" Relationship="CoopModel.FK_OrgUnits_OrgUnits" FromRole="OrgUnit1" ToRole="OrgUnit" />
+          <NavigationProperty Name="User" Relationship="CoopModel.FK_OrgUnits_Users" FromRole="OrgUnit" ToRole="User" />
+          <NavigationProperty Name="WorkspaceTemplate" Relationship="CoopModel.FK_OrgUnits_WorkspaceTemplates" FromRole="OrgUnit" ToRole="WorkspaceTemplate" />
+          <NavigationProperty Name="OrgUnitUserPermissions" Relationship="CoopModel.FK_OrgUnitUserPermissions_OrgUnits" FromRole="OrgUnit" ToRole="OrgUnitUserPermission" />
+        </EntityType>
+        <EntityType Name="OrgUnitUserPermission">
+          <Key>
+            <PropertyRef Name="OrgUnitId" />
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="PermissionLevelId" />
+          </Key>
+          <Property Name="OrgUnitId" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="PermissionLevelId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="OrgUnit" Relationship="CoopModel.FK_OrgUnitUserPermissions_OrgUnits" FromRole="OrgUnitUserPermission" ToRole="OrgUnit" />
+          <NavigationProperty Name="PermissionLevel" Relationship="CoopModel.FK_OrgUnitUserPermissions_PermissionLevels" FromRole="OrgUnitUserPermission" ToRole="PermissionLevel" />
+          <NavigationProperty Name="User" Relationship="CoopModel.FK_OrgUnitUserPermissions_Users" FromRole="OrgUnitUserPermission" ToRole="User" />
         </EntityType>
         <EntityType Name="PermissionLevel">
           <Key>
@@ -361,7 +722,30 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="OrgUnitGroupPermissions" Relationship="CoopModel.FK_OrgUnitGroupPermissions_PermissionLevels" FromRole="PermissionLevel" ToRole="OrgUnitGroupPermission" />
+          <NavigationProperty Name="OrgUnitUserPermissions" Relationship="CoopModel.FK_OrgUnitUserPermissions_PermissionLevels" FromRole="PermissionLevel" ToRole="OrgUnitUserPermission" />
           <NavigationProperty Name="Users" Relationship="CoopModel.FK_Users_PermissionLevels" FromRole="PermissionLevel" ToRole="User" />
+        </EntityType>
+        <EntityType Name="SysEvent">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Time" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="Summary" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TypeId" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="SysEventType" Relationship="CoopModel.FK_SysEvents_SysEventTypes" FromRole="SysEvent" ToRole="SysEventType" />
+        </EntityType>
+        <EntityType Name="SysEventType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="SysEvents" Relationship="CoopModel.FK_SysEvents_SysEventTypes" FromRole="SysEventType" ToRole="SysEvent" />
         </EntityType>
         <EntityType Name="UserGroup">
           <Key>
@@ -386,12 +770,43 @@
           <Property Name="TypeId" Type="Int32" Nullable="false" />
           <Property Name="PermissionLevelId" Type="Int32" Nullable="false" />
           <Property Name="LastAcitve" Type="DateTime" Nullable="false" Precision="7" />
-          <NavigationProperty Name="ModifiedGroups" Relationship="CoopModel.FK_Groups_Users" FromRole="User" ToRole="Group" />
-          <NavigationProperty Name="CreatedGroups" Relationship="CoopModel.FK_Groups_Users1" FromRole="User" ToRole="Group" />
+          <NavigationProperty Name="Groups" Relationship="CoopModel.FK_Groups_Users" FromRole="User" ToRole="Group" />
+          <NavigationProperty Name="Groups1" Relationship="CoopModel.FK_Groups_Users1" FromRole="User" ToRole="Group" />
+          <NavigationProperty Name="OrgUnits" Relationship="CoopModel.FK_OrgUnits_Users" FromRole="User" ToRole="OrgUnit" />
+          <NavigationProperty Name="OrgUnitUserPermissions" Relationship="CoopModel.FK_OrgUnitUserPermissions_Users" FromRole="User" ToRole="OrgUnitUserPermission" />
           <NavigationProperty Name="PermissionLevel" Relationship="CoopModel.FK_Users_PermissionLevels" FromRole="User" ToRole="PermissionLevel" />
           <NavigationProperty Name="UserGroups" Relationship="CoopModel.FK_UserGroups_Users" FromRole="User" ToRole="UserGroup" />
-          <NavigationProperty Name="OrgUnits" Relationship="CoopModel.FK_OrgUnits_Users" FromRole="User" ToRole="OrgUnit" />
+          <NavigationProperty Name="WorkspaceTemplates" Relationship="CoopModel.FK_WorkspaceTemplates_Users" FromRole="User" ToRole="WorkspaceTemplate" />
+          <NavigationProperty Name="WorkspaceTemplates1" Relationship="CoopModel.FK_WorkspaceTemplates_Users1" FromRole="User" ToRole="WorkspaceTemplate" />
         </EntityType>
+        <EntityType Name="WorkspaceTemplate">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreationTime" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="ModificationTime" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="CreatedByUserId" Type="Int32" Nullable="false" />
+          <Property Name="ModifiedByUserId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="OrgUnits" Relationship="CoopModel.FK_OrgUnits_WorkspaceTemplates" FromRole="WorkspaceTemplate" ToRole="OrgUnit" />
+          <NavigationProperty Name="User" Relationship="CoopModel.FK_WorkspaceTemplates_Users" FromRole="WorkspaceTemplate" ToRole="User" />
+          <NavigationProperty Name="User1" Relationship="CoopModel.FK_WorkspaceTemplates_Users1" FromRole="WorkspaceTemplate" ToRole="User" />
+          <NavigationProperty Name="DocumentTemplates" Relationship="CoopModel.WorkspaceDocumentTemplates" FromRole="WorkspaceTemplate" ToRole="DocumentTemplate" />
+          <NavigationProperty Name="Components" Relationship="CoopModel.WorkspaceTemplateComponents" FromRole="WorkspaceTemplate" ToRole="Component" />
+        </EntityType>
+        <Association Name="FK_DocumentTemplates_Components">
+          <End Type="CoopModel.Component" Role="Component" Multiplicity="0..1" />
+          <End Type="CoopModel.DocumentTemplate" Role="DocumentTemplate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Component">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DocumentTemplate">
+              <PropertyRef Name="ComponentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Groups_Users">
           <End Type="CoopModel.User" Role="User" Multiplicity="1" />
           <End Type="CoopModel.Group" Role="Group" Multiplicity="*" />
@@ -416,6 +831,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_OrgUnitGroupPermissions_Groups">
+          <End Type="CoopModel.Group" Role="Group" Multiplicity="1" />
+          <End Type="CoopModel.OrgUnitGroupPermission" Role="OrgUnitGroupPermission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Group">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrgUnitGroupPermission">
+              <PropertyRef Name="GroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_UserGroups_Groups">
           <End Type="CoopModel.Group" Role="Group" Multiplicity="1" />
           <End Type="CoopModel.UserGroup" Role="UserGroup" Multiplicity="*" />
@@ -428,47 +855,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Users_PermissionLevels">
+        <Association Name="FK_OrgUnitGroupPermissions_OrgUnits">
+          <End Type="CoopModel.OrgUnit" Role="OrgUnit" Multiplicity="1" />
+          <End Type="CoopModel.OrgUnitGroupPermission" Role="OrgUnitGroupPermission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrgUnit">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrgUnitGroupPermission">
+              <PropertyRef Name="OrgUnitId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrgUnitGroupPermissions_PermissionLevels">
           <End Type="CoopModel.PermissionLevel" Role="PermissionLevel" Multiplicity="1" />
-          <End Type="CoopModel.User" Role="User" Multiplicity="*" />
+          <End Type="CoopModel.OrgUnitGroupPermission" Role="OrgUnitGroupPermission" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="PermissionLevel">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="User">
+            <Dependent Role="OrgUnitGroupPermission">
               <PropertyRef Name="PermissionLevelId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_UserGroups_Users">
-          <End Type="CoopModel.User" Role="User" Multiplicity="1" />
-          <End Type="CoopModel.UserGroup" Role="UserGroup" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="UserGroup">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="OrgUnit">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Address" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CreationTime" Type="DateTime" Nullable="false" Precision="7" />
-          <Property Name="ModificationTime" Type="DateTime" Nullable="false" Precision="7" />
-          <Property Name="OwnerId" Type="Int32" Nullable="false" />
-          <Property Name="ParentId" Type="Int32" />
-          <NavigationProperty Name="Children" Relationship="CoopModel.FK_OrgUnits_OrgUnits" FromRole="OrgUnit" ToRole="OrgUnit1" />
-          <NavigationProperty Name="Parent" Relationship="CoopModel.FK_OrgUnits_OrgUnits" FromRole="OrgUnit1" ToRole="OrgUnit" />
-          <NavigationProperty Name="User" Relationship="CoopModel.FK_OrgUnits_Users" FromRole="OrgUnit" ToRole="User" />
-          <Property Name="Lat" Type="Double" Nullable="false" />
-          <Property Name="Lng" Type="Double" Nullable="false" />
-        </EntityType>
         <Association Name="FK_OrgUnits_OrgUnits">
           <End Type="CoopModel.OrgUnit" Role="OrgUnit" Multiplicity="0..1" />
           <End Type="CoopModel.OrgUnit" Role="OrgUnit1" Multiplicity="*" />
@@ -493,27 +903,66 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="SysEvent">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Time" Type="DateTime" Nullable="false" Precision="7" />
-          <Property Name="Summary" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="TypeId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="SysEventType" Relationship="CoopModel.FK_SysEvents_SysEventTypes" FromRole="SysEvent" ToRole="SysEventType" />
-          <Property Name="UserId" Type="Int32" Nullable="false" />
-        </EntityType>
-        <EntityType Name="SysEventType">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="SysEvents" Relationship="CoopModel.FK_SysEvents_SysEventTypes" FromRole="SysEventType" ToRole="SysEvent" />
-        </EntityType>
+        <Association Name="FK_OrgUnits_WorkspaceTemplates">
+          <End Type="CoopModel.WorkspaceTemplate" Role="WorkspaceTemplate" Multiplicity="1" />
+          <End Type="CoopModel.OrgUnit" Role="OrgUnit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WorkspaceTemplate">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrgUnit">
+              <PropertyRef Name="WorkspaceTemplateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrgUnitUserPermissions_OrgUnits">
+          <End Type="CoopModel.OrgUnit" Role="OrgUnit" Multiplicity="1" />
+          <End Type="CoopModel.OrgUnitUserPermission" Role="OrgUnitUserPermission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrgUnit">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrgUnitUserPermission">
+              <PropertyRef Name="OrgUnitId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrgUnitUserPermissions_PermissionLevels">
+          <End Type="CoopModel.PermissionLevel" Role="PermissionLevel" Multiplicity="1" />
+          <End Type="CoopModel.OrgUnitUserPermission" Role="OrgUnitUserPermission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PermissionLevel">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrgUnitUserPermission">
+              <PropertyRef Name="PermissionLevelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrgUnitUserPermissions_Users">
+          <End Type="CoopModel.User" Role="User" Multiplicity="1" />
+          <End Type="CoopModel.OrgUnitUserPermission" Role="OrgUnitUserPermission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrgUnitUserPermission">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_PermissionLevels">
+          <End Type="CoopModel.PermissionLevel" Role="PermissionLevel" Multiplicity="1" />
+          <End Type="CoopModel.User" Role="User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PermissionLevel">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="PermissionLevelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_SysEvents_SysEventTypes">
           <End Type="CoopModel.SysEventType" Role="SysEventType" Multiplicity="1" />
           <End Type="CoopModel.SysEvent" Role="SysEvent" Multiplicity="*" />
@@ -526,49 +975,75 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="Component">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="DocumentTemplates" Relationship="CoopModel.FK_DocumentTemplates_Components" FromRole="Component" ToRole="DocumentTemplate" />
-        </EntityType>
-        <EntityType Name="DocumentTemplate">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Reference" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Purpose" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="PagesCount" Type="Int32" Nullable="false" />
-          <Property Name="Link" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="ComponentId" Type="Int32" />
-          <NavigationProperty Name="Component" Relationship="CoopModel.FK_DocumentTemplates_Components" FromRole="DocumentTemplate" ToRole="Component" />
-        </EntityType>
-        <Association Name="FK_DocumentTemplates_Components">
-          <End Type="CoopModel.Component" Role="Component" Multiplicity="0..1" />
-          <End Type="CoopModel.DocumentTemplate" Role="DocumentTemplate" Multiplicity="*" />
+        <Association Name="FK_UserGroups_Users">
+          <End Type="CoopModel.User" Role="User" Multiplicity="1" />
+          <End Type="CoopModel.UserGroup" Role="UserGroup" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Component">
+            <Principal Role="User">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="DocumentTemplate">
-              <PropertyRef Name="ComponentId" />
+            <Dependent Role="UserGroup">
+              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        <Association Name="FK_WorkspaceTemplates_Users">
+          <End Type="CoopModel.User" Role="User" Multiplicity="1" />
+          <End Type="CoopModel.WorkspaceTemplate" Role="WorkspaceTemplate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="WorkspaceTemplate">
+              <PropertyRef Name="CreatedByUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WorkspaceTemplates_Users1">
+          <End Type="CoopModel.User" Role="User" Multiplicity="1" />
+          <End Type="CoopModel.WorkspaceTemplate" Role="WorkspaceTemplate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="WorkspaceTemplate">
+              <PropertyRef Name="ModifiedByUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="WorkspaceDocumentTemplates">
+          <End Type="CoopModel.DocumentTemplate" Role="DocumentTemplate" Multiplicity="*" />
+          <End Type="CoopModel.WorkspaceTemplate" Role="WorkspaceTemplate" Multiplicity="*" />
+        </Association>
+        <Association Name="WorkspaceTemplateComponents">
+          <End Type="CoopModel.Component" Role="Component" Multiplicity="*" />
+          <End Type="CoopModel.WorkspaceTemplate" Role="WorkspaceTemplate" Multiplicity="*" />
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="Хранилище CoopModelContainer" CdmEntityContainer="CoopEntities">
-          <EntitySetMapping Name="Companies">
-            <EntityTypeMapping TypeName="CoopModel.Company">
-              <MappingFragment StoreEntitySet="Companies">
-                <ScalarProperty Name="Address" ColumnName="Address" />
+          <FunctionImportMapping FunctionImportName="DeleteGroup" FunctionName="Хранилище CoopModel.DeleteGroup" />
+          <FunctionImportMapping FunctionImportName="DeleteUser" FunctionName="Хранилище CoopModel.DeleteUser" />
+          <FunctionImportMapping FunctionImportName="DeleteComponent" FunctionName="Хранилище CoopModel.DeleteComponent" />
+          <EntitySetMapping Name="Components">
+            <EntityTypeMapping TypeName="CoopModel.Component">
+              <MappingFragment StoreEntitySet="Components">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DocumentTemplates">
+            <EntityTypeMapping TypeName="CoopModel.DocumentTemplate">
+              <MappingFragment StoreEntitySet="DocumentTemplates">
+                <ScalarProperty Name="ComponentId" ColumnName="ComponentId" />
+                <ScalarProperty Name="Link" ColumnName="Link" />
+                <ScalarProperty Name="PagesCount" ColumnName="PagesCount" />
+                <ScalarProperty Name="Purpose" ColumnName="Purpose" />
+                <ScalarProperty Name="Reference" ColumnName="Reference" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
@@ -587,9 +1062,64 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="OrgUnitGroupPermissions">
+            <EntityTypeMapping TypeName="CoopModel.OrgUnitGroupPermission">
+              <MappingFragment StoreEntitySet="OrgUnitGroupPermissions">
+                <ScalarProperty Name="PermissionLevelId" ColumnName="PermissionLevelId" />
+                <ScalarProperty Name="GroupId" ColumnName="GroupId" />
+                <ScalarProperty Name="OrgUnitId" ColumnName="OrgUnitId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrgUnits">
+            <EntityTypeMapping TypeName="CoopModel.OrgUnit">
+              <MappingFragment StoreEntitySet="OrgUnits">
+                <ScalarProperty Name="WorkspaceTemplateId" ColumnName="WorkspaceTemplateId" />
+                <ScalarProperty Name="Lng" ColumnName="Lng" />
+                <ScalarProperty Name="Lat" ColumnName="Lat" />
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+                <ScalarProperty Name="OwnerId" ColumnName="OwnerId" />
+                <ScalarProperty Name="ModificationTime" ColumnName="ModificationTime" />
+                <ScalarProperty Name="CreationTime" ColumnName="CreationTime" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrgUnitUserPermissions">
+            <EntityTypeMapping TypeName="CoopModel.OrgUnitUserPermission">
+              <MappingFragment StoreEntitySet="OrgUnitUserPermissions">
+                <ScalarProperty Name="PermissionLevelId" ColumnName="PermissionLevelId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="OrgUnitId" ColumnName="OrgUnitId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="PermissionLevels">
             <EntityTypeMapping TypeName="CoopModel.PermissionLevel">
               <MappingFragment StoreEntitySet="PermissionLevels">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SysEvents">
+            <EntityTypeMapping TypeName="CoopModel.SysEvent">
+              <MappingFragment StoreEntitySet="SysEvents">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="TypeId" ColumnName="TypeId" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Summary" ColumnName="Summary" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SysEventTypes">
+            <EntityTypeMapping TypeName="CoopModel.SysEventType">
+              <MappingFragment StoreEntitySet="SysEventTypes">
+                <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
@@ -618,66 +1148,34 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="DeleteGroup" FunctionName="Хранилище CoopModel.DeleteGroup" />
-          <FunctionImportMapping FunctionImportName="DeleteUser" FunctionName="Хранилище CoopModel.DeleteUser" />
-          <EntitySetMapping Name="OrgUnits">
-            <EntityTypeMapping TypeName="CoopModel.OrgUnit">
-              <MappingFragment StoreEntitySet="OrgUnits">
-                <ScalarProperty Name="Lng" ColumnName="Lng" />
-                <ScalarProperty Name="Lat" ColumnName="Lat" />
-                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
-                <ScalarProperty Name="OwnerId" ColumnName="OwnerId" />
+          <EntitySetMapping Name="WorkspaceTemplates">
+            <EntityTypeMapping TypeName="CoopModel.WorkspaceTemplate">
+              <MappingFragment StoreEntitySet="WorkspaceTemplates">
+                <ScalarProperty Name="ModifiedByUserId" ColumnName="ModifiedByUserId" />
+                <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
                 <ScalarProperty Name="ModificationTime" ColumnName="ModificationTime" />
                 <ScalarProperty Name="CreationTime" ColumnName="CreationTime" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="SysEvents">
-            <EntityTypeMapping TypeName="CoopModel.SysEvent">
-              <MappingFragment StoreEntitySet="SysEvents">
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="TypeId" ColumnName="TypeId" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Summary" ColumnName="Summary" />
-                <ScalarProperty Name="Time" ColumnName="Time" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="SysEventTypes">
-            <EntityTypeMapping TypeName="CoopModel.SysEventType">
-              <MappingFragment StoreEntitySet="SysEventTypes">
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Components">
-            <EntityTypeMapping TypeName="CoopModel.Component">
-              <MappingFragment StoreEntitySet="Components">
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="DocumentTemplates">
-            <EntityTypeMapping TypeName="CoopModel.DocumentTemplate">
-              <MappingFragment StoreEntitySet="DocumentTemplates">
-                <ScalarProperty Name="ComponentId" ColumnName="ComponentId" />
-                <ScalarProperty Name="Link" ColumnName="Link" />
-                <ScalarProperty Name="PagesCount" ColumnName="PagesCount" />
-                <ScalarProperty Name="Purpose" ColumnName="Purpose" />
-                <ScalarProperty Name="Reference" ColumnName="Reference" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="DeleteComponent" FunctionName="Хранилище CoopModel.DeleteComponent" />
+          <AssociationSetMapping Name="WorkspaceDocumentTemplates" TypeName="CoopModel.WorkspaceDocumentTemplates" StoreEntitySet="WorkspaceDocumentTemplates">
+            <EndProperty Name="WorkspaceTemplate">
+              <ScalarProperty Name="Id" ColumnName="WorkspaceTemplateId" />
+            </EndProperty>
+            <EndProperty Name="DocumentTemplate">
+              <ScalarProperty Name="Id" ColumnName="DocumentTemplateId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="WorkspaceTemplateComponents" TypeName="CoopModel.WorkspaceTemplateComponents" StoreEntitySet="WorkspaceTemplateComponents">
+            <EndProperty Name="WorkspaceTemplate">
+              <ScalarProperty Name="Id" ColumnName="WorkspaceTemplateId" />
+            </EndProperty>
+            <EndProperty Name="Component">
+              <ScalarProperty Name="Id" ColumnName="ComponentId" />
+            </EndProperty>
+          </AssociationSetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

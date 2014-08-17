@@ -37,6 +37,7 @@ namespace MyCoop.WebApi.Services.Instances
                 orgUnit.OwnerId = entity.OwnerId;
                 orgUnit.ParentId = entity.ParentId;
                 orgUnit.ModificationTime = entity.ModificationTime;
+                orgUnit.WorkspaceTemplateId = entity.WorkspaceTemplateId;
             });
         }
 
