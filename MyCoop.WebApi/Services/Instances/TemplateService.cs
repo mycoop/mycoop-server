@@ -1,8 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using MyCoop.Data;
 using MyCoop.Repositories;
 using MyCoop.WebApi.Models.Components;
 using MyCoop.WebApi.Models.DocumentTemplates;
+using MyCoop.WebApi.Models.WorkspaceTemplates;
 
 namespace MyCoop.WebApi.Services.Instances
 {
@@ -72,6 +74,43 @@ namespace MyCoop.WebApi.Services.Instances
         public Task DeleteDocumentTemplate(int id)
         {
             return Delete<DocumentTemplate, IDocumentTemplateRepository>(id);
+        }
+
+        public Task<WorkspaceTemplateModel[]> GetWorkspaceTemplates()
+        {
+            return GetValues<WorkspaceTemplateModel, WorkspaceTemplate, IWorkspaceTemplateRepository>(template => new WorkspaceTemplateModel(template), "DocumentTemplates", "Components");
+        }
+
+        public Task<WorkspaceTemplateModel> GetWorkspaceTemplate(int id)
+        {
+            return GetValue<WorkspaceTemplateModel, WorkspaceTemplate, IWorkspaceTemplateRepository>(id, template => new WorkspaceTemplateModel(template), "DocumentTemplates", "Components");
+        }
+
+        public Task<int> AddWorkspaceTemplate(EditWorkspaceTemplateModel model)
+        {
+            return Add<WorkspaceTemplate, IWorkspaceTemplateRepository>(template => template.Id, model.GetEntity);
+        }
+
+        public Task UpdateWorkspaceTemplate(int id, EditWorkspaceTemplateModel model)
+        {
+            return Update<WorkspaceTemplate, IWorkspaceTemplateRepository>(id, template =>
+            {
+                var entity = model.GetEntity();
+                template.Name = entity.Name;
+                template.ModificationTime = entity.ModificationTime;
+                template.ModifiedByUserId = entity.ModifiedByUserId;
+            });
+        }
+
+        public Task DeleteWorkspaceTemplate(int id)
+        {
+            return Delete<WorkspaceTemplate, IWorkspaceTemplateRepository>(id);
+        }
+
+        public Task<DocumentTemplateModel[]> GetDocumentsByWorkspaceTemplateId(int id)
+        {
+            return AsyncOperation(() => Repository.GetWithContext<IDocumentTemplateRepository>().GetValuesByWorkspaceTemplateId(id),
+                userGroups => userGroups.Select(ug => new DocumentTemplateModel(ug)).ToArray());
         }
     }
 }

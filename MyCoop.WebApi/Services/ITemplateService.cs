@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using MyCoop.WebApi.Models.Components;
 using MyCoop.WebApi.Models.DocumentTemplates;
+using MyCoop.WebApi.Models.WorkspaceTemplates;
 
 namespace MyCoop.WebApi.Services
 {
@@ -25,5 +26,17 @@ namespace MyCoop.WebApi.Services
         Task UpdateDocumentTemplate(int id, EditDocumentTemplateModel model);
 
         Task DeleteDocumentTemplate(int id);
+
+        Task<WorkspaceTemplateModel[]> GetWorkspaceTemplates();
+
+        Task<WorkspaceTemplateModel> GetWorkspaceTemplate(int id);
+
+        Task<int> AddWorkspaceTemplate(EditWorkspaceTemplateModel model);
+
+        Task UpdateWorkspaceTemplate(int id, EditWorkspaceTemplateModel model);
+
+        Task DeleteWorkspaceTemplate(int id);
+
+        Task<DocumentTemplateModel[]> GetDocumentsByWorkspaceTemplateId(int id);
     }
 }

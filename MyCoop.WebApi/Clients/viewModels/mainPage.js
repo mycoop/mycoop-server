@@ -227,6 +227,46 @@ App.ViewModels.MainPageModel = (function () {
            }];
 
         publ.documentTemplateTemplates = ko.observable(documentTemplateTemplates);
+        
+        var workspaceTemplateTemplates = [
+           {
+               name: "workspace-template-gets",
+               url: config.apiPrefix + "workspace-template",
+               method: methods[0],
+               body: ''
+           },
+          {
+              name: "workspace-template-get",
+              url: config.apiPrefix + "workspace-template/1",
+              method: methods[0],
+              body: ''
+          },
+            {
+                name: "workspace-template-add",
+                url: config.apiPrefix + "workspace-template",
+                method: methods[1],
+                body: '{"name":"sfasf"}'
+            },
+          {
+              name: "workspace-template-update",
+              url: config.apiPrefix + "workspace-template/1",
+              method: methods[1],
+              body: '{ "name" : "update-template" }'
+          },
+          {
+              name: "workspace-template-delete",
+              url: config.apiPrefix + "workspace-template/3",
+              method: methods[2],
+              body: ''
+          },
+          {
+              name: "workspace-template-get-document-template",
+              url: config.apiPrefix + "workspace-template/1/document-template",
+              method: methods[0],
+              body: ''
+          }];
+
+        publ.workspaceTemplateTemplates = ko.observable(workspaceTemplateTemplates);
 
         publ.selectedTemplate = ko.observable();
 

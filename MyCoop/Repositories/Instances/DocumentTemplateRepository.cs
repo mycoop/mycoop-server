@@ -1,4 +1,5 @@
 ﻿using System.Data.Entity;
+using System.Linq;
 using System.Threading.Tasks;
 using MyCoop.Data;
 
@@ -18,6 +19,11 @@ namespace MyCoop.Repositories.Instances
         public Task<DocumentTemplate> GetValue(int id, params string[] includes)
         {
             return GetEntities(includes).SingleAsync(entity => entity.Id == id);
+        }
+
+        public Task<DocumentTemplate[]> GetValuesByWorkspaceTemplateId(int id)
+        {
+            return GetEntities().Where(dt => dt.WorkspaceTemplates.Any(wt => wt.Id == id)).ToArrayAsync();
         }
     }
 }

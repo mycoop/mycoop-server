@@ -70,9 +70,7 @@ namespace MyCoop.WebApi.Controllers
             Log.Out.BeginInfo("AddDocumentTemplate");
             if (!Request.Content.IsMimeMultipartContent())
             {
-
                 Request.CreateResponse(HttpStatusCode.UnsupportedMediaType);
-
             }
             var provider = GetMultipartProvider();
             var result = await Request.Content.ReadAsMultipartAsync(provider);
