@@ -11,26 +11,49 @@ namespace MyCoop.WebApi.Loggers
         public static void Error(this Log log, string summary, params object[] values)
         {
             int userId = UserHelper.GetId();
-            var stackTrace = new StackTrace(1);
-            log.WriteAsync<EventLogger>(logger => logger.WriteAsync(summary.Format(values), stackTrace.ToString(), EventType.Error, userId));
+            summary = summary.Format(values);
+            var description = new StackTrace(1).ToString();
+            log.WriteAsync<EventLogger>(logger => logger.WriteAsync(summary, description, EventType.Error, userId));
         }
 
         public static void Error(this Log log, Exception e, string summary, params object[] values)
         {
             int userId = UserHelper.GetId();
-            log.WriteAsync<EventLogger>(logger => logger.WriteAsync(summary.Format(values), e.GetFullMessage(),EventType.Error,userId));
-        }
-
-        public static void Info(this Log log, string summary, params object[] values)
-        {
-            int userId = UserHelper.GetId();
-            log.WriteAsync<EventLogger>(logger => logger.WriteAsync(summary.Format(values),String.Empty,EventType.Info,userId));
+            summary = summary.Format(values);
+            var description = e.GetFullMessage();
+            log.WriteAsync<EventLogger>(logger => logger.WriteAsync(summary, description, EventType.Error, userId));
         }
 
         public static void Info(this Log log, string description, string summary, params object[] values)
         {
             int userId = UserHelper.GetId();
-            log.WriteAsync<EventLogger>(logger => logger.WriteAsync(summary.Format(values), description,EventType.Info,userId));
-        } 
+            summary = summary.Format(values);
+            log.WriteAsync<EventLogger>(logger => logger.WriteAsync(summary, description, EventType.Info, userId));
+        }
+
+        public static void Info(this Log log, string summary, params object[] values)
+        {
+            log.Info(String.Empty, summary, values);
+        }
+
+        public static void BeginInfo(this Log log, string summary, params object[] values)
+        {
+            log.Info(String.Format("Begin {0}", summary), values);
+        }
+
+        public static void BeginInfo(this Log log, string description, string summary, params object[] values)
+        {
+            log.Info(description, String.Format("Begin {0}", summary), values);
+        }
+
+        public static void EndInfo(this Log log, string summary, params object[] values)
+        {
+            log.Info(String.Format("End {0}", summary), values);
+        }
+
+        public static void EndInfo(this Log log, string description, string summary, params object[] values)
+        {
+            log.Info(description, String.Format("End {0}", summary), values);
+        }
     }
 }

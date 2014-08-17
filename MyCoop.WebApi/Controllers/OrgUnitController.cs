@@ -36,27 +36,27 @@ namespace MyCoop.WebApi.Controllers
         [HttpPost]
         public async Task<HttpResponseMessage> AddOrgUnit([FromBody] EditOrgUnitModel model)
         {
-            Log.Out.Info(model.ToJson(), "Begin AddOrgUnit");
+            Log.Out.BeginInfo(model.ToJson(), "AddOrgUnit");
             var id = await Service.Get<IManagementSevice>().AddOrgUnit(model);
-            Log.Out.Info(model.ToJson(), "End AddOrgUnit Id: {0}", id);
+            Log.Out.EndInfo("AddOrgUnit Id: {0}", id);
             return Request.CreateResponse(HttpStatusCode.OK, new { Id = id });
         }
 
         [HttpPost]
         public async Task<HttpResponseMessage> UpdateOrgUnit([FromUri] int id, [FromBody] EditOrgUnitModel model)
         {
-            Log.Out.Info(model.ToJson(), "Begin UpdateOrgUnit Id: {0}", id);
+            Log.Out.BeginInfo(model.ToJson(), "UpdateOrgUnit Id: {0}", id);
             await Service.Get<IManagementSevice>().UpdateOrgUnit(id, model);
-            Log.Out.Info(model.ToJson(), "End UpdateOrgUnit Id: {0}", id);
+            Log.Out.EndInfo("UpdateOrgUnit Id: {0}", id);
             return Request.CreateResponse(HttpStatusCode.OK);
         }
 
         [HttpDelete]
         public async Task<HttpResponseMessage> DeleteOrgUnit(int id)
         {
-            Log.Out.Info("Begin DeleteOrgUnit Id: {0}", id);
+            Log.Out.BeginInfo("DeleteOrgUnit Id: {0}", id);
             await Service.Get<IManagementSevice>().DeleteOrgUnit(id);
-            Log.Out.Info("End DeleteOrgUnit Id: {0}", id);
+            Log.Out.EndInfo("DeleteOrgUnit Id: {0}", id);
             return Request.CreateResponse(HttpStatusCode.OK);
         }
 

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
+﻿using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -36,27 +33,27 @@ namespace MyCoop.WebApi.Controllers
         [HttpPost]
         public async Task<HttpResponseMessage> AddComponent([FromBody] EditComponentModel model)
         {
-            Log.Out.Info(model.ToJson(), "Begin AddComponent");
+            Log.Out.BeginInfo(model.ToJson(), "AddComponent");
             var id = await Service.Get<ITemplateService>().AddComponent(model);
-            Log.Out.Info(model.ToJson(), "End AddComponent Id: {0}", id);
+            Log.Out.EndInfo("AddComponent Id: {0}", id);
             return Request.CreateResponse(HttpStatusCode.OK, new { Id = id });
         }
 
         [HttpPost]
         public async Task<HttpResponseMessage> UpdateComponent([FromUri] int id, [FromBody] EditComponentModel model)
         {
-            Log.Out.Info(model.ToJson(), "Begin UpdateComponent Id: {0}", id);
+            Log.Out.BeginInfo(model.ToJson(), "UpdateComponent Id: {0}", id);
             await Service.Get<ITemplateService>().UpdateComponent(id, model);
-            Log.Out.Info(model.ToJson(), "End UpdateComponent Id: {0}", id);
+            Log.Out.EndInfo("UpdateComponent Id: {0}", id);
             return Request.CreateResponse(HttpStatusCode.OK);
         }
 
         [HttpDelete]
         public async Task<HttpResponseMessage> DeleteOrgUnit(int id)
         {
-            Log.Out.Info("Begin DeleteComponent Id: {0}", id);
+            Log.Out.BeginInfo("DeleteComponent Id: {0}", id);
             await Service.Get<ITemplateService>().DeleteComponent(id);
-            Log.Out.Info("End DeleteComponent Id: {0}", id);
+            Log.Out.EndInfo("DeleteComponent Id: {0}", id);
             return Request.CreateResponse(HttpStatusCode.OK);
         }
     }
