@@ -3,6 +3,7 @@
     public enum EventType
     {
         Error = 1,
-        Info = 2
+        Info = 2,
+        UserActivity = 3
     }
 }

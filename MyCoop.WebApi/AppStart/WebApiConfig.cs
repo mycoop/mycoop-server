@@ -23,6 +23,7 @@ namespace MyCoop.WebApi.AppStart
             config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
 
             config.Filters.Add(new ApiExceptionFilterAttribute());
+            config.Filters.Add(new UserActivityFilterAttribute());
         }
     }
 }
