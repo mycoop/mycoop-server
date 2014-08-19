@@ -68,7 +68,7 @@ namespace MyCoop.WebApi.Services.Instances
 
         public Task<GroupModel[]> GetGroups()
         {
-            return GetValues<GroupModel, Group, IGroupRepository>(group => new GroupModel(group), "ModifiedBy", "CreatedBy");
+            return GetValues<GroupModel, Group, IGroupRepository>(group => new GroupModel(group), "User1", "User");
         }
 
         public Task<GroupModel> GetGroup(int id)

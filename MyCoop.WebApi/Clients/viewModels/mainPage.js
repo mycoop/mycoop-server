@@ -128,7 +128,20 @@ App.ViewModels.MainPageModel = (function () {
 
         publ.userTemplates = ko.observable(userTemplates);
         
-        var groupTemplates = [];
+        var groupTemplates = [
+            {
+                name: "group-gets",
+                url: config.apiPrefix + "group",
+                method: methods[0],
+                body: ''
+            },
+           {
+               name: "group-get",
+               url: config.apiPrefix + "group/4",
+               method: methods[0],
+               body: ''
+           }
+        ];
 
         publ.groupTemplates = ko.observable(groupTemplates);
         
