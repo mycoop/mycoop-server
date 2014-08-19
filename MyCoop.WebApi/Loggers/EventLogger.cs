@@ -7,7 +7,7 @@ namespace MyCoop.WebApi.Loggers
 {
     public class EventLogger : ILogger
     {
-        public Task WriteAsync(string summary, string description, EventType type, int userId)
+        public Task WriteAsync(string summary, string description, EventType type, int userId, Guid transactionId)
         {
             var context = new CoopEntities();
             context.SysEvents.Add(new SysEvent
@@ -16,7 +16,8 @@ namespace MyCoop.WebApi.Loggers
                 Description = description,
                 Time = DateTime.UtcNow,
                 TypeId = (int)type,
-                UserId = userId
+                UserId = userId,
+                TransactionId = transactionId
             });
             return context.SaveChangesAsync().ContinueWith(_ => context.Dispose());
         }

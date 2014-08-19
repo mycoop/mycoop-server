@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Net.Http;
+using System.Web;
 using Any.Logs;
 using Any.Logs.Extentions;
 using MyCoop.WebApi.Helpers;
@@ -12,24 +13,27 @@ namespace MyCoop.WebApi.Loggers
         public static void Error(this Log log, string summary, params object[] values)
         {
             int userId = UserHelper.GetId();
+            Guid transactionId = TransactionHelper.GetId();
             summary = summary.Format(values);
             var description = new StackTrace(1).ToString();
-            log.WriteAsync<EventLogger>(logger => logger.WriteAsync(summary, description, EventType.Error, userId));
+            log.WriteAsync<EventLogger>(logger => logger.WriteAsync(summary, description, EventType.Error, userId, transactionId));
         }
 
         public static void Error(this Log log, Exception e, string summary, params object[] values)
         {
             int userId = UserHelper.GetId();
+            Guid transactionId = TransactionHelper.GetId();
             summary = summary.Format(values);
             var description = e.GetFullMessage();
-            log.WriteAsync<EventLogger>(logger => logger.WriteAsync(summary, description, EventType.Error, userId));
+            log.WriteAsync<EventLogger>(logger => logger.WriteAsync(summary, description, EventType.Error, userId, transactionId));
         }
 
         public static void Info(this Log log, string description, string summary, params object[] values)
         {
             int userId = UserHelper.GetId();
+            Guid transactionId = TransactionHelper.GetId();
             summary = summary.Format(values);
-            log.WriteAsync<EventLogger>(logger => logger.WriteAsync(summary, description, EventType.Info, userId));
+            log.WriteAsync<EventLogger>(logger => logger.WriteAsync(summary, description, EventType.Info, userId, transactionId));
         }
 
         public static void Info(this Log log, string summary, params object[] values)
@@ -60,9 +64,11 @@ namespace MyCoop.WebApi.Loggers
         public static void UserActivity(this Log log, HttpRequestMessage request)
         {
             int userId = UserHelper.GetId();
+            Guid transactionId = TransactionHelper.GetId();
             var summary = request.RequestUri.AbsolutePath;
-            var description = request.Headers.ToString();
-            log.WriteAsync<EventLogger>(logger => logger.WriteAsync(summary, description, EventType.UserActivity, userId));
+            var description = String.Format("ip: {1}{0}{2}", Environment.NewLine,
+                ((HttpContextWrapper) request.Properties["MS_HttpContext"]).Request.UserHostAddress, request.Headers);
+            log.WriteAsync<EventLogger>(logger => logger.WriteAsync(summary, description, EventType.UserActivity, userId, transactionId));
         }
     }
 }

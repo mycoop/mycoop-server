@@ -88,6 +88,7 @@
           <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
           <Property Name="TypeId" Type="int" Nullable="false" />
           <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="TransactionId" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
         <EntityType Name="SysEventTypes">
           <Key>
@@ -755,6 +756,7 @@
           <Property Name="TypeId" Type="Int32" Nullable="false" />
           <Property Name="UserId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="SysEventType" Relationship="CoopModel.FK_SysEvents_SysEventTypes" FromRole="SysEvent" ToRole="SysEventType" />
+          <Property Name="TransactionId" Type="Guid" Nullable="false" />
         </EntityType>
         <EntityType Name="SysEventType">
           <Key>
@@ -1188,6 +1190,7 @@
           <EntitySetMapping Name="SysEvents">
             <EntityTypeMapping TypeName="CoopModel.SysEvent">
               <MappingFragment StoreEntitySet="SysEvents">
+                <ScalarProperty Name="TransactionId" ColumnName="TransactionId" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="TypeId" ColumnName="TypeId" />
                 <ScalarProperty Name="Description" ColumnName="Description" />

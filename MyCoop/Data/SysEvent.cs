@@ -30,6 +30,8 @@ public partial class SysEvent
 
     public int UserId { get; set; }
 
+    public System.Guid TransactionId { get; set; }
+
 
 
     public virtual SysEventType SysEventType { get; set; }
