@@ -60,5 +60,59 @@ namespace MyCoop.WebApi.Controllers
             return Request.CreateResponse(HttpStatusCode.OK);
         }
 
+        [HttpGet]
+        [Route("{orgUnitId}/user/{userId}")]
+        public async Task<HttpResponseMessage> GetOrgUnitUserPermissions(int orgUnitId, int userId)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, await Service.Get<IManagementSevice>().GetOrgUnitUserPermissions(orgUnitId, userId));
+        }
+
+        [HttpGet]
+        [Route("{orgUnitId}/group/{groupId}")]
+        public async Task<HttpResponseMessage> GetOrgUnitGroupPermissions(int orgUnitId, int groupId)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, await Service.Get<IManagementSevice>().GetOrgUnitGroupPermissions(orgUnitId, groupId));
+        }
+
+        [HttpPost]
+        [Route("{orgUnitId}/user/{userId}/permission/{permissionId}")]
+        public async Task<HttpResponseMessage> AddOrgUnitUserPermission(int orgUnitId, int userId, int permissionId)
+        {
+            Log.Out.BeginInfo("AddOrgUnitUserPermission orgUnitId: {0}, userId: {1}, permissionId: {2}", orgUnitId, userId, permissionId);
+            await Service.Get<IManagementSevice>().AddOrgUnitUserPermission(orgUnitId, userId, permissionId);
+            Log.Out.BeginInfo("AddOrgUnitUserPermission orgUnitId: {0}, userId: {1}, permissionId: {2}", orgUnitId, userId, permissionId);
+            return Request.CreateResponse(HttpStatusCode.OK);
+        }
+
+        [HttpDelete]
+        [Route("{orgUnitId}/user/{userId}/permission/{permissionId}")]
+        public async Task<HttpResponseMessage> RemoveOrgUnitUserPermission(int orgUnitId, int userId, int permissionId)
+        {
+            Log.Out.BeginInfo("RemoveOrgUnitUserPermission orgUnitId: {0}, userId: {1}, permissionId: {2}", orgUnitId, userId, permissionId);
+            await Service.Get<IManagementSevice>().RemoveOrgUnitUserPermission(orgUnitId, userId, permissionId);
+            Log.Out.BeginInfo("RemoveOrgUnitUserPermission orgUnitId: {0}, userId: {1}, permissionId: {2}", orgUnitId, userId, permissionId);
+            return Request.CreateResponse(HttpStatusCode.OK);
+        }
+
+        [HttpPost]
+        [Route("{orgUnitId}/group/{groupId}/permission/{permissionId}")]
+        public async Task<HttpResponseMessage> AddOrgUnitGroupPermission(int orgUnitId, int groupId, int permissionId)
+        {
+            Log.Out.BeginInfo("AddOrgUnitGroupPermission orgUnitId: {0}, groupId: {1}, permissionId: {2}", orgUnitId, groupId, permissionId);
+            await Service.Get<IManagementSevice>().AddOrgUnitGroupPermission(orgUnitId, groupId, permissionId);
+            Log.Out.BeginInfo("AddOrgUnitGroupPermission orgUnitId: {0}, groupId: {1}, permissionId: {2}", orgUnitId, groupId, permissionId);
+            return Request.CreateResponse(HttpStatusCode.OK);
+        }
+
+        [HttpDelete]
+        [Route("{orgUnitId}/group/{groupId}/permission/{permissionId}")]
+        public async Task<HttpResponseMessage> RemoveOrgUnitGroupPermission(int orgUnitId, int groupId, int permissionId)
+        {
+            Log.Out.BeginInfo("RemoveOrgUnitGroupPermission orgUnitId: {0}, groupId: {1}, permissionId: {2}", orgUnitId, groupId, permissionId);
+            await Service.Get<IManagementSevice>().RemoveOrgUnitGroupPermission(orgUnitId, groupId, permissionId);
+            Log.Out.BeginInfo("RemoveOrgUnitGroupPermission orgUnitId: {0}, groupId: {1}, permissionId: {2}", orgUnitId, groupId, permissionId);
+            return Request.CreateResponse(HttpStatusCode.OK);
+        }
+
     }
 }

@@ -12,5 +12,17 @@ namespace MyCoop.WebApi.Services
         Task UpdateOrgUnit(int id, EditOrgUnitModel model);
 
         Task DeleteOrgUnit(int id);
+
+        Task<PermissionLevelModel[]> GetOrgUnitUserPermissions(int orgUnitId, int userId);
+
+        Task<PermissionLevelModel[]> GetOrgUnitGroupPermissions(int orgUnitId, int groupId);
+
+        Task AddOrgUnitUserPermission(int orgUnitId, int userId, int permissionId);
+
+        Task RemoveOrgUnitUserPermission(int orgUnitId, int userId, int permissionId);
+
+        Task AddOrgUnitGroupPermission(int orgUnitId, int groupId, int permissionId);
+
+        Task RemoveOrgUnitGroupPermission(int orgUnitId, int groupId, int permissionId);
     }
 }

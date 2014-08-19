@@ -118,13 +118,17 @@
     <Compile Include="Repositories\Instances\ComponentRepository.cs" />
     <Compile Include="Repositories\Instances\DocumentTemplateRepository.cs" />
     <Compile Include="Repositories\Instances\GroupRepository.cs" />
+    <Compile Include="Repositories\Instances\OrgUnitGroupPermissionRepository.cs" />
     <Compile Include="Repositories\Instances\OrgUnitRepository.cs" />
+    <Compile Include="Repositories\Instances\OrgUnitUserPermissionRepository.cs" />
     <Compile Include="Repositories\Instances\PermissionLevelRepository.cs" />
     <Compile Include="Repositories\Instances\RepositoryBase.cs" />
     <Compile Include="Repositories\Instances\UserGroupRepository.cs" />
     <Compile Include="Repositories\Instances\UserRepository.cs" />
     <Compile Include="Repositories\Instances\WorkspaceDocumentTemplateRepository.cs" />
+    <Compile Include="Repositories\IOrgUnitGroupPermissionRepository.cs" />
     <Compile Include="Repositories\IOrgUnitRepository.cs" />
+    <Compile Include="Repositories\IOrgUnitUserPermissionRepository.cs" />
     <Compile Include="Repositories\IPermissionLevelRepository.cs" />
     <Compile Include="Repositories\IRepository.cs" />
     <Compile Include="Repositories\IRepositoryManager.cs" />

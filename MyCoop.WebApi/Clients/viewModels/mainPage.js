@@ -175,7 +175,43 @@ App.ViewModels.MainPageModel = (function () {
                url: config.apiPrefix + "orgunit/3",
                method: methods[2],
                body: ''
-           }];
+           },
+            {
+                name: "org-unit-user-permission-gets",
+                url: config.apiPrefix + "orgunit/1016/user/1",
+                method: methods[0],
+                body: ''
+            },
+            {
+                name: "org-unit-group-permission-gets",
+                url: config.apiPrefix + "orgunit/1016/group/4",
+                method: methods[0],
+                body: ''
+            },
+            {
+                name: "org-unit-user-permission-add",
+                url: config.apiPrefix + "orgunit/1016/user/1/permission/1",
+                method: methods[1],
+                body: ''
+            },
+            {
+                name: "org-unit-group-permission-add",
+                url: config.apiPrefix + "orgunit/1016/group/4/permission/1",
+                method: methods[1],
+                body: ''
+            },
+            {
+                name: "org-unit-user-permission-remove",
+                url: config.apiPrefix + "orgunit/1016/user/1/permission/1",
+                method: methods[2],
+                body: ''
+            },
+            {
+                name: "org-unit-group-permission-remove",
+                url: config.apiPrefix + "orgunit/1016/group/4/permission/1",
+                method: methods[2],
+                body: ''
+            }];
 
         publ.orgUnitTemplates = ko.observable(orgUnitTemplates);
         

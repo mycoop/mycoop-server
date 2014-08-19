@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using MyCoop.Data;
 using MyCoop.Repositories;
 using MyCoop.WebApi.Models.OrgUnits;
@@ -44,6 +45,80 @@ namespace MyCoop.WebApi.Services.Instances
         public Task DeleteOrgUnit(int id)
         {
             return Delete<OrgUnit, IOrgUnitRepository>(id);
+        }
+
+        public Task<PermissionLevelModel[]> GetOrgUnitUserPermissions(int orgUnitId, int userId)
+        {
+            return AsyncOperation(() => Repository.GetWithContext<IPermissionLevelRepository>().GetValuesForUser(orgUnitId, userId),
+                values => values.Select(ug => new PermissionLevelModel(ug)).ToArray());
+        }
+
+        public Task<PermissionLevelModel[]> GetOrgUnitGroupPermissions(int orgUnitId, int groupId)
+        {
+            return AsyncOperation(() => Repository.GetWithContext<IPermissionLevelRepository>().GetValuesForGroup(orgUnitId, groupId),
+                values => values.Select(ug => new PermissionLevelModel(ug)).ToArray());
+        }
+
+        public Task AddOrgUnitUserPermission(int orgUnitId, int userId, int permissionId)
+        {
+            var entity = new OrgUnitUserPermission
+            {
+                OrgUnitId = orgUnitId,
+                UserId = userId,
+                PermissionLevelId = permissionId
+            };
+
+            var userGroupRepository = Repository.GetWithContext<IOrgUnitUserPermissionRepository>();
+            userGroupRepository.Add(entity);
+
+            return Repository.SaveChangesAsync();
+        }
+
+        public Task RemoveOrgUnitUserPermission(int orgUnitId, int userId, int permissionId)
+        {
+            var entity = new OrgUnitUserPermission
+            {
+                OrgUnitId = orgUnitId,
+                UserId = userId,
+                PermissionLevelId = permissionId
+            };
+
+            var repository = Repository.GetWithContext<IOrgUnitUserPermissionRepository>();
+            repository.Attach(entity);
+            repository.Delete(entity);
+
+            return Repository.SaveChangesAsync();
+        }
+
+        public Task AddOrgUnitGroupPermission(int orgUnitId, int groupId, int permissionId)
+        {
+            var entity = new OrgUnitGroupPermission
+            {
+                OrgUnitId = orgUnitId,
+                GroupId = groupId,
+                PermissionLevelId = permissionId
+            };
+
+            var userGroupRepository = Repository.GetWithContext<IOrgUnitGroupPermissionRepository>();
+            userGroupRepository.Add(entity);
+
+            return Repository.SaveChangesAsync();
+        }
+
+        public Task RemoveOrgUnitGroupPermission(int orgUnitId, int groupId, int permissionId)
+        {
+            var entity = new OrgUnitGroupPermission
+            {
+                OrgUnitId = orgUnitId,
+                GroupId = groupId,
+                PermissionLevelId = permissionId
+            };
+
+            var repository = Repository.GetWithContext<IOrgUnitGroupPermissionRepository>();
+            repository.Attach(entity);
+            repository.Delete(entity);
+
+            return Repository.SaveChangesAsync();
         }
     }
 }
