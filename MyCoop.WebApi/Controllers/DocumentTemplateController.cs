@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Http;
 using Any.Logs;
 using Aspose.Words;
+using Aspose.Words.Saving;
 using MyCoop.WebApi.Extentions;
 using MyCoop.WebApi.Filters;
 using MyCoop.WebApi.Loggers;
@@ -90,6 +91,12 @@ namespace MyCoop.WebApi.Controllers
             model.PagesCount = doc.PageCount;
 
             model.Link = String.Format("/Content/DocumentTemplates/{0}", temlateName);
+
+            var options = new ImageSaveOptions(SaveFormat.Png);
+            options.Resolution = 300;
+            options.PageCount = 1;
+
+            doc.Save(String.Format("{0}\\{1}.png",uploadedFileInfo.DirectoryName, Path.GetFileNameWithoutExtension(temlatePath)), options);
 
             Log.Out.Info(model.ToJson(), "Form model");
 

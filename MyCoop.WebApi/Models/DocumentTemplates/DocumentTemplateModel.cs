@@ -1,4 +1,6 @@
-﻿using MyCoop.Data;
+﻿using System;
+using System.IO;
+using MyCoop.Data;
 
 namespace MyCoop.WebApi.Models.DocumentTemplates
 {
@@ -38,6 +40,11 @@ namespace MyCoop.WebApi.Models.DocumentTemplates
         public string Link
         {
             get { return _documentTemplate.Link; }
+        }
+
+        public string Image
+        {
+            get { return String.Format("/Content/DocumentTemplates/{0}.png", Path.GetFileNameWithoutExtension(_documentTemplate.Link)); }
         }
 
         public int? ComponentId
