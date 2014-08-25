@@ -30,5 +30,10 @@ namespace MyCoop.Repositories.Instances
         {
             return GetEntities().Where(entity => entity.OrgUnitGroupPermissions.Any(oup => oup.OrgUnitId == orgUnitId && oup.GroupId == groupId)).ToArrayAsync();
         }
+
+        public Task<PermissionLevel[]> GetValuesForOrgUnit(int orgUnitId)
+        {
+            return GetEntities().Where(entity => entity.OrgUnitGroupPermissions.Any(oup => oup.OrgUnitId == orgUnitId) || entity.OrgUnitUserPermissions.Any(oup => oup.OrgUnitId == orgUnitId)).ToArrayAsync();
+        }
     }
 }

@@ -114,5 +114,12 @@ namespace MyCoop.WebApi.Controllers
             return Request.CreateResponse(HttpStatusCode.OK);
         }
 
+        [HttpGet]
+        [Route("{orgUnitId}/permission")]
+        public async Task<HttpResponseMessage> GetPermissions(int orgUnitId)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, await Service.Get<IManagementSevice>().GetOrgUnitPermissions(orgUnitId));
+        }
+
     }
 }

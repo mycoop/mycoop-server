@@ -120,5 +120,11 @@ namespace MyCoop.WebApi.Services.Instances
 
             return Repository.SaveChangesAsync();
         }
+
+        public Task<PermissionLevelModel[]> GetOrgUnitPermissions(int orgUnitId)
+        {
+            return AsyncOperation(() => Repository.GetWithContext<IPermissionLevelRepository>().GetValuesForOrgUnit(orgUnitId),
+                values => values.Select(ug => new PermissionLevelModel(ug)).ToArray());
+        }
     }
 }

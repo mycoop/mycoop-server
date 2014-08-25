@@ -8,5 +8,7 @@ namespace MyCoop.Repositories
         Task<PermissionLevel[]> GetValuesForUser(int orgUnitId, int userId);
 
         Task<PermissionLevel[]> GetValuesForGroup(int orgUnitId, int groupId);
+
+        Task<PermissionLevel[]> GetValuesForOrgUnit(int orgUnitId);
     }
 }
