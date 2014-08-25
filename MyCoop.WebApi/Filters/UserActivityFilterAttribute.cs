@@ -7,11 +7,11 @@ namespace MyCoop.WebApi.Filters
 {
     public class UserActivityFilterAttribute : ActionFilterAttribute
     {
-        //public override void OnActionExecuted(HttpActionExecutedContext actionExecutedContext)
-        //{
-        //    Log.Out.UserActivity(actionExecutedContext.Request);
-        //    base.OnActionExecuted(actionExecutedContext);
-        //}
+        public override void OnActionExecuted(HttpActionExecutedContext actionExecutedContext)
+        {
+            Log.Out.UserActivity(actionExecutedContext.Response);
+            base.OnActionExecuted(actionExecutedContext);
+        }
 
         public override void OnActionExecuting(HttpActionContext actionContext)
         {

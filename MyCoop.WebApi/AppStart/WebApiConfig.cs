@@ -10,7 +10,7 @@ namespace MyCoop.WebApi.AppStart
         public static void Register(HttpConfiguration config)
         {
             // Конфигурация и службы веб-API
-            config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
+            //config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
             // Маршруты веб-API
             config.MapHttpAttributeRoutes();
 

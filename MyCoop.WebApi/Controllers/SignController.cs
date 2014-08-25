@@ -28,7 +28,7 @@ namespace MyCoop.WebApi.Controllers
             {
                 UserHelper.SaveId(userId);
                 Log.Out.Info("Sign in");
-                return Request.CreateResponse(HttpStatusCode.OK, userId);
+                return Request.CreateResponse(HttpStatusCode.OK, new { Id = userId });
             }
             return Request.CreateResponse(HttpStatusCode.BadRequest);
 

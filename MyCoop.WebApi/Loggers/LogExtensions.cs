@@ -67,7 +67,16 @@ namespace MyCoop.WebApi.Loggers
             Guid transactionId = TransactionHelper.GetId();
             var summary = request.RequestUri.AbsolutePath;
             var description = String.Format("ip: {1}{0}{2}", Environment.NewLine,
-                ((HttpContextWrapper) request.Properties["MS_HttpContext"]).Request.UserHostAddress, request.Headers);
+                ((HttpContextWrapper)request.Properties["MS_HttpContext"]).Request.UserHostAddress, request.Headers);
+            log.WriteAsync<EventLogger>(logger => logger.WriteAsync(summary, description, EventType.UserActivity, userId, transactionId));
+        }
+
+        public static void UserActivity(this Log log, HttpResponseMessage response)
+        {
+            int userId = UserHelper.GetId();
+            Guid transactionId = TransactionHelper.GetId();
+            var summary = String.Format("{0} {1} {2}", response.RequestMessage.RequestUri.AbsolutePath, (int)response.StatusCode, response.ReasonPhrase);
+            var description = response.Content != null ? String.Format("{1}{0}{2}", Environment.NewLine, response.Content.Headers, response.Content.ReadAsStringAsync().Result) : String.Empty;
             log.WriteAsync<EventLogger>(logger => logger.WriteAsync(summary, description, EventType.UserActivity, userId, transactionId));
         }
     }
