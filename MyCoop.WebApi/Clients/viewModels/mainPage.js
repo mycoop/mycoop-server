@@ -124,7 +124,13 @@ App.ViewModels.MainPageModel = (function () {
 
         publ.signTemplates = ko.observable(signTemplates);
         
-        var userTemplates = [];
+        var userTemplates = [
+        {
+            name: "user-current",
+            url: config.apiPrefix + "user/current",
+            method: methods[0],
+            body: ''
+        }];
 
         publ.userTemplates = ko.observable(userTemplates);
         
@@ -210,6 +216,18 @@ App.ViewModels.MainPageModel = (function () {
                 name: "org-unit-group-permission-remove",
                 url: config.apiPrefix + "orgunit/1016/group/4/permission/1",
                 method: methods[2],
+                body: ''
+            },
+            {
+                name: "org-unit-users-permissions",
+                url: config.apiPrefix + "orgunit/1029/user-permission",
+                method: methods[0],
+                body: ''
+            },
+            {
+                name: "org-unit-groups-permissions",
+                url: config.apiPrefix + "orgunit/1029/group-permission",
+                method: methods[0],
                 body: ''
             }];
 
