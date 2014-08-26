@@ -121,10 +121,16 @@ namespace MyCoop.WebApi.Services.Instances
             return Repository.SaveChangesAsync();
         }
 
-        public Task<PermissionLevelModel[]> GetOrgUnitPermissions(int orgUnitId)
+        public Task<OrgUnitUserPermissionModel[]> GetUserOrgUnitPermissions(int orgUnitId)
         {
-            return AsyncOperation(() => Repository.GetWithContext<IPermissionLevelRepository>().GetValuesForOrgUnit(orgUnitId),
-                values => values.Select(ug => new PermissionLevelModel(ug)).ToArray());
+            return AsyncOperation(() => Repository.GetWithContext<IOrgUnitUserPermissionRepository>().GetValuesByOrgUnitId(orgUnitId, "User"),
+                values => values.Select(ug => new OrgUnitUserPermissionModel(ug)).ToArray());
+        }
+
+        public Task<OrgUnitGroupPermissionModel[]> GetGroupOrgUnitPermissions(int orgUnitId)
+        {
+            return AsyncOperation(() => Repository.GetWithContext<IOrgUnitGroupPermissionRepository>().GetValuesByOrgUnitId(orgUnitId, "Group"),
+                values => values.Select(ug => new OrgUnitGroupPermissionModel(ug)).ToArray());
         }
     }
 }

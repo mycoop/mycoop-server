@@ -115,11 +115,17 @@ namespace MyCoop.WebApi.Controllers
         }
 
         [HttpGet]
-        [Route("{orgUnitId}/permission")]
-        public async Task<HttpResponseMessage> GetPermissions(int orgUnitId)
+        [Route("{orgUnitId}/user-permission")]
+        public async Task<HttpResponseMessage> GetUserPermissions(int orgUnitId)
         {
-            return Request.CreateResponse(HttpStatusCode.OK, await Service.Get<IManagementSevice>().GetOrgUnitPermissions(orgUnitId));
+            return Request.CreateResponse(HttpStatusCode.OK, await Service.Get<IManagementSevice>().GetUserOrgUnitPermissions(orgUnitId));
         }
 
+        [HttpGet]
+        [Route("{orgUnitId}/group-permission")]
+        public async Task<HttpResponseMessage> GetGroupPermissions(int orgUnitId)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, await Service.Get<IManagementSevice>().GetGroupOrgUnitPermissions(orgUnitId));
+        }
     }
 }

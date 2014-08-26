@@ -168,7 +168,9 @@
     <Compile Include="Models\Groups\UserGroupModel.cs" />
     <Compile Include="Models\OrgUnits\EditOrgUnitModel.cs" />
     <Compile Include="Models\OrgUnits\LocationModel.cs" />
+    <Compile Include="Models\OrgUnits\OrgUnitGroupPermissionModel.cs" />
     <Compile Include="Models\OrgUnits\OrgUnitModel.cs" />
+    <Compile Include="Models\OrgUnits\OrgUnitUserPermissionModel.cs" />
     <Compile Include="Models\OrgUnits\PermissionLevelModel.cs" />
     <Compile Include="Models\Signs\LoginModel.cs" />
     <Compile Include="Models\Users\AddUserModel.cs" />
