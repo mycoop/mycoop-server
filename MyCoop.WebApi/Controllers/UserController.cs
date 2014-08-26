@@ -5,6 +5,7 @@ using System.Web.Http;
 using Any.Logs;
 using MyCoop.WebApi.Extentions;
 using MyCoop.WebApi.Filters;
+using MyCoop.WebApi.Helpers;
 using MyCoop.WebApi.Loggers;
 using MyCoop.WebApi.Models.Users;
 using MyCoop.WebApi.Services;
@@ -30,7 +31,6 @@ namespace MyCoop.WebApi.Controllers
         public async Task<HttpResponseMessage> Get(int id)
         {
             return Request.CreateResponse(HttpStatusCode.OK, await Service.Get<ISystemService>().GetUser(id));
-
         }
 
         [HttpPost]
@@ -68,6 +68,13 @@ namespace MyCoop.WebApi.Controllers
         public async Task<HttpResponseMessage> GetGroups(int userId)
         {
             return Request.CreateResponse(HttpStatusCode.OK, await Service.Get<ISystemService>().GetUserGroups(userId));
+        }
+
+        [HttpGet]
+        [Route("current")]
+        public async Task<HttpResponseMessage> GetCurrent()
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, await Service.Get<ISystemService>().GetUser(UserHelper.GetId()));
         }
     }
 }
