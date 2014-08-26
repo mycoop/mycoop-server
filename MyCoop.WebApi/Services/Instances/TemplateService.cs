@@ -74,7 +74,7 @@ namespace MyCoop.WebApi.Services.Instances
 
         public Task DeleteDocumentTemplate(int id)
         {
-            return Delete<DocumentTemplate, IDocumentTemplateRepository>(id);
+            return Repository.GetWithContext<IDocumentTemplateRepository>().Delete(id);
         }
 
         public Task<WorkspaceTemplateModel[]> GetWorkspaceTemplates()
@@ -107,7 +107,7 @@ namespace MyCoop.WebApi.Services.Instances
 
         public Task DeleteWorkspaceTemplate(int id)
         {
-            return Delete<WorkspaceTemplate, IWorkspaceTemplateRepository>(id);
+            return Repository.GetWithContext<IWorkspaceTemplateRepository>().Delete(id);
         }
 
         public Task<DocumentTemplateModel[]> GetDocumentsByWorkspaceTemplateId(int id)

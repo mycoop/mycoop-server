@@ -9,7 +9,10 @@ namespace MyCoop.WebApi.Filters
     {
         public override void OnActionExecuted(HttpActionExecutedContext actionExecutedContext)
         {
-            Log.Out.UserActivity(actionExecutedContext.Response);
+            if (actionExecutedContext.Response != null)
+            {
+                Log.Out.UserActivity(actionExecutedContext.Response);
+            }
             base.OnActionExecuted(actionExecutedContext);
         }
 

@@ -20,5 +20,10 @@ namespace MyCoop.Repositories.Instances
         {
             return GetEntities(includes).SingleAsync(entity => entity.Id == id);
         }
+
+        public Task Delete(int id)
+        {
+            return Task.Run(() => Context.DeleteWorkspaceTemplate(id));
+        }
     }
 }

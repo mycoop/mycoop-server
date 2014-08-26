@@ -111,6 +111,18 @@ public partial class CoopEntities : DbContext
         return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteWorkspaceTemplate", idParameter);
     }
 
+
+    public virtual int DeleteDocumentTemplate(Nullable<int> id)
+    {
+
+        var idParameter = id.HasValue ?
+            new ObjectParameter("id", id) :
+            new ObjectParameter("id", typeof(int));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteDocumentTemplate", idParameter);
+    }
+
 }
 
 }

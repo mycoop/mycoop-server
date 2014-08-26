@@ -25,5 +25,10 @@ namespace MyCoop.Repositories.Instances
         {
             return GetEntities().Where(dt => dt.WorkspaceDocumentTemplates.Any(wt => wt.WorkspaceTemplateId == id)).ToArrayAsync();
         }
+
+        public Task Delete(int id)
+        {
+            return Task.Run(() => Context.DeleteDocumentTemplate(id));
+        }
     }
 }
