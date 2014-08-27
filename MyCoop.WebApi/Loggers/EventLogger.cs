@@ -15,7 +15,7 @@ namespace MyCoop.WebApi.Loggers
                 Summary = summary,
                 Description = description,
                 Time = DateTime.UtcNow,
-                TypeId = (int)type,
+                Type = (int)type,
                 UserId = userId,
                 TransactionId = transactionId
             });

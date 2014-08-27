@@ -41,6 +41,12 @@ public partial class CoopEntities : DbContext
 
     public virtual DbSet<Group> Groups { get; set; }
 
+    public virtual DbSet<IncidentOrgUnit> IncidentOrgUnits { get; set; }
+
+    public virtual DbSet<Incident> Incidents { get; set; }
+
+    public virtual DbSet<IncidentUser> IncidentUsers { get; set; }
+
     public virtual DbSet<OrgUnitGroupPermission> OrgUnitGroupPermissions { get; set; }
 
     public virtual DbSet<OrgUnit> OrgUnits { get; set; }
@@ -50,8 +56,6 @@ public partial class CoopEntities : DbContext
     public virtual DbSet<PermissionLevel> PermissionLevels { get; set; }
 
     public virtual DbSet<SysEvent> SysEvents { get; set; }
-
-    public virtual DbSet<SysEventType> SysEventTypes { get; set; }
 
     public virtual DbSet<UserGroup> UserGroups { get; set; }
 

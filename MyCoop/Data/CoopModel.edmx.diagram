@@ -5,20 +5,22 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="b749d490547e4f618460740bd1ce2e37" Name="Diagram1">
-        <EntityTypeShape EntityType="CoopModel.Component" Width="1.5" PointX="6" PointY="28.125" />
-        <EntityTypeShape EntityType="CoopModel.DocumentTemplate" Width="1.5" PointX="8.25" PointY="27.75" />
-        <EntityTypeShape EntityType="CoopModel.Group" Width="1.5" PointX="5.25" PointY="13.75" />
-        <EntityTypeShape EntityType="CoopModel.OrgUnitGroupPermission" Width="1.5" PointX="7.5" PointY="12.625" />
-        <EntityTypeShape EntityType="CoopModel.OrgUnit" Width="1.5" PointX="7.5" PointY="18.375" />
-        <EntityTypeShape EntityType="CoopModel.OrgUnitUserPermission" Width="1.5" PointX="5.25" PointY="10.75" />
-        <EntityTypeShape EntityType="CoopModel.PermissionLevel" Width="1.5" PointX="0.75" PointY="10.5" />
-        <EntityTypeShape EntityType="CoopModel.SysEvent" Width="1.5" PointX="3" PointY="1" />
-        <EntityTypeShape EntityType="CoopModel.SysEventType" Width="1.5" PointX="0.75" PointY="1.375" />
-        <EntityTypeShape EntityType="CoopModel.UserGroup" Width="1.5" PointX="7.5" PointY="15.5" />
-        <EntityTypeShape EntityType="CoopModel.User" Width="1.5" PointX="3" PointY="15.25" />
-        <EntityTypeShape EntityType="CoopModel.WorkspaceDocumentTemplate" Width="1.5" PointX="10.5" PointY="23.125" />
-        <EntityTypeShape EntityType="CoopModel.WorkspaceTemplateComponent" Width="1.5" PointX="7.5" PointY="24.125" />
-        <EntityTypeShape EntityType="CoopModel.WorkspaceTemplate" Width="1.5" PointX="5.25" PointY="22.5" />
+        <EntityTypeShape EntityType="CoopModel.Component" Width="1.5" PointX="3" PointY="28.75" />
+        <EntityTypeShape EntityType="CoopModel.DocumentTemplate" Width="1.5" PointX="5.25" PointY="28.25" />
+        <EntityTypeShape EntityType="CoopModel.Group" Width="1.5" PointX="5.25" PointY="12.5" />
+        <EntityTypeShape EntityType="CoopModel.IncidentOrgUnit" Width="1.5" PointX="9.75" PointY="20.5" />
+        <EntityTypeShape EntityType="CoopModel.Incident" Width="1.5" PointX="3" PointY="19.25" />
+        <EntityTypeShape EntityType="CoopModel.IncidentUser" Width="1.5" PointX="5.25" PointY="17" />
+        <EntityTypeShape EntityType="CoopModel.OrgUnitGroupPermission" Width="1.5" PointX="7.5" PointY="12.75" />
+        <EntityTypeShape EntityType="CoopModel.OrgUnit" Width="1.5" PointX="7.5" PointY="19.375" />
+        <EntityTypeShape EntityType="CoopModel.OrgUnitUserPermission" Width="1.5" PointX="9.75" PointY="16.75" />
+        <EntityTypeShape EntityType="CoopModel.PermissionLevel" Width="1.5" PointX="0.75" PointY="12" />
+        <EntityTypeShape EntityType="CoopModel.SysEvent" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="CoopModel.UserGroup" Width="1.5" PointX="7.5" PointY="16.25" />
+        <EntityTypeShape EntityType="CoopModel.User" Width="1.5" PointX="3" PointY="13.875" />
+        <EntityTypeShape EntityType="CoopModel.WorkspaceDocumentTemplate" Width="1.5" PointX="7.5" PointY="24.625" />
+        <EntityTypeShape EntityType="CoopModel.WorkspaceTemplateComponent" Width="1.5" PointX="7.5" PointY="27.625" />
+        <EntityTypeShape EntityType="CoopModel.WorkspaceTemplate" Width="1.5" PointX="5.25" PointY="24.125" />
         <AssociationConnector Association="CoopModel.FK_DocumentTemplates_Components" />
         <AssociationConnector Association="CoopModel.FK_WorkspaceTemplateComponents_Components" />
         <AssociationConnector Association="CoopModel.FK_WorkspaceDocumentTemplates_DocumentTemplates" />
@@ -26,6 +28,10 @@
         <AssociationConnector Association="CoopModel.FK_Groups_Users1" />
         <AssociationConnector Association="CoopModel.FK_OrgUnitGroupPermissions_Groups" />
         <AssociationConnector Association="CoopModel.FK_UserGroups_Groups" />
+        <AssociationConnector Association="CoopModel.FK_IncidentOrgUnits_Incidents" />
+        <AssociationConnector Association="CoopModel.FK_IncidentOrgUnits_OrgUnits" />
+        <AssociationConnector Association="CoopModel.FK_IncidentUsers_Incidents" />
+        <AssociationConnector Association="CoopModel.FK_IncidentUsers_Users" />
         <AssociationConnector Association="CoopModel.FK_OrgUnitGroupPermissions_OrgUnits" />
         <AssociationConnector Association="CoopModel.FK_OrgUnitGroupPermissions_PermissionLevels" />
         <AssociationConnector Association="CoopModel.FK_OrgUnits_OrgUnits" />
@@ -35,7 +41,6 @@
         <AssociationConnector Association="CoopModel.FK_OrgUnitUserPermissions_PermissionLevels" />
         <AssociationConnector Association="CoopModel.FK_OrgUnitUserPermissions_Users" />
         <AssociationConnector Association="CoopModel.FK_Users_PermissionLevels" />
-        <AssociationConnector Association="CoopModel.FK_SysEvents_SysEventTypes" />
         <AssociationConnector Association="CoopModel.FK_UserGroups_Users" />
         <AssociationConnector Association="CoopModel.FK_WorkspaceTemplates_Users" />
         <AssociationConnector Association="CoopModel.FK_WorkspaceTemplates_Users1" />

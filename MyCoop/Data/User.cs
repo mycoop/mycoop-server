@@ -25,6 +25,8 @@ public partial class User
 
         this.Groups1 = new HashSet<Group>();
 
+        this.IncidentUsers = new HashSet<IncidentUser>();
+
         this.OrgUnits = new HashSet<OrgUnit>();
 
         this.OrgUnitUserPermissions = new HashSet<OrgUnitUserPermission>();
@@ -59,6 +61,8 @@ public partial class User
     public virtual ICollection<Group> Groups { get; set; }
 
     public virtual ICollection<Group> Groups1 { get; set; }
+
+    public virtual ICollection<IncidentUser> IncidentUsers { get; set; }
 
     public virtual ICollection<OrgUnit> OrgUnits { get; set; }
 

@@ -22,7 +22,7 @@ public partial class WorkspaceTemplateComponent
 
     public int ComponentId { get; set; }
 
-    public System.DateTime CreationTime { get; set; }
+    public Nullable<System.DateTime> CreationTime { get; set; }
 
 
 

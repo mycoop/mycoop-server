@@ -15,26 +15,20 @@ namespace MyCoop.Data
 using System;
     using System.Collections.Generic;
     
-public partial class SysEventType
+public partial class IncidentUser
 {
 
-    public SysEventType()
-    {
+    public int IncidentId { get; set; }
 
-        this.SysEvents = new HashSet<SysEvent>();
+    public int UserId { get; set; }
 
-    }
-
-
-    public int Id { get; set; }
-
-    public string Name { get; set; }
-
-    public string Description { get; set; }
+    public Nullable<System.DateTime> CreationTime { get; set; }
 
 
 
-    public virtual ICollection<SysEvent> SysEvents { get; set; }
+    public virtual Incident Incident { get; set; }
+
+    public virtual User User { get; set; }
 
 }
 

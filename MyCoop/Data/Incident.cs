@@ -15,22 +15,46 @@ namespace MyCoop.Data
 using System;
     using System.Collections.Generic;
     
-public partial class SysEvent
+public partial class Incident
 {
+
+    public Incident()
+    {
+
+        this.IncidentOrgUnits = new HashSet<IncidentOrgUnit>();
+
+        this.IncidentUsers = new HashSet<IncidentUser>();
+
+    }
+
 
     public int Id { get; set; }
 
-    public System.DateTime Time { get; set; }
+    public string Name { get; set; }
 
-    public string Summary { get; set; }
+    public double Lat { get; set; }
 
-    public string Description { get; set; }
+    public double Lng { get; set; }
+
+    public string Address { get; set; }
 
     public int Type { get; set; }
 
-    public int UserId { get; set; }
+    public int Priority { get; set; }
 
-    public System.Guid TransactionId { get; set; }
+    public int FacilityType { get; set; }
+
+    public System.DateTime StartTime { get; set; }
+
+    public long Duration { get; set; }
+
+    public string Description { get; set; }
+
+
+
+    public virtual ICollection<IncidentOrgUnit> IncidentOrgUnits { get; set; }
+
+    public virtual ICollection<IncidentUser> IncidentUsers { get; set; }
 
 }
 

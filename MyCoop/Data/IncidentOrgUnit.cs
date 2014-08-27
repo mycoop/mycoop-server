@@ -15,20 +15,20 @@ namespace MyCoop.Data
 using System;
     using System.Collections.Generic;
     
-public partial class WorkspaceDocumentTemplate
+public partial class IncidentOrgUnit
 {
 
-    public int WorkspaceTemplateId { get; set; }
+    public int IncidentId { get; set; }
 
-    public int DocumentTemplateId { get; set; }
+    public int OrgUnitId { get; set; }
 
     public Nullable<System.DateTime> CreationTime { get; set; }
 
 
 
-    public virtual DocumentTemplate DocumentTemplate { get; set; }
+    public virtual Incident Incident { get; set; }
 
-    public virtual WorkspaceTemplate WorkspaceTemplate { get; set; }
+    public virtual OrgUnit OrgUnit { get; set; }
 
 }
 

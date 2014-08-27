@@ -77,6 +77,15 @@
     <Compile Include="Data\Group.cs">
       <DependentUpon>CoopModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Data\Incident.cs">
+      <DependentUpon>CoopModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\IncidentOrgUnit.cs">
+      <DependentUpon>CoopModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\IncidentUser.cs">
+      <DependentUpon>CoopModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Data\OrgUnit.cs">
       <DependentUpon>CoopModel.tt</DependentUpon>
     </Compile>
@@ -90,9 +99,6 @@
       <DependentUpon>CoopModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Data\SysEvent.cs">
-      <DependentUpon>CoopModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data\SysEventType.cs">
       <DependentUpon>CoopModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Data\User.cs">
