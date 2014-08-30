@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using MyCoop.WebApi.Models.Incidents;
 using MyCoop.WebApi.Models.OrgUnits;
 
 namespace MyCoop.WebApi.Services
@@ -28,5 +29,13 @@ namespace MyCoop.WebApi.Services
         Task<OrgUnitUserPermissionModel[]> GetUserOrgUnitPermissions(int orgUnitId);
 
         Task<OrgUnitGroupPermissionModel[]> GetGroupOrgUnitPermissions(int orgUnitId);
+
+        Task<IncidentModel[]> GeIncidents();
+        Task<IncidentModel> GeIncident(int id);
+        Task<int> AddIncident(EditIncidentModel model);
+
+        Task UpdateIncident(int id, EditIncidentModel model);
+
+        Task DeleteIncident(int id);
     }
 }

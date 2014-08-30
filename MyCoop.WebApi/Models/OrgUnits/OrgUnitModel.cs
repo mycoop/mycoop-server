@@ -11,7 +11,7 @@ namespace MyCoop.WebApi.Models.OrgUnits
         public OrgUnitModel(OrgUnit orgUnit)
         {
             _orgUnit = orgUnit;
-            _location = new LocationModel {Lat = _orgUnit.Lat, Lng = _orgUnit.Lng};
+            _location = new LocationModel { Lat = _orgUnit.Lat, Lng = _orgUnit.Lng, Address = _orgUnit.Address };
         }
 
         public int Id
@@ -22,11 +22,6 @@ namespace MyCoop.WebApi.Models.OrgUnits
         public string Name
         {
             get { return _orgUnit.Name; }
-        }
-
-        public string Address
-        {
-            get { return _orgUnit.Address; }
         }
 
         public LocationModel Location

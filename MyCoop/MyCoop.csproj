@@ -121,6 +121,8 @@
     <Compile Include="Repositories\IComponentRepository.cs" />
     <Compile Include="Repositories\IDocumentTemplateRepository.cs" />
     <Compile Include="Repositories\IGroupRepository.cs" />
+    <Compile Include="Repositories\IIncidentRepository.cs" />
+    <Compile Include="Repositories\Instances\IncidentRepository.cs" />
     <Compile Include="Repositories\Instances\ComponentRepository.cs" />
     <Compile Include="Repositories\Instances\DocumentTemplateRepository.cs" />
     <Compile Include="Repositories\Instances\GroupRepository.cs" />

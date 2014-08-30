@@ -139,6 +139,7 @@
     <Compile Include="AppStart\WebApiConfig.cs" />
     <Compile Include="Controllers\ComponentController.cs" />
     <Compile Include="Controllers\DocumentTemplateController.cs" />
+    <Compile Include="Controllers\IncidentController.cs" />
     <Compile Include="Controllers\WorkspaceTemplateController.cs" />
     <Compile Include="Core\WebApiDependencyResolver.cs" />
     <Compile Include="Controllers\ApiControllerBase.cs" />
@@ -166,8 +167,10 @@
     <Compile Include="Models\DocumentTemplates\EditDocumentTemplateModel.cs" />
     <Compile Include="Models\Groups\EditGroupModel.cs" />
     <Compile Include="Models\Groups\UserGroupModel.cs" />
+    <Compile Include="Models\Incidents\EditIncidentModel.cs" />
+    <Compile Include="Models\Incidents\IncidentModel.cs" />
     <Compile Include="Models\OrgUnits\EditOrgUnitModel.cs" />
-    <Compile Include="Models\OrgUnits\LocationModel.cs" />
+    <Compile Include="Models\LocationModel.cs" />
     <Compile Include="Models\OrgUnits\OrgUnitGroupPermissionModel.cs" />
     <Compile Include="Models\OrgUnits\OrgUnitModel.cs" />
     <Compile Include="Models\OrgUnits\OrgUnitUserPermissionModel.cs" />

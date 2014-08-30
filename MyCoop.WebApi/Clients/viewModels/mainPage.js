@@ -168,13 +168,13 @@ App.ViewModels.MainPageModel = (function () {
                name: "org-unit-add",
                url: config.apiPrefix + "orgunit",
                method: methods[1],
-               body: '{"name":"sfasf", "address": "qwrqw", "location": { "lat":"54.55", "lng":"1.2" }, "ownerId": "1", "parentId": "1", "workspaceTemplateId":"1"}'
+               body: '{"name":"sfasf", "location": { "lat":"54.55", "lng":"1.2", "address": "qwrqw" }, "ownerId": "1", "parentId": "1", "workspaceTemplateId":"1"}'
            },
            {
                name: "org-unit-update",
                url: config.apiPrefix + "orgunit/1",
                method: methods[1],
-               body: '{"name":"vasja", "address": "qwrqw", "location": { "lat":"77.55", "lng":"5.2" }, "ownerId": "1", "parentId": "1", "workspaceTemplateId":"1"}'
+               body: '{"name":"vasja", "location": { "lat":"77.55", "lng":"5.2", "address": "qwrqw" }, "ownerId": "1", "parentId": "1", "workspaceTemplateId":"1"}'
            },
            {
                name: "org-unit-delete",
@@ -334,6 +334,42 @@ App.ViewModels.MainPageModel = (function () {
           }];
 
         publ.workspaceTemplateTemplates = ko.observable(workspaceTemplateTemplates);
+        
+
+        var incidentTemplates = [
+           {
+               name: "incident-gets",
+               url: config.apiPrefix + "incident",
+               method: methods[0],
+               body: ''
+           },
+          {
+              name: "incident-get",
+              url: config.apiPrefix + "incident/1",
+              method: methods[0],
+              body: ''
+          },
+            {
+                name: "incident-add",
+                url: config.apiPrefix + "incident",
+                method: methods[1],
+                body: '{"name":"vasja", "location": { "lat":"77.55", "lng":"5.2", "address": "qwrqw" }, "type": "1", "priority": "1", "facilityType":"1", "startTime": "30.08.2014", "duration":"100000", "description": "twetw" }'
+            },
+          {
+              name: "incident-update",
+              url: config.apiPrefix + "incident/1",
+              method: methods[1],
+              body: '{"name":"kolja", "location": { "lat":"77.55", "lng":"5.2", "address": "qwrqw" }, "type": "1", "priority": "1", "facilityType":"1", "startTime": "30.08.2014", "duration":"100000", "description": "twetw" }'
+          },
+          {
+              name: "incident-delete",
+              url: config.apiPrefix + "workspace-template/3",
+              method: methods[2],
+              body: ''
+          }];
+
+        publ.incidentTemplates = ko.observable(incidentTemplates);
+
 
         publ.selectedTemplate = ko.observable();
 

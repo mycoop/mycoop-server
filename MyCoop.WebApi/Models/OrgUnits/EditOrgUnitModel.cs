@@ -20,12 +20,6 @@ namespace MyCoop.WebApi.Models.OrgUnits
             set { _orgUnit.Name = value; }
         }
 
-        public string Address
-        {
-            get { return _orgUnit.Address; }
-            set { _orgUnit.Address = value; }
-        }
-
         public LocationModel Location
         {
             get { return _location; }
@@ -36,6 +30,7 @@ namespace MyCoop.WebApi.Models.OrgUnits
                 {
                     _orgUnit.Lat = _location.Lat;
                     _orgUnit.Lng = _location.Lng;
+                    _orgUnit.Address = _location.Address;
                 }
                 
             }

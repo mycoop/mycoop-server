@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using MyCoop.Data;
 using MyCoop.Repositories;
+using MyCoop.WebApi.Models.Incidents;
 using MyCoop.WebApi.Models.OrgUnits;
 
 namespace MyCoop.WebApi.Services.Instances
@@ -131,6 +132,43 @@ namespace MyCoop.WebApi.Services.Instances
         {
             return AsyncOperation(() => Repository.GetWithContext<IOrgUnitGroupPermissionRepository>().GetValuesByOrgUnitId(orgUnitId, "Group"),
                 values => values.Select(ug => new OrgUnitGroupPermissionModel(ug)).ToArray());
+        }
+
+        public Task<IncidentModel[]> GeIncidents()
+        {
+            return GetValues<IncidentModel, Incident, IIncidentRepository>(entity => new IncidentModel(entity));
+        }
+
+        public Task<IncidentModel> GeIncident(int id)
+        {
+            return GetValue<IncidentModel, Incident, IIncidentRepository>(id, entity => new IncidentModel(entity));
+        }
+
+        public Task<int> AddIncident(EditIncidentModel model)
+        {
+            return Add<Incident, IIncidentRepository>(entity => entity.Id, model.GetEntity);
+        }
+
+        public Task UpdateIncident(int id, EditIncidentModel model)
+        {
+            return Update<Incident, IIncidentRepository>(id, entity =>
+            {
+                var updatedEntity = model.GetEntity();
+                entity.Name = updatedEntity.Name;
+                entity.Address = updatedEntity.Address;
+                entity.Lat = updatedEntity.Lat;
+                entity.Lng = updatedEntity.Lng;
+                entity.Type = updatedEntity.Type;
+                entity.Priority = updatedEntity.Priority;
+                entity.FacilityType = updatedEntity.FacilityType;
+                entity.Duration = updatedEntity.Duration;
+                entity.Description = updatedEntity.Description;
+            });
+        }
+
+        public Task DeleteIncident(int id)
+        {
+            return Delete<Incident, IIncidentRepository>(id);
         }
     }
 }
