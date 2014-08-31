@@ -131,6 +131,7 @@
     <Compile Include="Repositories\Instances\OrgUnitUserPermissionRepository.cs" />
     <Compile Include="Repositories\Instances\PermissionLevelRepository.cs" />
     <Compile Include="Repositories\Instances\RepositoryBase.cs" />
+    <Compile Include="Repositories\Instances\SysEventRepository.cs" />
     <Compile Include="Repositories\Instances\UserGroupRepository.cs" />
     <Compile Include="Repositories\Instances\UserRepository.cs" />
     <Compile Include="Repositories\Instances\WorkspaceDocumentTemplateRepository.cs" />
@@ -141,6 +142,7 @@
     <Compile Include="Repositories\IRepository.cs" />
     <Compile Include="Repositories\IRepositoryManager.cs" />
     <Compile Include="Repositories\IStdRepository.cs" />
+    <Compile Include="Repositories\ISysEventRepository.cs" />
     <Compile Include="Repositories\IUserGroupRepository.cs" />
     <Compile Include="Repositories\IUserRepository.cs" />
     <Compile Include="Repositories\Instances\WorkspaceTemplateRepository.cs" />

@@ -121,7 +121,7 @@
           <Property Name="Summary" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Type" Type="int" Nullable="false" />
-          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="int" />
           <Property Name="TransactionId" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
         <EntityType Name="UserGroups">
@@ -367,6 +367,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_SysEvents_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="SysEvents" Type="Self.SysEvents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SysEvents">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_UserGroups_Groups">
           <End Role="Groups" Type="Self.Groups" Multiplicity="1" />
           <End Role="UserGroups" Type="Self.UserGroups" Multiplicity="*" />
@@ -571,6 +583,10 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="OrgUnitUserPermissions" EntitySet="OrgUnitUserPermissions" />
           </AssociationSet>
+          <AssociationSet Name="FK_SysEvents_Users" Association="Self.FK_SysEvents_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="SysEvents" EntitySet="SysEvents" />
+          </AssociationSet>
           <AssociationSet Name="FK_UserGroups_Groups" Association="Self.FK_UserGroups_Groups">
             <End Role="Groups" EntitySet="Groups" />
             <End Role="UserGroups" EntitySet="UserGroups" />
@@ -723,6 +739,10 @@
           <AssociationSet Name="FK_Users_PermissionLevels" Association="CoopModel.FK_Users_PermissionLevels">
             <End Role="PermissionLevel" EntitySet="PermissionLevels" />
             <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SysEvents_Users" Association="CoopModel.FK_SysEvents_Users">
+            <End Role="User" EntitySet="Users" />
+            <End Role="SysEvent" EntitySet="SysEvents" />
           </AssociationSet>
           <AssociationSet Name="FK_UserGroups_Users" Association="CoopModel.FK_UserGroups_Users">
             <End Role="User" EntitySet="Users" />
@@ -891,8 +911,9 @@
           <Property Name="Summary" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Type" Type="Int32" Nullable="false" />
-          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" />
           <Property Name="TransactionId" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="CoopModel.FK_SysEvents_Users" FromRole="SysEvent" ToRole="User" />
         </EntityType>
         <EntityType Name="UserGroup">
           <Key>
@@ -923,6 +944,7 @@
           <NavigationProperty Name="OrgUnits" Relationship="CoopModel.FK_OrgUnits_Users" FromRole="User" ToRole="OrgUnit" />
           <NavigationProperty Name="OrgUnitUserPermissions" Relationship="CoopModel.FK_OrgUnitUserPermissions_Users" FromRole="User" ToRole="OrgUnitUserPermission" />
           <NavigationProperty Name="PermissionLevel" Relationship="CoopModel.FK_Users_PermissionLevels" FromRole="User" ToRole="PermissionLevel" />
+          <NavigationProperty Name="SysEvents" Relationship="CoopModel.FK_SysEvents_Users" FromRole="User" ToRole="SysEvent" />
           <NavigationProperty Name="UserGroups" Relationship="CoopModel.FK_UserGroups_Users" FromRole="User" ToRole="UserGroup" />
           <NavigationProperty Name="WorkspaceTemplates" Relationship="CoopModel.FK_WorkspaceTemplates_Users" FromRole="User" ToRole="WorkspaceTemplate" />
           <NavigationProperty Name="WorkspaceTemplates1" Relationship="CoopModel.FK_WorkspaceTemplates_Users1" FromRole="User" ToRole="WorkspaceTemplate" />
@@ -1202,6 +1224,18 @@
             </Principal>
             <Dependent Role="User">
               <PropertyRef Name="PermissionLevelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SysEvents_Users">
+          <End Type="CoopModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="CoopModel.SysEvent" Role="SysEvent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SysEvent">
+              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>

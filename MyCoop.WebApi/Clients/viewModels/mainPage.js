@@ -125,12 +125,18 @@ App.ViewModels.MainPageModel = (function () {
         publ.signTemplates = ko.observable(signTemplates);
         
         var userTemplates = [
-        {
-            name: "user-current",
-            url: config.apiPrefix + "user/current",
-            method: methods[0],
-            body: ''
-        }];
+            {
+                name: "user-current",
+                url: config.apiPrefix + "user/current",
+                method: methods[0],
+                body: ''
+            },
+            {
+                name: "user-history",
+                url: config.apiPrefix + "user/history?startTime=08.08.2014",
+                method: methods[0],
+                body: ''
+            }];
 
         publ.userTemplates = ko.observable(userTemplates);
         

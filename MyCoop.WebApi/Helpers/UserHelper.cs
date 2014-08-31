@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 using System.Globalization;
 using System.Web;
 using MyCoop.Helpers;
@@ -25,7 +26,7 @@ namespace MyCoop.WebApi.Helpers
 
         }
 
-        public static int GetId()
+        public static int? TryGetId()
         {
             if (HttpContext.Current.Items[GlobalKeys.UserId] != null)
             {
@@ -47,7 +48,17 @@ namespace MyCoop.WebApi.Helpers
                 }
                 
             }
-            return -1;
+            return null;
+        }
+
+        public static int GetId()
+        {
+            var id = TryGetId();
+            if (id.HasValue)
+            {
+                return id.Value;
+            }
+            throw new ObjectNotFoundException("id is not found");
         }
 
         public static void RemoveId()

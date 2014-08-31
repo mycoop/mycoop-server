@@ -7,7 +7,7 @@ namespace MyCoop.WebApi.Loggers
 {
     public class EventLogger : ILogger
     {
-        public Task WriteAsync(string summary, string description, EventType type, int userId, Guid transactionId)
+        public Task WriteAsync(string summary, string description, EventType type, int? userId, Guid transactionId)
         {
             var context = new CoopEntities();
             context.SysEvents.Add(new SysEvent

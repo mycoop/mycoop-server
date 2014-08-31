@@ -36,5 +36,7 @@ namespace MyCoop.WebApi.Services
         Task AddUserToGroup(int userId, int groupId);
 
         Task RemoveUserFromGroup(int userId, int groupId);
+
+        Task<UserHistoryModel[]> GetUserHistory(DateTime startTime);
     }
 }

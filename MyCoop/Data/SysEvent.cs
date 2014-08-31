@@ -28,9 +28,13 @@ public partial class SysEvent
 
     public int Type { get; set; }
 
-    public int UserId { get; set; }
+    public Nullable<int> UserId { get; set; }
 
     public System.Guid TransactionId { get; set; }
+
+
+
+    public virtual User User { get; set; }
 
 }
 

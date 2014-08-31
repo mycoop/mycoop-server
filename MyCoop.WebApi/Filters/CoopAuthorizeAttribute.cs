@@ -8,7 +8,7 @@ namespace MyCoop.WebApi.Filters
     {
         protected override bool IsAuthorized(HttpActionContext actionContext)
         {
-            return UserHelper.GetId() != -1;
+            return UserHelper.TryGetId().HasValue;
         }
     }
 }

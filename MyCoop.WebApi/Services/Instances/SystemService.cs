@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using MyCoop.Data;
 using MyCoop.Helpers;
 using MyCoop.Repositories;
+using MyCoop.WebApi.Loggers;
 using MyCoop.WebApi.Models.Users;
 using MyCoop.WebApi.Models.Groups;
 
@@ -132,6 +133,12 @@ namespace MyCoop.WebApi.Services.Instances
             userGroupRepository.Delete(userGroup);
 
             return Repository.SaveChangesAsync();
+        }
+
+        public Task<UserHistoryModel[]> GetUserHistory(DateTime startTime)
+        {
+            return AsyncOperation(() => Repository.GetWithContext<ISysEventRepository>().GetValues((int)EventType.LoginActivity, startTime, "User"),
+                userGroups => userGroups.Select(entity => new UserHistoryModel(entity)).ToArray());
         }
     }
 }

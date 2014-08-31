@@ -31,6 +31,8 @@ public partial class User
 
         this.OrgUnitUserPermissions = new HashSet<OrgUnitUserPermission>();
 
+        this.SysEvents = new HashSet<SysEvent>();
+
         this.UserGroups = new HashSet<UserGroup>();
 
         this.WorkspaceTemplates = new HashSet<WorkspaceTemplate>();
@@ -69,6 +71,8 @@ public partial class User
     public virtual ICollection<OrgUnitUserPermission> OrgUnitUserPermissions { get; set; }
 
     public virtual PermissionLevel PermissionLevel { get; set; }
+
+    public virtual ICollection<SysEvent> SysEvents { get; set; }
 
     public virtual ICollection<UserGroup> UserGroups { get; set; }
 

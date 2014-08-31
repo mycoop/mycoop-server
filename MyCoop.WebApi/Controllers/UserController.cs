@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -75,6 +76,13 @@ namespace MyCoop.WebApi.Controllers
         public async Task<HttpResponseMessage> GetCurrent()
         {
             return Request.CreateResponse(HttpStatusCode.OK, await Service.Get<ISystemService>().GetUser(UserHelper.GetId()));
+        }
+
+        [HttpGet]
+        [Route("history")]
+        public async Task<HttpResponseMessage> GetHistory(DateTime startTime)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, await Service.Get<ISystemService>().GetUserHistory(startTime));
         }
     }
 }

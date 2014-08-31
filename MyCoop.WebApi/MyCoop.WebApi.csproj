@@ -180,6 +180,7 @@
     <Compile Include="Models\Groups\GroupModel.cs" />
     <Compile Include="Models\Users\GroupUserModel.cs" />
     <Compile Include="Models\Users\UpdateUserModel.cs" />
+    <Compile Include="Models\Users\UserHistoryModel.cs" />
     <Compile Include="Models\Users\UserModel.cs" />
     <Compile Include="Models\WorkspaceTemplates\EditWorkspaceTemplateModel.cs" />
     <Compile Include="Models\WorkspaceTemplates\WorkspaceTemplateModel.cs" />

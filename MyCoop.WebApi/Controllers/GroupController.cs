@@ -16,7 +16,7 @@ namespace MyCoop.WebApi.Controllers
     [RoutePrefix("group")]
     public class GroupController : ApiControllerBase
     {
-        public GroupController(IServiceManager serviceManager) 
+        public GroupController(IServiceManager serviceManager)
             : base(serviceManager)
         {
         }

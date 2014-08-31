@@ -27,9 +27,10 @@ namespace MyCoop.WebApi.Controllers
             if (userId != -1)
             {
                 UserHelper.SaveId(userId);
-                Log.Out.Info("Sign in");
+                Log.Out.LoginActivity("Success", Request);
                 return Request.CreateResponse(HttpStatusCode.OK, new { Id = userId });
             }
+            Log.Out.LoginActivity("Invalid login/password", Request);
             return Request.CreateResponse(HttpStatusCode.BadRequest);
 
         }

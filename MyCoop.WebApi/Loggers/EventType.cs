@@ -4,6 +4,7 @@
     {
         Error = 1,
         Info = 2,
-        UserActivity = 3
+        UserActivity = 3,
+        LoginActivity = 4
     }
 }
