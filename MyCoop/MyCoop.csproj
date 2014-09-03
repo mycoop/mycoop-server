@@ -53,6 +53,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration\CryptographySection.cs" />
+    <Compile Include="Data\AttributeBusinessProcess.cs">
+      <DependentUpon>CoopModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\AttributeType.cs">
+      <DependentUpon>CoopModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\BusinessProcess.cs">
+      <DependentUpon>CoopModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\BusinessProcessAttribute.cs">
+      <DependentUpon>CoopModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Data\Component.cs">
       <DependentUpon>CoopModel.tt</DependentUpon>
     </Compile>
@@ -118,10 +130,18 @@
     </Compile>
     <Compile Include="Helpers\SecurityHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\IAttributeBusinessProcessRepository.cs" />
+    <Compile Include="Repositories\IAttributeTypeRepository.cs" />
+    <Compile Include="Repositories\IBusinessProcessAttributeRepository.cs" />
+    <Compile Include="Repositories\IBusinessProcessRpository.cs" />
     <Compile Include="Repositories\IComponentRepository.cs" />
     <Compile Include="Repositories\IDocumentTemplateRepository.cs" />
     <Compile Include="Repositories\IGroupRepository.cs" />
     <Compile Include="Repositories\IIncidentRepository.cs" />
+    <Compile Include="Repositories\Instances\AttributeBusinessProcessRepository.cs" />
+    <Compile Include="Repositories\Instances\AttributeTypeRepository.cs" />
+    <Compile Include="Repositories\Instances\BusinessProcessAttributeRepository.cs" />
+    <Compile Include="Repositories\Instances\BusinessProcessRpository.cs" />
     <Compile Include="Repositories\Instances\IncidentRepository.cs" />
     <Compile Include="Repositories\Instances\ComponentRepository.cs" />
     <Compile Include="Repositories\Instances\DocumentTemplateRepository.cs" />

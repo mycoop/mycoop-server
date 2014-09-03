@@ -185,7 +185,9 @@
     <Compile Include="Models\WorkspaceTemplates\EditWorkspaceTemplateModel.cs" />
     <Compile Include="Models\WorkspaceTemplates\WorkspaceTemplateModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\IBusinessProcessService.cs" />
     <Compile Include="Services\IManagementSevice.cs" />
+    <Compile Include="Services\Instances\BusinessProcessService.cs" />
     <Compile Include="Services\Instances\ManagementSevice.cs" />
     <Compile Include="Services\Instances\ServiceBase.cs" />
     <Compile Include="Services\Instances\SystemService.cs" />

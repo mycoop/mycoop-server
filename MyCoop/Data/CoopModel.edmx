@@ -5,6 +5,40 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="Хранилище CoopModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AttributeBusinessProcesses">
+          <Key>
+            <PropertyRef Name="BusinessProcessId" />
+            <PropertyRef Name="AttributeId" />
+          </Key>
+          <Property Name="BusinessProcessId" Type="int" Nullable="false" />
+          <Property Name="AttributeId" Type="int" Nullable="false" />
+          <Property Name="CreationTime" Type="datetime2" Precision="7" />
+        </EntityType>
+        <EntityType Name="AttributeTypes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BusinessProcessAttributes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="AttributeTypeId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BusinessProcesses">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="OrgUnitId" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Components">
           <Key>
             <PropertyRef Name="Id" />
@@ -175,6 +209,54 @@
           <Property Name="CreatedByUserId" Type="int" Nullable="false" />
           <Property Name="ModifiedByUserId" Type="int" Nullable="false" />
         </EntityType>
+        <Association Name="FK_AttributeBusinessProcesses_BusinessProcessAttributes">
+          <End Role="BusinessProcessAttributes" Type="Self.BusinessProcessAttributes" Multiplicity="1" />
+          <End Role="AttributeBusinessProcesses" Type="Self.AttributeBusinessProcesses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BusinessProcessAttributes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AttributeBusinessProcesses">
+              <PropertyRef Name="AttributeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AttributeBusinessProcesses_BusinessProcesses">
+          <End Role="BusinessProcesses" Type="Self.BusinessProcesses" Multiplicity="1" />
+          <End Role="AttributeBusinessProcesses" Type="Self.AttributeBusinessProcesses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BusinessProcesses">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AttributeBusinessProcesses">
+              <PropertyRef Name="BusinessProcessId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BusinessProcessAttributes_AttributeTypes">
+          <End Role="AttributeTypes" Type="Self.AttributeTypes" Multiplicity="1" />
+          <End Role="BusinessProcessAttributes" Type="Self.BusinessProcessAttributes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AttributeTypes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BusinessProcessAttributes">
+              <PropertyRef Name="AttributeTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BusinessProcesses_OrgUnits">
+          <End Role="OrgUnits" Type="Self.OrgUnits" Multiplicity="1" />
+          <End Role="BusinessProcesses" Type="Self.BusinessProcesses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrgUnits">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BusinessProcesses">
+              <PropertyRef Name="OrgUnitId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_DocumentTemplates_Components">
           <End Role="Components" Type="Self.Components" Multiplicity="0..1" />
           <End Role="DocumentTemplates" Type="Self.DocumentTemplates" Multiplicity="*" />
@@ -503,6 +585,10 @@
           <Parameter Name="id" Type="int" Mode="In" />
         </Function>
         <EntityContainer Name="Хранилище CoopModelContainer">
+          <EntitySet Name="AttributeBusinessProcesses" EntityType="Self.AttributeBusinessProcesses" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AttributeTypes" EntityType="Self.AttributeTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BusinessProcessAttributes" EntityType="Self.BusinessProcessAttributes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BusinessProcesses" EntityType="Self.BusinessProcesses" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Components" EntityType="Self.Components" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DocumentTemplates" EntityType="Self.DocumentTemplates" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Groups" EntityType="Self.Groups" Schema="dbo" store:Type="Tables" />
@@ -519,6 +605,22 @@
           <EntitySet Name="WorkspaceDocumentTemplates" EntityType="Self.WorkspaceDocumentTemplates" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WorkspaceTemplateComponents" EntityType="Self.WorkspaceTemplateComponents" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WorkspaceTemplates" EntityType="Self.WorkspaceTemplates" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_AttributeBusinessProcesses_BusinessProcessAttributes" Association="Self.FK_AttributeBusinessProcesses_BusinessProcessAttributes">
+            <End Role="BusinessProcessAttributes" EntitySet="BusinessProcessAttributes" />
+            <End Role="AttributeBusinessProcesses" EntitySet="AttributeBusinessProcesses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AttributeBusinessProcesses_BusinessProcesses" Association="Self.FK_AttributeBusinessProcesses_BusinessProcesses">
+            <End Role="BusinessProcesses" EntitySet="BusinessProcesses" />
+            <End Role="AttributeBusinessProcesses" EntitySet="AttributeBusinessProcesses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BusinessProcessAttributes_AttributeTypes" Association="Self.FK_BusinessProcessAttributes_AttributeTypes">
+            <End Role="AttributeTypes" EntitySet="AttributeTypes" />
+            <End Role="BusinessProcessAttributes" EntitySet="BusinessProcessAttributes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BusinessProcesses_OrgUnits" Association="Self.FK_BusinessProcesses_OrgUnits">
+            <End Role="OrgUnits" EntitySet="OrgUnits" />
+            <End Role="BusinessProcesses" EntitySet="BusinessProcesses" />
+          </AssociationSet>
           <AssociationSet Name="FK_DocumentTemplates_Components" Association="Self.FK_DocumentTemplates_Components">
             <End Role="Components" EntitySet="Components" />
             <End Role="DocumentTemplates" EntitySet="DocumentTemplates" />
@@ -644,6 +746,10 @@
           <FunctionImport Name="DeleteDocumentTemplate">
           <Parameter Name="id" Mode="In" Type="Int32" />
           </FunctionImport>
+          <EntitySet Name="AttributeBusinessProcesses" EntityType="CoopModel.AttributeBusinessProcess" />
+          <EntitySet Name="AttributeTypes" EntityType="CoopModel.AttributeType" />
+          <EntitySet Name="BusinessProcessAttributes" EntityType="CoopModel.BusinessProcessAttribute" />
+          <EntitySet Name="BusinessProcesses" EntityType="CoopModel.BusinessProcess" />
           <EntitySet Name="Components" EntityType="CoopModel.Component" />
           <EntitySet Name="DocumentTemplates" EntityType="CoopModel.DocumentTemplate" />
           <EntitySet Name="Groups" EntityType="CoopModel.Group" />
@@ -660,6 +766,22 @@
           <EntitySet Name="WorkspaceDocumentTemplates" EntityType="CoopModel.WorkspaceDocumentTemplate" />
           <EntitySet Name="WorkspaceTemplateComponents" EntityType="CoopModel.WorkspaceTemplateComponent" />
           <EntitySet Name="WorkspaceTemplates" EntityType="CoopModel.WorkspaceTemplate" />
+          <AssociationSet Name="FK_AttributeBusinessProcesses_BusinessProcessAttributes" Association="CoopModel.FK_AttributeBusinessProcesses_BusinessProcessAttributes">
+            <End Role="BusinessProcessAttribute" EntitySet="BusinessProcessAttributes" />
+            <End Role="AttributeBusinessProcess" EntitySet="AttributeBusinessProcesses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AttributeBusinessProcesses_BusinessProcesses" Association="CoopModel.FK_AttributeBusinessProcesses_BusinessProcesses">
+            <End Role="BusinessProcess" EntitySet="BusinessProcesses" />
+            <End Role="AttributeBusinessProcess" EntitySet="AttributeBusinessProcesses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BusinessProcessAttributes_AttributeTypes" Association="CoopModel.FK_BusinessProcessAttributes_AttributeTypes">
+            <End Role="AttributeType" EntitySet="AttributeTypes" />
+            <End Role="BusinessProcessAttribute" EntitySet="BusinessProcessAttributes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BusinessProcesses_OrgUnits" Association="CoopModel.FK_BusinessProcesses_OrgUnits">
+            <End Role="OrgUnit" EntitySet="OrgUnits" />
+            <End Role="BusinessProcess" EntitySet="BusinessProcesses" />
+          </AssociationSet>
           <AssociationSet Name="FK_DocumentTemplates_Components" Association="CoopModel.FK_DocumentTemplates_Components">
             <End Role="Component" EntitySet="Components" />
             <End Role="DocumentTemplate" EntitySet="DocumentTemplates" />
@@ -765,6 +887,47 @@
             <End Role="WorkspaceTemplateComponent" EntitySet="WorkspaceTemplateComponents" />
           </AssociationSet>
           </EntityContainer>
+        <EntityType Name="AttributeBusinessProcess">
+          <Key>
+            <PropertyRef Name="BusinessProcessId" />
+            <PropertyRef Name="AttributeId" />
+          </Key>
+          <Property Name="BusinessProcessId" Type="Int32" Nullable="false" />
+          <Property Name="AttributeId" Type="Int32" Nullable="false" />
+          <Property Name="CreationTime" Type="DateTime" Precision="7" />
+          <NavigationProperty Name="BusinessProcessAttribute" Relationship="CoopModel.FK_AttributeBusinessProcesses_BusinessProcessAttributes" FromRole="AttributeBusinessProcess" ToRole="BusinessProcessAttribute" />
+          <NavigationProperty Name="BusinessProcess" Relationship="CoopModel.FK_AttributeBusinessProcesses_BusinessProcesses" FromRole="AttributeBusinessProcess" ToRole="BusinessProcess" />
+        </EntityType>
+        <EntityType Name="AttributeType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="BusinessProcessAttributes" Relationship="CoopModel.FK_BusinessProcessAttributes_AttributeTypes" FromRole="AttributeType" ToRole="BusinessProcessAttribute" />
+        </EntityType>
+        <EntityType Name="BusinessProcessAttribute">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="AttributeTypeId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="AttributeBusinessProcesses" Relationship="CoopModel.FK_AttributeBusinessProcesses_BusinessProcessAttributes" FromRole="BusinessProcessAttribute" ToRole="AttributeBusinessProcess" />
+          <NavigationProperty Name="AttributeType" Relationship="CoopModel.FK_BusinessProcessAttributes_AttributeTypes" FromRole="BusinessProcessAttribute" ToRole="AttributeType" />
+        </EntityType>
+        <EntityType Name="BusinessProcess">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="OrgUnitId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="AttributeBusinessProcesses" Relationship="CoopModel.FK_AttributeBusinessProcesses_BusinessProcesses" FromRole="BusinessProcess" ToRole="AttributeBusinessProcess" />
+          <NavigationProperty Name="OrgUnit" Relationship="CoopModel.FK_BusinessProcesses_OrgUnits" FromRole="BusinessProcess" ToRole="OrgUnit" />
+        </EntityType>
         <EntityType Name="Component">
           <Key>
             <PropertyRef Name="Id" />
@@ -871,6 +1034,7 @@
           <Property Name="Lat" Type="Double" Nullable="false" />
           <Property Name="Lng" Type="Double" Nullable="false" />
           <Property Name="WorkspaceTemplateId" Type="Int32" />
+          <NavigationProperty Name="BusinessProcesses" Relationship="CoopModel.FK_BusinessProcesses_OrgUnits" FromRole="OrgUnit" ToRole="BusinessProcess" />
           <NavigationProperty Name="IncidentOrgUnits" Relationship="CoopModel.FK_IncidentOrgUnits_OrgUnits" FromRole="OrgUnit" ToRole="IncidentOrgUnit" />
           <NavigationProperty Name="OrgUnitGroupPermissions" Relationship="CoopModel.FK_OrgUnitGroupPermissions_OrgUnits" FromRole="OrgUnit" ToRole="OrgUnitGroupPermission" />
           <NavigationProperty Name="OrgUnits1" Relationship="CoopModel.FK_OrgUnits_OrgUnits" FromRole="OrgUnit" ToRole="OrgUnit1" />
@@ -987,6 +1151,54 @@
           <NavigationProperty Name="WorkspaceDocumentTemplates" Relationship="CoopModel.FK_WorkspaceDocumentTemplates_WorkspaceTemplates" FromRole="WorkspaceTemplate" ToRole="WorkspaceDocumentTemplate" />
           <NavigationProperty Name="WorkspaceTemplateComponents" Relationship="CoopModel.FK_WorkspaceTemplateComponents_WorkspaceTemplates" FromRole="WorkspaceTemplate" ToRole="WorkspaceTemplateComponent" />
         </EntityType>
+        <Association Name="FK_AttributeBusinessProcesses_BusinessProcessAttributes">
+          <End Type="CoopModel.BusinessProcessAttribute" Role="BusinessProcessAttribute" Multiplicity="1" />
+          <End Type="CoopModel.AttributeBusinessProcess" Role="AttributeBusinessProcess" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BusinessProcessAttribute">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AttributeBusinessProcess">
+              <PropertyRef Name="AttributeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AttributeBusinessProcesses_BusinessProcesses">
+          <End Type="CoopModel.BusinessProcess" Role="BusinessProcess" Multiplicity="1" />
+          <End Type="CoopModel.AttributeBusinessProcess" Role="AttributeBusinessProcess" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BusinessProcess">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AttributeBusinessProcess">
+              <PropertyRef Name="BusinessProcessId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BusinessProcessAttributes_AttributeTypes">
+          <End Type="CoopModel.AttributeType" Role="AttributeType" Multiplicity="1" />
+          <End Type="CoopModel.BusinessProcessAttribute" Role="BusinessProcessAttribute" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AttributeType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BusinessProcessAttribute">
+              <PropertyRef Name="AttributeTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BusinessProcesses_OrgUnits">
+          <End Type="CoopModel.OrgUnit" Role="OrgUnit" Multiplicity="1" />
+          <End Type="CoopModel.BusinessProcess" Role="BusinessProcess" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrgUnit">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BusinessProcess">
+              <PropertyRef Name="OrgUnitId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_DocumentTemplates_Components">
           <End Type="CoopModel.Component" Role="Component" Multiplicity="0..1" />
           <End Type="CoopModel.DocumentTemplate" Role="DocumentTemplate" Multiplicity="*" />
@@ -1310,6 +1522,43 @@
           <FunctionImportMapping FunctionImportName="DeleteUser" FunctionName="Хранилище CoopModel.DeleteUser" />
           <FunctionImportMapping FunctionImportName="DeleteWorkspaceTemplate" FunctionName="Хранилище CoopModel.DeleteWorkspaceTemplate" />
           <FunctionImportMapping FunctionImportName="DeleteDocumentTemplate" FunctionName="Хранилище CoopModel.DeleteDocumentTemplate" />
+          <EntitySetMapping Name="AttributeBusinessProcesses">
+            <EntityTypeMapping TypeName="CoopModel.AttributeBusinessProcess">
+              <MappingFragment StoreEntitySet="AttributeBusinessProcesses">
+                <ScalarProperty Name="CreationTime" ColumnName="CreationTime" />
+                <ScalarProperty Name="AttributeId" ColumnName="AttributeId" />
+                <ScalarProperty Name="BusinessProcessId" ColumnName="BusinessProcessId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AttributeTypes">
+            <EntityTypeMapping TypeName="CoopModel.AttributeType">
+              <MappingFragment StoreEntitySet="AttributeTypes">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BusinessProcessAttributes">
+            <EntityTypeMapping TypeName="CoopModel.BusinessProcessAttribute">
+              <MappingFragment StoreEntitySet="BusinessProcessAttributes">
+                <ScalarProperty Name="AttributeTypeId" ColumnName="AttributeTypeId" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BusinessProcesses">
+            <EntityTypeMapping TypeName="CoopModel.BusinessProcess">
+              <MappingFragment StoreEntitySet="BusinessProcesses">
+                <ScalarProperty Name="OrgUnitId" ColumnName="OrgUnitId" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Components">
             <EntityTypeMapping TypeName="CoopModel.Component">
               <MappingFragment StoreEntitySet="Components">

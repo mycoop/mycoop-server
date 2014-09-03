@@ -35,6 +35,14 @@ public partial class CoopEntities : DbContext
     }
 
 
+    public virtual DbSet<AttributeBusinessProcess> AttributeBusinessProcesses { get; set; }
+
+    public virtual DbSet<AttributeType> AttributeTypes { get; set; }
+
+    public virtual DbSet<BusinessProcessAttribute> BusinessProcessAttributes { get; set; }
+
+    public virtual DbSet<BusinessProcess> BusinessProcesses { get; set; }
+
     public virtual DbSet<Component> Components { get; set; }
 
     public virtual DbSet<DocumentTemplate> DocumentTemplates { get; set; }

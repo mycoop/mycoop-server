@@ -28,6 +28,11 @@ namespace MyCoop.WebApi.Core
             _mapTypes.Add(typeof(IOrgUnitGroupPermissionRepository), typeof(OrgUnitGroupPermissionRepository));
             _mapTypes.Add(typeof(IIncidentRepository), typeof(IncidentRepository));
             _mapTypes.Add(typeof(ISysEventRepository), typeof(SysEventRepository));
+
+            _mapTypes.Add(typeof(IAttributeBusinessProcessRepository), typeof(AttributeBusinessProcessRepository));
+            _mapTypes.Add(typeof(IAttributeTypeRepository), typeof(AttributeTypeRepository));
+            _mapTypes.Add(typeof(IBusinessProcessAttributeRepository), typeof(BusinessProcessAttributeRepository));
+            _mapTypes.Add(typeof(IBusinessProcessRpository), typeof(BusinessProcessRpository));
         }
 
         private CoopEntities _context;

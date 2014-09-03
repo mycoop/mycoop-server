@@ -21,6 +21,8 @@ public partial class OrgUnit
     public OrgUnit()
     {
 
+        this.BusinessProcesses = new HashSet<BusinessProcess>();
+
         this.IncidentOrgUnits = new HashSet<IncidentOrgUnit>();
 
         this.OrgUnitGroupPermissions = new HashSet<OrgUnitGroupPermission>();
@@ -53,6 +55,8 @@ public partial class OrgUnit
     public Nullable<int> WorkspaceTemplateId { get; set; }
 
 
+
+    public virtual ICollection<BusinessProcess> BusinessProcesses { get; set; }
 
     public virtual ICollection<IncidentOrgUnit> IncidentOrgUnits { get; set; }
 
