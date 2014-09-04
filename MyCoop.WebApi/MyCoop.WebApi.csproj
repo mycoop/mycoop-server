@@ -137,6 +137,9 @@
     <Compile Include="AppStart\FilterConfig.cs" />
     <Compile Include="AppStart\RouteConfig.cs" />
     <Compile Include="AppStart\WebApiConfig.cs" />
+    <Compile Include="Controllers\AttributeTypeController.cs" />
+    <Compile Include="Controllers\BusinessProcessAttributeController.cs" />
+    <Compile Include="Controllers\BusinessProcessController.cs" />
     <Compile Include="Controllers\ComponentController.cs" />
     <Compile Include="Controllers\DocumentTemplateController.cs" />
     <Compile Include="Controllers\IncidentController.cs" />
@@ -161,6 +164,12 @@
     <Compile Include="Loggers\EventLogger.cs" />
     <Compile Include="Loggers\EventType.cs" />
     <Compile Include="Loggers\LogExtensions.cs" />
+    <Compile Include="Models\AttributeTypes\AttributeTypeModel.cs" />
+    <Compile Include="Models\AttributeTypes\EditAttributeTypeModel.cs" />
+    <Compile Include="Models\BusinessProcessAttributes\BusinessProcessAttributeModel.cs" />
+    <Compile Include="Models\BusinessProcessAttributes\EditBusinessProcessAttributeModel.cs" />
+    <Compile Include="Models\BusinessProcesses\BusinessProcessModel.cs" />
+    <Compile Include="Models\BusinessProcesses\EditBusinessProcessModel.cs" />
     <Compile Include="Models\Components\ComponentModel.cs" />
     <Compile Include="Models\Components\EditComponentModel.cs" />
     <Compile Include="Models\DocumentTemplates\DocumentTemplateModel.cs" />

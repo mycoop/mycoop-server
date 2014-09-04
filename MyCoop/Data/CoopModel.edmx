@@ -38,6 +38,9 @@
           <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
           <Property Name="OrgUnitId" Type="int" Nullable="false" />
+          <Property Name="Address" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Lat" Type="float" Nullable="false" />
+          <Property Name="Lng" Type="float" Nullable="false" />
         </EntityType>
         <EntityType Name="Components">
           <Key>
@@ -927,6 +930,9 @@
           <Property Name="OrgUnitId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="AttributeBusinessProcesses" Relationship="CoopModel.FK_AttributeBusinessProcesses_BusinessProcesses" FromRole="BusinessProcess" ToRole="AttributeBusinessProcess" />
           <NavigationProperty Name="OrgUnit" Relationship="CoopModel.FK_BusinessProcesses_OrgUnits" FromRole="BusinessProcess" ToRole="OrgUnit" />
+          <Property Name="Address" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Lat" Type="Double" Nullable="false" />
+          <Property Name="Lng" Type="Double" Nullable="false" />
         </EntityType>
         <EntityType Name="Component">
           <Key>
@@ -1552,6 +1558,9 @@
           <EntitySetMapping Name="BusinessProcesses">
             <EntityTypeMapping TypeName="CoopModel.BusinessProcess">
               <MappingFragment StoreEntitySet="BusinessProcesses">
+                <ScalarProperty Name="Lng" ColumnName="Lng" />
+                <ScalarProperty Name="Lat" ColumnName="Lat" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
                 <ScalarProperty Name="OrgUnitId" ColumnName="OrgUnitId" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Name" ColumnName="Name" />

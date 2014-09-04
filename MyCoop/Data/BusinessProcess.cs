@@ -34,6 +34,12 @@ public partial class BusinessProcess
 
     public int OrgUnitId { get; set; }
 
+    public string Address { get; set; }
+
+    public double Lat { get; set; }
+
+    public double Lng { get; set; }
+
 
 
     public virtual ICollection<AttributeBusinessProcess> AttributeBusinessProcesses { get; set; }
