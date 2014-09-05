@@ -46,7 +46,7 @@ namespace MyCoop.WebApi.Services.Instances
 
         public Task DeleteBusinessProcess(int id)
         {
-            return Delete<BusinessProcess, IBusinessProcessRpository>(id);
+            return Repository.GetWithContext<IBusinessProcessRpository>().Delete(id);
         }
 
         public Task<BusinessProcessAttributeModel[]> GetBusinessProcessAttributes()

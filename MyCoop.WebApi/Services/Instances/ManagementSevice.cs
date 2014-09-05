@@ -45,7 +45,7 @@ namespace MyCoop.WebApi.Services.Instances
 
         public Task DeleteOrgUnit(int id)
         {
-            return Delete<OrgUnit, IOrgUnitRepository>(id);
+            return Repository.GetWithContext<IOrgUnitRepository>().Delete(id);
         }
 
         public Task<PermissionLevelModel[]> GetOrgUnitUserPermissions(int orgUnitId, int userId)

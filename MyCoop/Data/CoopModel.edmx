@@ -572,6 +572,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="DeleteBusinessProcess" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
         <Function Name="DeleteComponent" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="id" Type="int" Mode="In" />
         </Function>
@@ -579,6 +582,9 @@
           <Parameter Name="id" Type="int" Mode="In" />
         </Function>
         <Function Name="DeleteGroup" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="DeleteOrgUnit" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="id" Type="int" Mode="In" />
         </Function>
         <Function Name="DeleteUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -889,6 +895,12 @@
             <End Role="WorkspaceTemplate" EntitySet="WorkspaceTemplates" />
             <End Role="WorkspaceTemplateComponent" EntitySet="WorkspaceTemplateComponents" />
           </AssociationSet>
+          <FunctionImport Name="DeleteBusinessProcess">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteOrgUnit">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
           </EntityContainer>
         <EntityType Name="AttributeBusinessProcess">
           <Key>
@@ -1745,6 +1757,8 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="DeleteBusinessProcess" FunctionName="Хранилище CoopModel.DeleteBusinessProcess" />
+          <FunctionImportMapping FunctionImportName="DeleteOrgUnit" FunctionName="Хранилище CoopModel.DeleteOrgUnit" />
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
