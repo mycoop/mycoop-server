@@ -58,7 +58,34 @@ namespace MyCoop.WebApi.Controllers
         {
             Log.Out.BeginInfo("DeleteBusinessProcess Id: {0}", id);
             await Service.Get<IBusinessProcessService>().DeleteBusinessProcess(id);
-            Log.Out.EndInfo("DeleteBusinessProcess Id: {0}", id);
+            Log.Out.EndInfo("DeleteBusinessProcess");
+            return Request.CreateResponse(HttpStatusCode.OK);
+        }
+
+        [HttpGet]
+        [Route("{id}/attribute")]
+        public async Task<HttpResponseMessage> GetAttributesByBusinessProcessId(int id)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, await Service.Get<IBusinessProcessService>().GetAttributesByBusinessProcessId(id));
+        }
+
+        [HttpPost]
+        [Route("{businessProcessId}/attribute/{attributeId}")]
+        public async Task<HttpResponseMessage> AddAttributeToBusinessProcess(int attributeId, int businessProcessId)
+        {
+            Log.Out.BeginInfo("AddAttributeToBusinessProcess attributeId: {0}, businessProcessId: {1}", attributeId, businessProcessId);
+            await Service.Get<IBusinessProcessService>().AddAttributeToBusinessProcess(attributeId, businessProcessId);
+            Log.Out.EndInfo("AddAttributeToBusinessProcess");
+            return Request.CreateResponse(HttpStatusCode.OK);
+        }
+
+        [HttpDelete]
+        [Route("{businessProcessId}/attribute/{attributeId}")]
+        public async Task<HttpResponseMessage> RemoveAttributeFromBusinessProcess(int attributeId, int businessProcessId)
+        {
+            Log.Out.BeginInfo("RemoveAttributeFromBusinessProcess attributeId: {0}, businessProcessId: {1}", attributeId, businessProcessId);
+            await Service.Get<IBusinessProcessService>().RemoveAttributeFromBusinessProcess(attributeId, businessProcessId);
+            Log.Out.EndInfo("RemoveAttributeFromBusinessProcess");
             return Request.CreateResponse(HttpStatusCode.OK);
         }
     }

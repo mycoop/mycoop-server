@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using MyCoop.Data;
 using MyCoop.Repositories;
@@ -106,6 +107,42 @@ namespace MyCoop.WebApi.Services.Instances
         public Task DeleteAttributeType(int id)
         {
             return Delete<AttributeType, IAttributeTypeRepository>(id);
+        }
+
+
+        public Task<BusinessProcessAttributeModel[]> GetAttributesByBusinessProcessId(int id)
+        {
+            return AsyncOperation(() => Repository.GetWithContext<IBusinessProcessAttributeRepository>().GetValuesByBusinessProcessId(id),
+                userGroups => userGroups.Select(a => new BusinessProcessAttributeModel(a)).ToArray());
+        }
+
+        public Task AddAttributeToBusinessProcess(int attributeId, int businessProcessId)
+        {
+            var entity = new AttributeBusinessProcess
+            {
+                AttributeId = attributeId,
+                BusinessProcessId = businessProcessId,
+                CreationTime = DateTime.UtcNow
+            };
+
+            Repository.GetWithContext<IAttributeBusinessProcessRepository>().Add(entity);
+
+            return Repository.SaveChangesAsync();
+        }
+
+        public Task RemoveAttributeFromBusinessProcess(int attributeId, int businessProcessId)
+        {
+            var entity = new AttributeBusinessProcess
+            {
+                AttributeId = attributeId,
+                BusinessProcessId = businessProcessId
+            };
+
+            var repository = Repository.GetWithContext<IAttributeBusinessProcessRepository>();
+            repository.Attach(entity);
+            repository.Delete(entity);
+
+            return Repository.SaveChangesAsync();
         }
     }
 }

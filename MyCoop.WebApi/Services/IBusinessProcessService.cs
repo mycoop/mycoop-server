@@ -37,5 +37,11 @@ namespace MyCoop.WebApi.Services
         Task UpdateAttributeType(int id, EditAttributeTypeModel model);
 
         Task DeleteAttributeType(int id);
+
+        Task<BusinessProcessAttributeModel[]> GetAttributesByBusinessProcessId(int id);
+
+        Task AddAttributeToBusinessProcess(int attributeId, int businessProcessId);
+
+        Task RemoveAttributeFromBusinessProcess(int attributeId, int businessProcessId);
     }
 }
