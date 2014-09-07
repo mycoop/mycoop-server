@@ -14,6 +14,7 @@ namespace MyCoop.WebApi.Core
             _mapTypes.Add(typeof(ISystemService), typeof(SystemService));
             _mapTypes.Add(typeof(IManagementSevice), typeof(ManagementSevice));
             _mapTypes.Add(typeof(ITemplateService), typeof(TemplateService));
+            _mapTypes.Add(typeof(IBusinessProcessService), typeof(BusinessProcessService));
         }
 
         private readonly RepositoryManager _repositoryManager = new RepositoryManager();
