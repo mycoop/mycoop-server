@@ -41,7 +41,7 @@ using log4net;
 using log4net.Config;
 
 #if! OPEN_SOURCE
-using ASCOfficeEWSEditor.Editor;
+//using ASCOfficeEWSEditor.Editor;
 #endif
 
 namespace FileConverter2

@@ -1,6 +1,8 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30501.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileConverterUtils2", "FileConverterUtils2\FileConverterUtils2.csproj", "{665D791F-4A42-4EB0-A766-300783379D40}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LicenseTest", "LicenseTest\LicenseTest.csproj", "{02FD89FC-7CFB-4269-B082-5DE063F0FC37}"

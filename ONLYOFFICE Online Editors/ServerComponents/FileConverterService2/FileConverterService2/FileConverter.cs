@@ -125,7 +125,7 @@ namespace FileConverterService2
 
             Stop();
             _stopEvt.Reset();
-            for (int i = 0; i < m_nMaxRunThreads; i++)
+            for (int i = 0; i < /*m_nMaxRunThreads*/ 1; i++)
             {
                 var runThread = new Thread(Run);
 
