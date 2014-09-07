@@ -7,6 +7,11 @@ using MyCoop.WebApi.Extentions;
 using MyCoop.WebApi.Loggers;
 using MyCoop.WebApi.Models.BusinessProcesses;
 using MyCoop.WebApi.Services;
+using System.Collections.Generic;
+using System;
+using System.Web;
+using System.Net.Http.Headers;
+using System.IO;
 
 namespace MyCoop.WebApi.Controllers
 {
@@ -23,6 +28,45 @@ namespace MyCoop.WebApi.Controllers
         public async Task<HttpResponseMessage> Get()
         {
             return Request.CreateResponse(HttpStatusCode.OK, await Service.Get<IBusinessProcessService>().GetBusinessProcesses());
+        }
+
+
+        [HttpGet]
+        [Route("csv")]
+        public async Task<HttpResponseMessage> GetCSV()
+        {
+            byte[] output = null;
+
+            var processes = await Service.Get<IBusinessProcessService>().GetBusinessProcesses();
+            var lines = new List<string>();
+            var reportGuid = Guid.NewGuid();
+            var fileName = "BusinessProcesses_" + reportGuid + ".csv";
+            var filePath = HttpContext.Current.Server.MapPath("~/Content/Reports/") + fileName;
+            lines.Add("Process Name,Description,Location");
+            foreach (var item in processes)
+            {
+                if (item.Location != null)
+                {
+                    lines.Add(String.Format("{0},{1},{2}", item.Name, item.Description, item.Location.Address));
+                }
+            }
+            File.WriteAllLines(filePath, lines);
+
+            output = File.ReadAllBytes(filePath);
+            File.Delete(filePath);
+
+            if (output != null)
+            {
+                var result = new HttpResponseMessage(HttpStatusCode.OK) { Content = new ByteArrayContent(output) };
+                result.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+                result.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
+                {
+                    FileName = "myCOOP Business Processes" + ".csv"
+                };
+                return result;
+            }
+
+            return this.Request.CreateErrorResponse(HttpStatusCode.NoContent, "No record found");
         }
 
         [HttpGet]

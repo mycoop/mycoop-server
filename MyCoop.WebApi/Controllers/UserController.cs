@@ -103,7 +103,10 @@ namespace MyCoop.WebApi.Controllers
             lines.Add("Email,UserName,LoginTime,LoginStatus");
             foreach (var item in history)
             {
-                lines.Add(String.Format("{0},{1},{2},{3}", item.User.Email, item.User.FirstName + " " + item.User.LastName, item.Time, item.Status));
+                if (item.User != null)
+                {
+                    lines.Add(String.Format("{0},{1},{2},{3}", item.User.Email, item.User.FirstName + " " + item.User.LastName, item.Time, item.Status));
+                }
             }
             File.WriteAllLines(filePath, lines);
 
