@@ -76,6 +76,8 @@ public class fileDownloader : IHttpHandler {
     
     public static string GetIP4Address()
     {
+        return "1";
+        
         string IP4Address = String.Empty;
 
         foreach (IPAddress IPA in Dns.GetHostAddresses(HttpContext.Current.Request.UserHostAddress))

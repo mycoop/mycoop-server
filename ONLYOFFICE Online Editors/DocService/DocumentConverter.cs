@@ -208,7 +208,8 @@ namespace DocService
                 {
                     if (HttpContext.Current != null)
                     {
-                        userIp = HttpContext.Current.Request.UserHostAddress;
+                        //userIp = HttpContext.Current.Request.UserHostAddress;
+                        userIp = "1";
                     }
                 }
                 catch

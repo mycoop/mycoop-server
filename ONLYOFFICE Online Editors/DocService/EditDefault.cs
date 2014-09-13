@@ -39,7 +39,8 @@ namespace DocService
 
         public static string CurUserHostAddress
         {
-            get { return Regex.Replace(HttpContext.Current.Request.UserHostAddress, "[^0-9-.a-zA-Z_=]", "_"); }
+            //get { return Regex.Replace(HttpContext.Current.Request.UserHostAddress, "[^0-9-.a-zA-Z_=]", "_"); }
+            get { return "1"; }
         }
 
 
