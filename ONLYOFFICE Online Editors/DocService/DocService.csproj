@@ -91,13 +91,6 @@
     <Compile Include="CanvasService.ashx.cs">
       <DependentUpon>CanvasService.ashx</DependentUpon>
     </Compile>
-    <Compile Include="Default.aspx.cs">
-      <DependentUpon>Default.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Default.aspx.designer.cs">
-      <DependentUpon>Default.aspx</DependentUpon>
-    </Compile>
     <Compile Include="DocEditor.aspx.cs">
       <DependentUpon>DocEditor.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -106,6 +99,8 @@
       <DependentUpon>DocEditor.aspx</DependentUpon>
     </Compile>
     <Compile Include="DocumentConverter.cs" />
+    <Compile Include="EditDefault.cs" />
+    <Compile Include="FileType.cs" />
     <Compile Include="FontService.ashx.cs">
       <DependentUpon>FontService.ashx</DependentUpon>
     </Compile>
@@ -122,25 +117,12 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Themes\images\alert.png" />
-    <Content Include="App_Themes\images\close.png" />
-    <Content Include="App_Themes\images\corner.png" />
-    <Content Include="App_Themes\images\done.png" />
-    <Content Include="App_Themes\images\file_doct.png" />
-    <Content Include="App_Themes\images\file_pptt.png" />
-    <Content Include="App_Themes\images\file_xlst.png" />
-    <Content Include="App_Themes\images\loader16.gif" />
-    <Content Include="App_Themes\images\logo.png" />
-    <Content Include="App_Themes\images\question_small.png" />
-    <Content Include="App_Themes\jquery-ui.css" />
-    <Content Include="App_Themes\stylesheet.css" />
     <Content Include="CanvasService.ashx" />
-    <Content Include="Default.aspx" />
     <Content Include="DocEditor.aspx" />
     <Content Include="fileDownloader.ashx" />
     <Content Include="FileUploader.ashx" />
     <Content Include="FontService.ashx" />
-    <Content Include="index.html" />
+    <Content Include="default.aspx" />
     <Content Include="OfficeWeb\3rdparty\bootstrap\css\bootstrap.min.css" />
     <Content Include="OfficeWeb\3rdparty\bootstrap\img\glyphicons-halflings-white.png" />
     <Content Include="OfficeWeb\3rdparty\bootstrap\img\glyphicons-halflings.png" />
@@ -6247,13 +6229,6 @@
     <Content Include="OfficeWeb\sdk\Word\Images\marker_format.cur" />
     <Content Include="OfficeWeb\sdk\Word\sdk-all.js" />
     <Content Include="ResourceService.ashx" />
-    <Content Include="script\jquery-1.9.0.min.js" />
-    <Content Include="script\jquery-ui.min.js" />
-    <Content Include="script\jquery.blockUI.js" />
-    <Content Include="script\jquery.dropdownToggle.js" />
-    <Content Include="script\jquery.fileupload.js" />
-    <Content Include="script\jquery.iframe-transport.js" />
-    <Content Include="script\jscript.js" />
     <Content Include="UploadService.ashx" />
     <Content Include="web.config" />
   </ItemGroup>

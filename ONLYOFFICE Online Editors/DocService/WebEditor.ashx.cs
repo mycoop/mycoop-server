@@ -4,6 +4,7 @@ using System.Net;
 using System.Web;
 using System.Web.Services;
 using ASC.Api.DocumentConverter;
+using DocService;
 
 namespace OnlineEditorsExample
 {
@@ -73,7 +74,7 @@ namespace OnlineEditorsExample
                     if (stream == null) throw new Exception("stream is null");
                     const int bufferSize = 4096;
 
-                    using (var fs = File.Open(_Default.StoragePath + fileName, FileMode.Create))
+                    using (var fs = File.Open(EditDefault.StoragePath + fileName, FileMode.Create))
                     {
                         var buffer = new byte[bufferSize];
                         int readed;
@@ -98,7 +99,7 @@ namespace OnlineEditorsExample
             context.Response.ContentType = "text/plain";
             try
             {
-                context.Response.Write("{ \"filename\": \"" + _Default.DoUpload(context) + "\"}");
+                context.Response.Write("{ \"filename\": \"" + EditDefault.DoUpload(context) + "\"}");
             }
             catch (Exception e)
             {
@@ -111,7 +112,7 @@ namespace OnlineEditorsExample
             context.Response.ContentType = "text/plain";
             try
             {
-                context.Response.Write(_Default.DoConvert(context));
+                context.Response.Write(EditDefault.DoConvert(context));
             }
             catch (Exception e)
             {

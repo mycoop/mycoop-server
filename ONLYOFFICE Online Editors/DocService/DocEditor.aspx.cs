@@ -4,6 +4,7 @@ using System.Web;
 using System.Web.Configuration;
 using System.Web.UI;
 using ASC.Api.DocumentConverter;
+using DocService;
 
 namespace OnlineEditorsExample
 {
@@ -13,12 +14,12 @@ namespace OnlineEditorsExample
 
         public static string FileUri
         {
-            get { return _Default.FileUri(FileName); }
+            get { return EditDefault.FileUri(FileName); }
         }
 
         protected string Key
         {
-            get { return ServiceConverter.GenerateRevisionId(_Default.CurUserHostAddress + "/" + Path.GetFileName(FileUri)); }
+            get { return ServiceConverter.GenerateRevisionId(EditDefault.CurUserHostAddress + "/" + Path.GetFileName(FileUri)); }
         }
 
         protected string ValidateKey
@@ -50,7 +51,7 @@ namespace OnlineEditorsExample
             var externalUrl = Request["fileUrl"];
             if (!string.IsNullOrEmpty(externalUrl))
             {
-                FileName = _Default.DoUpload(externalUrl);
+                FileName = EditDefault.DoUpload(externalUrl);
             }
             else
             {
@@ -83,9 +84,9 @@ namespace OnlineEditorsExample
                     return;
             }
             var demoName = "demo" + ext;
-            FileName = _Default.GetCorrectName(demoName);
+            FileName = EditDefault.GetCorrectName(demoName);
 
-            File.Copy(HttpRuntime.AppDomainAppPath + "app_data/" + demoName, _Default.StoragePath + FileName);
+            File.Copy(HttpRuntime.AppDomainAppPath + "app_data/" + demoName, EditDefault.StoragePath + FileName);
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="DocEditor.aspx.cs" Inherits="OnlineEditorsExample.DocEditor" Title="ONLYOFFICE™" %>
 
 <%@ Import Namespace="System.IO" %>
-<%@ Import Namespace="OnlineEditorsExample" %>
+<%@ Import Namespace="DocService" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -98,12 +98,12 @@
                         },
 
                         permissions: {
-                            edit: "<%= _Default.EditedExts.Contains(Path.GetExtension(FileName)) %>" == "True",
+                            edit: "<%= EditDefault.EditedExts.Contains(Path.GetExtension(FileName)) %>" == "True",
                             download: true
                         }
                     },
                     editorConfig: {
-                        mode: '<%= _Default.EditMode && _Default.EditedExts.Contains(Path.GetExtension(FileName)) && Request["action"] != "view" ? "edit" : "view" %>',
+                        mode: '<%= EditDefault.EditMode && EditDefault.EditedExts.Contains(Path.GetExtension(FileName)) && Request["action"] != "view" ? "edit" : "view" %>',
                         canBackToFolder: "<%= Request["action"] != "embedded" %>" == "True",
 
                         lang: "en",

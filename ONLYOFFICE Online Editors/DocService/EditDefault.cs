@@ -7,44 +7,11 @@ using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Caching;
 using System.Web.Configuration;
-using System.Web.UI;
 using ASC.Api.DocumentConverter;
 
-namespace OnlineEditorsExample
+namespace DocService
 {
-    internal static class FileType
-    {
-        public static readonly List<string> ExtsSpreadsheet = new List<string>
-            {
-                ".xls", ".xlsx",
-                ".ods", ".csv"
-            };
-
-        public static readonly List<string> ExtsPresentation = new List<string>
-            {
-                ".pps", ".ppsx",
-                ".ppt", ".pptx",
-                ".odp"
-            };
-
-        public static readonly List<string> ExtsDocument = new List<string>
-            {
-                ".docx", ".doc", ".odt", ".rtf", ".txt",
-                ".html", ".htm", ".mht", ".pdf", ".djvu",
-                ".fb2", ".epub", ".xps"
-            };
-
-        public static string GetInternalExtension(string extension)
-        {
-            extension = Path.GetExtension(extension).ToLower();
-            if (ExtsDocument.Contains(extension)) return ".docx";
-            if (ExtsSpreadsheet.Contains(extension)) return ".xlsx";
-            if (ExtsPresentation.Contains(extension)) return ".pptx";
-            return string.Empty;
-        }
-    }
-
-    public partial class _Default : Page
+    public class EditDefault
     {
         public static string StoragePath
         {
@@ -83,7 +50,7 @@ namespace OnlineEditorsExample
             {
                 long size;
                 long.TryParse(WebConfigurationManager.AppSettings["filesize-max"], out size);
-                return size > 0 ? size : 5*1024*1024;
+                return size > 0 ? size : 5 * 1024 * 1024;
             }
         }
 
@@ -117,10 +84,10 @@ namespace OnlineEditorsExample
         public static string FileUri(string fileName)
         {
             var uri = new UriBuilder(HttpContext.Current.Request.Url)
-                {
-                    Path = VirtualPath + fileName,
-                    Query = ""
-                };
+            {
+                Path = VirtualPath + fileName,
+                Query = ""
+            };
 
             if (HaveExternalIP())
             {
@@ -277,10 +244,10 @@ namespace OnlineEditorsExample
                 try
                 {
                     var uri = new UriBuilder(HttpContext.Current.Request.Url)
-                        {
-                            Path = VirtualPath + "demo.docx",
-                            Query = ""
-                        };
+                    {
+                        Path = VirtualPath + "demo.docx",
+                        Query = ""
+                    };
                     var fileUri = uri.ToString();
 
                     ServiceConverter.GetConvertedUri(fileUri, "docx", "docx", Guid.NewGuid().ToString(), false, out convertUri);
