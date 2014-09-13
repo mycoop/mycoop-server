@@ -7,7 +7,7 @@
 // </автоматически создаваемое>
 //------------------------------------------------------------------------------
 
-namespace OnlineEditorsExample {
+namespace DocService {
     
     
     public partial class DocEditor {

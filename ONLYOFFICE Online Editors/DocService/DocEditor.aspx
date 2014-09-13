@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="DocEditor.aspx.cs" Inherits="OnlineEditorsExample.DocEditor" Title="ONLYOFFICE™" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="DocEditor.aspx.cs" Inherits="DocService.DocEditor" Title="ONLYOFFICE™" %>
 
 <%@ Import Namespace="System.IO" %>
 <%@ Import Namespace="DocService" %>

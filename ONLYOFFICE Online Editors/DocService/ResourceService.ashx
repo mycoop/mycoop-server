@@ -1,4 +1,4 @@
-﻿<%@ WebHandler Language="C#" Class="ResourceService" CodeBehind="ResourceService.ashx.cs" %>
+﻿<%@ WebHandler Language="C#" Class="DocService.ResourceService" CodeBehind="ResourceService.ashx.cs" %>
 /*
  * (c) Copyright Ascensio System SIA 2010-2014
  *

@@ -1,10 +1,13 @@
 ﻿using System.Web;
 using System.Web.Routing;
 
-public class FontServiceRoute : IRouteHandler
+namespace DocService
 {
-    public IHttpHandler GetHttpHandler(RequestContext requestContext)
+    public class FontServiceRoute : IRouteHandler
     {
-        return new FontService(requestContext);
+        public IHttpHandler GetHttpHandler(RequestContext requestContext)
+        {
+            return new FontService(requestContext);
+        }
     }
 }

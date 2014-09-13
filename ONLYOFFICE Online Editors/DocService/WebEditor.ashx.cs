@@ -3,10 +3,8 @@ using System.IO;
 using System.Net;
 using System.Web;
 using System.Web.Services;
-using ASC.Api.DocumentConverter;
-using DocService;
 
-namespace OnlineEditorsExample
+namespace DocService
 {
     [WebService(Namespace = "http://tempuri.org/")]
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]

@@ -1,4 +1,4 @@
-﻿<%@ WebHandler Language="C#" Class="FontService" CodeBehind="FontService.ashx.cs"  %>
+﻿<%@ WebHandler Language="C#" Class="DocService.FontService" CodeBehind="FontService.ashx.cs"  %>
 /*
  * (c) Copyright Ascensio System SIA 2010-2014
  *

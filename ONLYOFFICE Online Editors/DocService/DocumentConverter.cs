@@ -10,7 +10,7 @@ using System.Web.Script.Serialization;
 using System.Xml;
 using System.Xml.Linq;
 
-namespace ASC.Api.DocumentConverter
+namespace DocService
 {
     /// <summary>
     /// Class service api conversion

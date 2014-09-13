@@ -1,12 +1,11 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Web.Routing;
 using FileConverterUtils2;
 using log4net.Config;
 
-namespace ASP
+namespace DocService
 {
     public class global_asax : System.Web.HttpApplication
     {

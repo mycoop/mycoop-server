@@ -3,10 +3,8 @@ using System.IO;
 using System.Web;
 using System.Web.Configuration;
 using System.Web.UI;
-using ASC.Api.DocumentConverter;
-using DocService;
 
-namespace OnlineEditorsExample
+namespace DocService
 {
     public partial class DocEditor : Page
     {

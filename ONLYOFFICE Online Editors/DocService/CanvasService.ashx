@@ -1,4 +1,4 @@
-﻿<%@ WebHandler Language="C#" Class="CanvasService" CodeBehind="CanvasService.ashx.cs" %>
+﻿<%@ WebHandler Language="C#" Class="DocService.CanvasService" CodeBehind="CanvasService.ashx.cs" %>
 /*
  * (c) Copyright Ascensio System SIA 2010-2014
  *
