@@ -1,20 +1,19 @@
 ﻿using System;
 using MyCoop.Data;
-using MyCoop.WebApi.Models.Users;
 
 namespace MyCoop.WebApi.Models.Groups
 {
     public class GroupModel
     {
         private readonly Group _group;
-        private readonly UserModel _createdBy;
-        private readonly UserModel _modifiedBy;
+        private readonly UserInfoModel _createdBy;
+        private readonly UserInfoModel _modifiedBy;
 
         public GroupModel(Group group)
         {
             _group = group;
-            _createdBy = new UserModel(_group.User1);
-            _modifiedBy = new UserModel(_group.User);
+            _createdBy = new UserInfoModel(_group.User1);
+            _modifiedBy = new UserInfoModel(_group.User);
         }
         public int Id
         {
@@ -36,11 +35,11 @@ namespace MyCoop.WebApi.Models.Groups
         {
             get { return _group.ModificationTime; }
         }
-        public UserModel CreatedBy
+        public UserInfoModel CreatedBy
         {
             get { return _createdBy; }
         }
-        public UserModel ModifiedBy
+        public UserInfoModel ModifiedBy
         {
             get { return _modifiedBy; }
         }

@@ -79,14 +79,14 @@ namespace MyCoop.WebApi.Services.Instances
 
         public Task<WorkspaceTemplateModel[]> GetWorkspaceTemplates()
         {
-            return GetValues<WorkspaceTemplateModel, WorkspaceTemplate, IWorkspaceTemplateRepository>(template => new WorkspaceTemplateModel(template), 
-                "WorkspaceDocumentTemplates", "WorkspaceTemplateComponents", "WorkspaceTemplateComponents.Component");
+            return GetValues<WorkspaceTemplateModel, WorkspaceTemplate, IWorkspaceTemplateRepository>(template => new WorkspaceTemplateModel(template),
+                "WorkspaceDocumentTemplates", "WorkspaceTemplateComponents", "WorkspaceTemplateComponents.Component", "User", "User1");
         }
 
         public Task<WorkspaceTemplateModel> GetWorkspaceTemplate(int id)
         {
-            return GetValue<WorkspaceTemplateModel, WorkspaceTemplate, IWorkspaceTemplateRepository>(id, template => new WorkspaceTemplateModel(template), 
-                "WorkspaceDocumentTemplates", "WorkspaceTemplateComponents", "WorkspaceTemplateComponents.Component");
+            return GetValue<WorkspaceTemplateModel, WorkspaceTemplate, IWorkspaceTemplateRepository>(id, template => new WorkspaceTemplateModel(template),
+                "WorkspaceDocumentTemplates", "WorkspaceTemplateComponents", "WorkspaceTemplateComponents.Component", "User", "User1");
         }
 
         public Task<int> AddWorkspaceTemplate(EditWorkspaceTemplateModel model)

@@ -1,5 +1,5 @@
-﻿using MyCoop.Data;
-using System;
+﻿using System;
+using MyCoop.Data;
 
 namespace MyCoop.WebApi.Models.Users
 {

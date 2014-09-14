@@ -10,12 +10,16 @@ namespace MyCoop.WebApi.Models.WorkspaceTemplates
         private readonly WorkspaceTemplate _workspaceTemplate;
         private readonly int _documentCount;
         private readonly ComponentModel[] _components;
+        private readonly UserInfoModel _createdBy;
+        private readonly UserInfoModel _modifiedBy;
 
         public WorkspaceTemplateModel(WorkspaceTemplate workspaceTemplate)
         {
             _workspaceTemplate = workspaceTemplate;
             _documentCount = workspaceTemplate.WorkspaceDocumentTemplates.Count;
             _components = workspaceTemplate.WorkspaceTemplateComponents.Select(c => new ComponentModel(c.Component)).ToArray();
+            _createdBy = new UserInfoModel(_workspaceTemplate.User1);
+            _modifiedBy = new UserInfoModel(_workspaceTemplate.User);
         }
 
         public int Id
@@ -38,14 +42,13 @@ namespace MyCoop.WebApi.Models.WorkspaceTemplates
             get { return _workspaceTemplate.ModificationTime; }
         }
 
-        public int CreatedByUserId
+        public UserInfoModel CreatedBy
         {
-            get { return _workspaceTemplate.CreatedByUserId; }
+            get { return _createdBy; }
         }
-
-        public int ModifiedByUserId
+        public UserInfoModel ModifiedBy
         {
-            get { return _workspaceTemplate.ModifiedByUserId; }
+            get { return _modifiedBy; }
         }
 
         public int DocumentCount
