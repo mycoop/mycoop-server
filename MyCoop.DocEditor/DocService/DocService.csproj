@@ -123,6 +123,9 @@
     <Content Include="FileUploader.ashx" />
     <Content Include="FontService.ashx" />
     <Content Include="default.aspx" />
+    <Content Include="HtmlEditor.html" />
+    <Content Include="HtmlEditor.js" />
+    <Content Include="jquery-1.10.2.js" />
     <Content Include="OfficeWeb\3rdparty\bootstrap\css\bootstrap.min.css" />
     <Content Include="OfficeWeb\3rdparty\bootstrap\img\glyphicons-halflings-white.png" />
     <Content Include="OfficeWeb\3rdparty\bootstrap\img\glyphicons-halflings.png" />

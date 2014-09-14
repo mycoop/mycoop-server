@@ -12,17 +12,30 @@ namespace DocService
 
         public static string FileUri
         {
-            get { return EditDefault.FileUri(FileName); }
+            get
+            {
+                var fileUri = EditDefault.FileUri(FileName);
+                return fileUri;
+            }
         }
 
         protected string Key
         {
-            get { return ServiceConverter.GenerateRevisionId(EditDefault.CurUserHostAddress + "/" + Path.GetFileName(FileUri)); }
+            get
+            {
+                var key =
+                    ServiceConverter.GenerateRevisionId(EditDefault.CurUserHostAddress + "/" + Path.GetFileName(FileUri));
+                return key;
+            }
         }
 
         protected string ValidateKey
         {
-            get { return ServiceConverter.GenerateValidateKey(Key); }
+            get
+            {
+                var validateKey = ServiceConverter.GenerateValidateKey(Key);
+                return validateKey;
+            }
         }
 
         protected string DocServiceApiUri

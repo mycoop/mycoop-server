@@ -14,6 +14,9 @@ namespace DocService
         {
             switch (context.Request["type"])
             {
+                case "get":
+                    Get(context);
+                    break;
                 case "save":
                     Save(context);
                     break;
@@ -23,6 +26,28 @@ namespace DocService
                 case "convert":
                     Convert(context);
                     break;
+            }
+        }
+
+        private static void Get(HttpContext context)
+        {
+            context.Response.ContentType = "text/plain";
+            var fileName = context.Request["fileName"];
+            if (string.IsNullOrEmpty(fileName))
+            {
+                context.Response.Write("error");
+                return;
+            }
+            try
+            {
+                var fileUri = EditDefault.FileUri(fileName);
+                var key = ServiceConverter.GenerateRevisionId(EditDefault.CurUserHostAddress + "/" + Path.GetFileName(fileUri));
+                var validateKey = ServiceConverter.GenerateValidateKey(key);
+                context.Response.Write(String.Format("{{ \"fileUri\": \"{0}\", \"key\": \"{1}\", \"validateKey\": \"{2}\" }}", fileUri, key, validateKey));
+            }
+            catch (Exception e)
+            {
+                context.Response.Write("{ \"error\": \"" + e.Message + "\"}");
             }
         }
 
