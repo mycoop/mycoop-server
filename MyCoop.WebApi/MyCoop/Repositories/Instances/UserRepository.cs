@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using MyCoop.Data;
@@ -18,14 +17,14 @@ namespace MyCoop.Repositories.Instances
             get { return Context.Users; }
         }
 
-        public Task<User> GetUser(string email, string password)
+        public Task<User> GetValue(string email, string password)
         {
             return ObjectSet.SingleOrDefaultAsync(user => user.Email == email && user.Password == password);
         }
 
-        public Task<User[]> GetUsersByGroupId(int groupId)
+        public Task<User[]> GetValuesByGroupId(int id)
         {
-            return GetEntities().Where(user => user.UserGroups.Any(item => item.GroupId == groupId)).ToArrayAsync();
+            return GetEntities().Where(entity => entity.UserGroups.Any(item => item.GroupId == id)).ToArrayAsync();
         }
 
         public Task Delete(int id)
@@ -36,6 +35,11 @@ namespace MyCoop.Repositories.Instances
         public Task<User> GetValue(int id, params string[] includes)
         {
             return GetEntities(includes).SingleAsync(entity => entity.Id == id);
+        }
+
+        public Task<User[]> GetValuesByIncidentId(int id)
+        {
+            return GetEntities().Where(entity => entity.IncidentUsers.Any(item => item.IncidentId == id)).ToArrayAsync();
         }
     }
 }

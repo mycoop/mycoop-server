@@ -584,6 +584,9 @@
         <Function Name="DeleteGroup" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="id" Type="int" Mode="In" />
         </Function>
+        <Function Name="DeleteIncident" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
         <Function Name="DeleteOrgUnit" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="id" Type="int" Mode="In" />
         </Function>
@@ -896,9 +899,12 @@
             <End Role="WorkspaceTemplateComponent" EntitySet="WorkspaceTemplateComponents" />
           </AssociationSet>
           <FunctionImport Name="DeleteBusinessProcess">
-            <Parameter Name="id" Mode="In" Type="Int32" />
+          <Parameter Name="id" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="DeleteOrgUnit">
+          <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteIncident">
             <Parameter Name="id" Mode="In" Type="Int32" />
           </FunctionImport>
           </EntityContainer>
@@ -1759,6 +1765,7 @@
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="DeleteBusinessProcess" FunctionName="Хранилище CoopModel.DeleteBusinessProcess" />
           <FunctionImportMapping FunctionImportName="DeleteOrgUnit" FunctionName="Хранилище CoopModel.DeleteOrgUnit" />
+          <FunctionImportMapping FunctionImportName="DeleteIncident" FunctionName="Хранилище CoopModel.DeleteIncident" />
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

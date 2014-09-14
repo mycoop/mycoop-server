@@ -159,6 +159,18 @@ public partial class CoopEntities : DbContext
         return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteOrgUnit", idParameter);
     }
 
+
+    public virtual int DeleteIncident(Nullable<int> id)
+    {
+
+        var idParameter = id.HasValue ?
+            new ObjectParameter("id", id) :
+            new ObjectParameter("id", typeof(int));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteIncident", idParameter);
+    }
+
 }
 
 }

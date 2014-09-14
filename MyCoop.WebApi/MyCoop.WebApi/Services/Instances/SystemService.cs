@@ -20,7 +20,7 @@ namespace MyCoop.WebApi.Services.Instances
         public Task<int> Connect(string email, string password)
         {
             var hash = SecurityHelper.GetHash(String.Concat(email, password));
-            return AsyncOperation(() => Repository.GetWithContext<IUserRepository>().GetUser(email, hash),
+            return AsyncOperation(() => Repository.GetWithContext<IUserRepository>().GetValue(email, hash),
                 result => result != null ? result.Id : -1);
         }
 

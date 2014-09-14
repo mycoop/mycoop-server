@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using MyCoop.Data;
 using MyCoop.Repositories;
@@ -168,7 +169,79 @@ namespace MyCoop.WebApi.Services.Instances
 
         public Task DeleteIncident(int id)
         {
-            return Delete<Incident, IIncidentRepository>(id);
+            return Repository.GetWithContext<IIncidentRepository>().Delete(id);
+        }
+
+        public Task<IncidentUserModel[]> GetUsersByIncidentId(int id)
+        {
+            return AsyncOperation(() => Repository.GetWithContext<IUserRepository>().GetValuesByIncidentId(id),
+                userGroups => userGroups.Select(ug => new IncidentUserModel(ug)).ToArray());
+        }
+
+        public Task<IncidentOrgUnitModel[]> GetOrgUnitsByIncidentId(int id)
+        {
+            return AsyncOperation(() => Repository.GetWithContext<IOrgUnitRepository>().GetValuesByIncidentId(id),
+                userGroups => userGroups.Select(ug => new IncidentOrgUnitModel(ug)).ToArray());
+        }
+
+        public Task AddIncidentUser(int incidentId, int userId)
+        {
+            var entity = new IncidentUser
+            {
+                IncidentId = incidentId,
+                UserId = userId,
+                CreationTime = DateTime.UtcNow
+            };
+
+            var userGroupRepository = Repository.GetWithContext<IIncidentUserRepository>();
+            userGroupRepository.Add(entity);
+
+            return Repository.SaveChangesAsync();
+        }
+
+        public Task RemoveIncidentUser(int incidentId, int userId)
+        {
+            var entity = new IncidentUser
+            {
+                IncidentId = incidentId,
+                UserId = userId
+            };
+
+            var repository = Repository.GetWithContext<IIncidentUserRepository>();
+            repository.Attach(entity);
+            repository.Delete(entity);
+
+            return Repository.SaveChangesAsync();
+        }
+
+        public Task AddIncidentOrgUnit(int incidentId, int orgUnitId)
+        {
+            var entity = new IncidentOrgUnit
+            {
+                IncidentId = incidentId,
+                OrgUnitId = orgUnitId,
+                CreationTime = DateTime.UtcNow
+            };
+
+            var userGroupRepository = Repository.GetWithContext<IIncidentOrgUnitRepository>();
+            userGroupRepository.Add(entity);
+
+            return Repository.SaveChangesAsync();
+        }
+
+        public Task RemoveIncidentOrgUnit(int incidentId, int orgUnitId)
+        {
+            var entity = new IncidentOrgUnit
+            {
+                IncidentId = incidentId,
+                OrgUnitId = orgUnitId
+            };
+
+            var repository = Repository.GetWithContext<IIncidentOrgUnitRepository>();
+            repository.Attach(entity);
+            repository.Delete(entity);
+
+            return Repository.SaveChangesAsync();
         }
     }
 }

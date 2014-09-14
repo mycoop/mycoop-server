@@ -178,6 +178,8 @@
     <Compile Include="Models\Groups\UserGroupModel.cs" />
     <Compile Include="Models\Incidents\EditIncidentModel.cs" />
     <Compile Include="Models\Incidents\IncidentModel.cs" />
+    <Compile Include="Models\Incidents\IncidentOrgUnitModel.cs" />
+    <Compile Include="Models\Incidents\IncidentUserModel.cs" />
     <Compile Include="Models\OrgUnits\EditOrgUnitModel.cs" />
     <Compile Include="Models\LocationModel.cs" />
     <Compile Include="Models\OrgUnits\OrgUnitGroupPermissionModel.cs" />

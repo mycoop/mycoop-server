@@ -37,5 +37,17 @@ namespace MyCoop.WebApi.Services
         Task UpdateIncident(int id, EditIncidentModel model);
 
         Task DeleteIncident(int id);
+
+        Task<IncidentUserModel[]> GetUsersByIncidentId(int id);
+
+        Task<IncidentOrgUnitModel[]> GetOrgUnitsByIncidentId(int id);
+
+        Task AddIncidentUser(int incidentId, int userId);
+
+        Task RemoveIncidentUser(int incidentId, int userId);
+
+        Task AddIncidentOrgUnit(int incidentId, int orgUnitId);
+
+        Task RemoveIncidentOrgUnit(int incidentId, int orgUnitId);
     }
 }

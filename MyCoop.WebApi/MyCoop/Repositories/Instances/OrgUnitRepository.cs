@@ -1,4 +1,5 @@
 ﻿using System.Data.Entity;
+using System.Linq;
 using System.Threading.Tasks;
 using MyCoop.Data;
 
@@ -23,6 +24,11 @@ namespace MyCoop.Repositories.Instances
         public Task Delete(int id)
         {
             return Task.Run(() => Context.DeleteOrgUnit(id));
+        }
+
+        public Task<OrgUnit[]> GetValuesByIncidentId(int id)
+        {
+            return GetEntities().Where(entity => entity.IncidentOrgUnits.Any(item => item.IncidentId == id)).ToArrayAsync();
         }
     }
 }

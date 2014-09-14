@@ -369,7 +369,43 @@ App.ViewModels.MainPageModel = (function () {
           },
           {
               name: "incident-delete",
-              url: config.apiPrefix + "workspace-template/3",
+              url: config.apiPrefix + "incident/3",
+              method: methods[2],
+              body: ''
+          },
+          {
+              name: "incident-users",
+              url: config.apiPrefix + "incident/1/user",
+              method: methods[0],
+              body: ''
+          },
+          {
+              name: "incident-org-units",
+              url: config.apiPrefix + "incident/1/org-unit",
+              method: methods[0],
+              body: ''
+          },
+          {
+              name: "incident-user-add",
+              url: config.apiPrefix + "incident/1/user/1",
+              method: methods[1],
+              body: ''
+          },
+          {
+              name: "incident-org-unit-add",
+              url: config.apiPrefix + "incident/1/org-unit/1016",
+              method: methods[1],
+              body: ''
+          },
+          {
+              name: "remove-incident-user-delete",
+              url: config.apiPrefix + "incident/1/user/1",
+              method: methods[2],
+              body: ''
+          },
+          {
+              name: "incident-org-unit-delete",
+              url: config.apiPrefix + "incident/1/org-unit/1016",
               method: methods[2],
               body: ''
           }];
