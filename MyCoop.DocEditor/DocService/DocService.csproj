@@ -100,6 +100,9 @@
     </Compile>
     <Compile Include="DocumentConverter.cs" />
     <Compile Include="EditDefault.cs" />
+    <Compile Include="fileDownloader.ashx.cs">
+      <DependentUpon>fileDownloader.ashx</DependentUpon>
+    </Compile>
     <Compile Include="FileType.cs" />
     <Compile Include="FontService.ashx.cs">
       <DependentUpon>FontService.ashx</DependentUpon>
